@@ -1,0 +1,26 @@
+body {
+	font-family: Verdana, sans-serif;
+	font-size:0.8em;
+}
+header {
+	border:1px solid grey;
+    background-color:light grey;
+    color:black;
+    text-align:center;
+	margin:5px;
+    padding:8px;
+}
+#leftMenu {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:600px;
+    width:330px;
+    float:left;
+    padding:5px;	      
+}
+#rightFrame {
+	height:600px;
+    width:850px;
+    float:left;
+    padding:10px;	 	 
+}

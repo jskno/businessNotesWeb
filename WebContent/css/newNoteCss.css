@@ -1,0 +1,31 @@
+body {
+	font-family: Verdana, sans-serif;
+	font-size:0.8em;
+}
+header {
+	border:1px solid grey;
+    background-color:light grey;
+    color:black;
+    text-align:center;
+	margin:5px;
+    padding:8px;
+}
+#text {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:300px;
+    width:530px;
+    float:left;
+    padding:5px;	      
+}
+#subopt {
+    width:550px;
+    float:left;
+    padding:10px;	 	 
+}
+#submit {
+    clear:both;
+    text-align:left;
+    padding:5px;	 	 
+}
+		
