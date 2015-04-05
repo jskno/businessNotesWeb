@@ -45,6 +45,7 @@ public class ProductDAOImpl extends DaoImpl implements ProductDAO {
 		//	closeConnection(connection);
 		//}
 		return product;
+		// see when to close connections.
 	}
 
 }
