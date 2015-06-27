@@ -40,7 +40,7 @@ public class BusinessNotesController extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String base = "/jsp/";
-		String url = base + "navBar.jsp"; // "newNoteHome2.jsp"; //home.jsp
+		String url = base + "newNoteForm.jsp"; //"newNoteForm.jsp"; "navBar.jsp"; / "newNoteHome2.jsp"; / home.jsp
 		String action = request.getParameter("action");
 		String keyWord = request.getParameter("keyWord");
 		if (action != null) {

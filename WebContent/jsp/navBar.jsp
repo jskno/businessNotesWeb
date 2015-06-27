@@ -30,14 +30,43 @@
                 <ul class="nav navbar-nav" role="menu">
                     <!-- existing links -->
                     <li><a href="#" class="active">Current Page</a><span class="sr-only">current</span></li>
-                    <li><a href="#">Link</a></li>
+                    <li><a href="#">Note</a></li>
                     <li class="dropdown">
-                        <a class="dropdown-toggle" role="button" data-toggle="dropdown">Dropdown<span class="caret" /></a>
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown">Customer<span class="caret" /></a>
                         <ul class="dropdown-menu">
                             <li><a href="#">Option one</a></li>
                             <li><a href="#">Option two</a></li>
                         </ul>
                     </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown">Supplier<span class="caret" /></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Option one</a></li>
+                            <li><a href="#">Option two</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown">Product<span class="caret" /></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Option one</a></li>
+                            <li><a href="#">Option two</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown">Database<span class="caret" /></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Option one</a></li>
+                            <li><a href="#">Option two</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown">Tools<span class="caret" /></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Option one</a></li>
+                            <li><a href="#">Option two</a></li>
+                        </ul>
+                    </li>
+                    
                 </ul>
             </div>
         </div>
