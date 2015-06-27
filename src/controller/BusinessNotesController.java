@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
@@ -17,16 +18,18 @@ import dao.CompanyDAO;
 import dao.CompanyDAOImpl;
 import dao.NoteDAO;
 import dao.NoteDAOImpl;
+import dao.SubMenuDAO;
+import dao.SubMenuDAOImpl;
 
 public class BusinessNotesController extends HttpServlet {
 	
 	public void init(ServletConfig config) throws ServletException {
 		
 		super.init(config);
-		//NoteDAO noteDao = new NoteDAOImpl();
-		//List<Note> notesList = noteDao.getLastNotes();
+		SubMenuDAO subMenuDao = new SubMenuDAOImpl();
+		Map<String, List<String>> subMenusList = subMenuDao.getSubMenus();
 		ServletContext context = config.getServletContext();
-		//context.setAttribute("notesList", notesList);
+		context.setAttribute("subMenusList", subMenusList);
 	}
 	
 	protected void doGet(HttpServletRequest request,
@@ -37,7 +40,7 @@ public class BusinessNotesController extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		String base = "/jsp/";
-		String url = base + "newNoteHome2.jsp"; //home.jsp
+		String url = base + "navBar.jsp"; // "newNoteHome2.jsp"; //home.jsp
 		String action = request.getParameter("action");
 		String keyWord = request.getParameter("keyWord");
 		if (action != null) {
