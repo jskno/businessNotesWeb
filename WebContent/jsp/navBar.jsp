@@ -70,10 +70,6 @@
                 </ul>
             </div>
         </div>
-    </nav>
-    <div class="row">
-			<p />
-    </div>
-   
+   </nav>
 </body>
 </html>

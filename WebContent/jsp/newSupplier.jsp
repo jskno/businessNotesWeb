@@ -18,25 +18,13 @@
     	</div>
 		
 		<div class="well">
-			<h3>New Note</h3>
-  			<p>Form to introduce a new note.</p>
+			<h3>New Supplier</h3>
+  			<p>Form to introduce a new supplier.</p>
   		</div>
   		<form class="form-horizontal" role="form">
     		<div class="form-group">
-      			<label class="control-label col-sm-2" for="noteTitle">Note title:</label>
-      			<div class="col-sm-10">
-        		<input type="text" class="form-control" id="noteTitle" placeholder="Enter title">
-      			</div>
-    		</div>
-    		<div class="form-group">
-      			<label class="control-label col-sm-2" for="noteText">Note Text:</label>
-     			<div class="col-sm-10">          
-        		<textarea class="form-control" rows="5" id="noteText"></textarea>
-      			</div>
-    		</div>
-    		<div class="form-group">
-      			<label for="customer" class="control-label col-sm-2">Customer:</label>
-      			<div class="col-sm-10">
+      			<label class="control-label col-sm-2" for="name">Company Name:</label>
+      			<div class="col-sm-8">
     				<select class="form-control col-sm-10" id="customer">
         				<option>1</option>
         				<option>2</option>
@@ -44,35 +32,21 @@
         				<option>4</option>
       				</select>
       			</div>
-      		</div>
-      		<div class="form-group">
-      			<label for="supplier" class="control-label col-sm-2">Supplier:</label>
-      			<div class="col-sm-10">
-    				<select class="form-control col-sm-10" id="supplier">
-        				<option>1</option>
-        				<option>2</option>
-        				<option>3</option>
-        				<option>4</option>
-      				</select>
+      			<div class="col-sm-2">
+      				<a href="#" class="btn btn-info" role="button">New Company</a>
       			</div>
-      		</div>
-      		<div class="form-group">
-      			<label for="product" class="control-label col-sm-2">Product:</label>
-      			<div class="col-sm-10">
-    				<select class="form-control" id="product">
-        				<option>1</option>
-        				<option>2</option>
-        				<option>3</option>
-        				<option>4</option>
-      				</select>
+    		</div>
+    		<div class="form-group">
+      			<label class="control-label col-sm-2" for="name">Contact Name:</label>
+     			<div class="col-sm-10">          
+        		<input type="text" class="form-control" id="name" placeholder="Enter the contact name">
       			</div>
-      		</div>
-    		<div class="form-group">        
-				<div class="col-sm-offset-2 col-sm-10">
-       			<div class="checkbox">
-          			<label><input type="checkbox"> Remember me</label>
-	        	</div>
-    			</div>
+    		</div>
+    		<div class="form-group">
+      			<label class="control-label col-sm-2" for="telephone">Contact Telephone:</label>
+     			<div class="col-sm-10">          
+        		<input type="text" class="form-control" id="telephone" placeholder="Enter the contact telephone">
+      			</div>
     		</div>
     		<div class="form-group">        
       			<div class="col-sm-offset-2 col-sm-10">

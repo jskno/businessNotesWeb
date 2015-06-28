@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Date;
+
 public class Note {
 	
 	private int id;
@@ -7,6 +9,9 @@ public class Note {
 	private Supplier supplier;
 	private Product product;
 	private String noteText;
+	private String noteTitle;
+	private Date noteDate;
+	
 	public int getId() {
 		return id;
 	}
@@ -37,12 +42,21 @@ public class Note {
 	public void setNoteText(String noteText) {
 		this.noteText = noteText;
 	}
+	public String getNoteTitle() {
+		return noteTitle;
+	}
+	public void setNoteTitle(String noteTitle) {
+		this.noteTitle = noteTitle;
+	}
+	public Date getNoteDate() {
+		return noteDate;
+	}
+	public void setNoteDate(Date noteDate) {
+		this.noteDate = noteDate;
+	}
 	@Override
 	public String toString() {
 		return "Note [customer=" + customer + ", supplier=" + supplier
 				+ ", product=" + product + ", noteText=" + noteText + "]";
 	}
-	
-	
-
 }

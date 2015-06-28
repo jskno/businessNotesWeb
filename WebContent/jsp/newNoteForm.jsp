@@ -16,7 +16,6 @@
     			<jsp:include page="navBar.jsp" flush="true" />
     		</div>
     	</div>
-		<p />
 		<div class="well">
 			<h3>New Note</h3>
   			<p>Form to introduce a new note.</p>
@@ -36,35 +35,44 @@
     		</div>
     		<div class="form-group">
       			<label for="customer" class="control-label col-sm-2">Customer:</label>
-      			<div class="col-sm-10">
-    				<select class="form-control col-sm-10" id="customer">
+      			<div class="col-sm-8">
+    				<select class="form-control col-sm-8" id="customer">
         				<option>1</option>
         				<option>2</option>
         				<option>3</option>
         				<option>4</option>
       				</select>
+      			</div>
+      			<div class="col-sm-2">
+      				<a href="#" class="btn btn-info" role="button">New Customer</a>
       			</div>
       		</div>
       		<div class="form-group">
       			<label for="supplier" class="control-label col-sm-2">Supplier:</label>
-      			<div class="col-sm-10">
-    				<select class="form-control col-sm-10" id="supplier">
+      			<div class="col-sm-8">
+    				<select class="form-control col-sm-8" id="supplier">
         				<option>1</option>
         				<option>2</option>
         				<option>3</option>
         				<option>4</option>
       				</select>
       			</div>
+      			<div class="col-sm-2">
+      				<a href="#" class="btn btn-info" role="button">New Supplier</a>
+      			</div>
       		</div>
       		<div class="form-group">
       			<label for="product" class="control-label col-sm-2">Product:</label>
-      			<div class="col-sm-10">
+      			<div class="col-sm-8">
     				<select class="form-control" id="product">
         				<option>1</option>
         				<option>2</option>
         				<option>3</option>
         				<option>4</option>
       				</select>
+      			</div>
+      			<div class="col-sm-2">
+      				<a href="#" class="btn btn-info" role="button">New Product</a>
       			</div>
       		</div>
     		<div class="form-group">        
