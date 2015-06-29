@@ -58,7 +58,7 @@ String imageURL=application.getInitParameter("imageURL");
 		<span class="label" style="margin-left: 15px;">List of Last Notes</span>
 	</div>
 	<div id="section">
-		<jsp:include page="notesList.jsp" flush="true" />
+		<jsp:include page="oldNotesList.jsp" flush="true" />
 	</div>
 		 
 </body>

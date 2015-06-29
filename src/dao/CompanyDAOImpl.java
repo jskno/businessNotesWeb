@@ -27,7 +27,7 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 		
 	}
 	
-	public List<Company> findAllCompanies() {
+	public List<Company> getCompaniesList() {
 		
 		List<Company> result = new ArrayList<Company>();
 				
@@ -87,12 +87,14 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 	}
 
 	@Override
-	public Company getCompanyById(int companyId, Connection connection) {
+	public Company getCompanyById(int companyId) {
 		
 		String sql = "select * from company where id = " + companyId;
 		Company company = new Company();
+		Connection connection = null;
 		
 		try {
+			connection = getConnection();
 			PreparedStatement statement = connection.prepareStatement(sql);
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
@@ -103,9 +105,9 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
-		}// finally {
-		//	closeConnection(connection);
-		//}
+		} finally {
+			closeConnection(connection);
+		}
 		return company;
 	}
 	

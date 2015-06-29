@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import model.Company;
 import model.Supplier;
@@ -33,17 +35,20 @@ public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
 	}
 
 	@Override
-	public Supplier getSupplierById(int supplierId, Connection connection) {
+	public Supplier getSupplierById(int supplierId) {
 		
 		String sql = "select * from supplier where id = " + supplierId;
 		Supplier supplier = new Supplier();
-		
+		Company company;
+		Connection connection = null;
 		try {
+			connection = getConnection();
 			PreparedStatement statement = connection.prepareStatement(sql);
 			ResultSet resultSet = statement.executeQuery();
+			
 			while (resultSet.next()) {
-				Company company = companyDao.getCompanyById(
-						resultSet.getInt("company_id"), connection);
+				company = companyDao.getCompanyById(
+						resultSet.getInt("company_id"));
 				supplier.setId(resultSet.getInt("id"));
 				supplier.setCompany(company);
 				supplier.setContactName(resultSet.getString("contact_name"));
@@ -51,10 +56,45 @@ public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
-		}// finally {
-		//	closeConnection(connection);
-		//}
+		} finally {
+			closeConnection(connection);
+		}
 		return supplier;
+	}
+
+	@Override
+	public List<Supplier> getSuppliesList() {
+		
+		List<Supplier> result = new ArrayList<Supplier>();
+		
+		String sql = "select * from supplier";
+		
+		Connection connection = null;
+		Supplier supplier = new Supplier();
+		Company company;
+		try {
+			connection = getConnection();
+			PreparedStatement statement = connection.prepareStatement(sql);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				
+				supplier.setId(resultSet.getInt("id"));
+				
+				company = companyDao.getCompanyById(
+						resultSet.getInt("id"));
+				
+				supplier.setCompany(company);
+				supplier.setContactName(resultSet.getString("contact_name"));
+				supplier.setContactTelephone(resultSet.getString("contact_telephone"));
+				
+				result.add(supplier);
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			closeConnection(connection);
+		}
+		return result;
 	}
 
 }

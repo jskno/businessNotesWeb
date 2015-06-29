@@ -68,11 +68,11 @@ public class NoteDAOImpl extends DaoImpl implements NoteDAO {
 				Note note = new Note();
 				int idCustomer = resultSet.getInt("customer_id");
 				Customer customer = customerDao.getCustomerById(
-						idCustomer, connection);
+						idCustomer);
 				Supplier supplier = supplierDao.getSupplierById(
-						resultSet.getInt("supplier_id"), connection);
+						resultSet.getInt("supplier_id"));
 				Product product = productDao.getProductById(
-						resultSet.getInt("product_id"), connection);
+						resultSet.getInt("product_id"));
 								
 				note.setId(resultSet.getInt("id"));
 				note.setCustomer(customer);

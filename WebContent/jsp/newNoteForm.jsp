@@ -14,13 +14,14 @@
 		<div class="row">
     		<div class="col-sm-12">
     			<jsp:include page="navBar.jsp" flush="true" />
+    			<%@ include file="navBar.jsp" %>
     		</div>
     	</div>
 		<div class="well">
 			<h3>New Note</h3>
   			<p>Form to introduce a new note.</p>
   		</div>
-  		<form class="form-horizontal" role="form">
+  		<form class="form-horizontal" role="form" action="" method="POST">
     		<div class="form-group">
       			<label class="control-label col-sm-2" for="noteTitle">Note title:</label>
       			<div class="col-sm-10">
@@ -44,7 +45,7 @@
       				</select>
       			</div>
       			<div class="col-sm-2">
-      				<a href="#" class="btn btn-info" role="button">New Customer</a>
+      				<a href="newCustomer.jsp" class="btn btn-info" role="button">New Customer</a>
       			</div>
       		</div>
       		<div class="form-group">
@@ -58,7 +59,7 @@
       				</select>
       			</div>
       			<div class="col-sm-2">
-      				<a href="#" class="btn btn-info" role="button">New Supplier</a>
+      				<a href="newSupplier.jsp" class="btn btn-info" role="button">New Supplier</a>
       			</div>
       		</div>
       		<div class="form-group">
@@ -72,7 +73,7 @@
       				</select>
       			</div>
       			<div class="col-sm-2">
-      				<a href="#" class="btn btn-info" role="button">New Product</a>
+      				<a href="newProduct.jsp" class="btn btn-info" role="button">New Product</a>
       			</div>
       		</div>
     		<div class="form-group">        

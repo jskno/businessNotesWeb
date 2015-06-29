@@ -21,7 +21,7 @@
 			<h3>New Supplier</h3>
   			<p>Form to introduce a new supplier.</p>
   		</div>
-  		<form class="form-horizontal" role="form">
+  		<form class="form-horizontal" role="form" action="" method="POST">
     		<div class="form-group">
       			<label class="control-label col-sm-2" for="name">Company Name:</label>
       			<div class="col-sm-8">

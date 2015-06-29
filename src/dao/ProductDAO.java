@@ -1,11 +1,12 @@
 package dao;
 
-import java.sql.Connection;
+import java.util.List;
 
 import model.Product;
 
 public interface ProductDAO extends Dao {
 
-	Product getProductById(int productId, Connection connection);
+	Product getProductById(int productId);
+	List<Product> getProductsList();
 
 }

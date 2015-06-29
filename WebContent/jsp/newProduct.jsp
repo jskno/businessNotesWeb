@@ -21,7 +21,7 @@
 			<h3>New Product</h3>
   			<p>Form to introduce a new product.</p>
   		</div>
-  		<form class="form-horizontal" role="form">
+  		<form class="form-horizontal" role="form" action="" method="POST">
     		<div class="form-group">
       			<label class="control-label col-sm-2" for="code">Product Code:</label>
      			<div class="col-sm-10">          

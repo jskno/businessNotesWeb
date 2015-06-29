@@ -1,11 +1,13 @@
 package dao;
 
-import java.sql.Connection;
+import java.util.List;
 
 import model.Customer;
 
 public interface CustomerDAO extends Dao {
 
-	Customer getCustomerById(int customerId, Connection connection);
+	Customer getCustomerById(int customerId);
+
+	List<Customer> getCustomersList();
 
 }

@@ -1,11 +1,13 @@
 package dao;
 
-import java.sql.Connection;
+import java.util.List;
 
 import model.Supplier;
 
 public interface SupplierDAO extends Dao {
 
-	Supplier getSupplierById(int supplierId, Connection connection);
+	Supplier getSupplierById(int supplierId);
+
+	List<Supplier> getSuppliesList();
 
 }
