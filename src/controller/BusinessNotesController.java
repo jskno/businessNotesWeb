@@ -64,7 +64,7 @@ public class BusinessNotesController extends HttpServlet {
 				break;
 			case "customersList":
 				getCustomersList(request, response, keyWord);
-				url = base + "searchResult.jsp";
+				url = base + "customersList.jsp";
 				break;
 			case "newSupplier":
 				showNewSupplierForm(request, response, keyWord);
