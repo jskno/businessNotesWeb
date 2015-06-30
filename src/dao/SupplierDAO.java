@@ -8,6 +8,6 @@ public interface SupplierDAO extends Dao {
 
 	Supplier getSupplierById(int supplierId);
 
-	List<Supplier> getSuppliesList();
+	List<Supplier> getSuppliersList();
 
 }

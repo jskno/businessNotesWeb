@@ -21,23 +21,27 @@
 			<h3>New Company</h3>
   			<p>Form to introduce a new company.</p>
   		</div>
-  		<form class="form-horizontal" role="form" action="" method="POST">
+  		<form class="form-horizontal" role="form" action="notes" method="POST">
+  		<input type="hidden" name="action" value="createCompany"/>
     		<div class="form-group">
-      			<label class="control-label col-sm-2" for="name">Company Name:</label>
+      			<label class="control-label col-sm-2" for="companyName">Company Name:</label>
       			<div class="col-sm-10">
-        		<input type="text" class="form-control" id="name" placeholder="Enter name">
+        		<input type="text" class="form-control" name="companyName" id="companyName" 
+        				placeholder="Enter name">
       			</div>
     		</div>
     		<div class="form-group">
-      			<label class="control-label col-sm-2" for="telephone">Telephone Number:</label>
+      			<label class="control-label col-sm-2" for="companyTelephone">Telephone Number:</label>
      			<div class="col-sm-10">          
-        		<input type="text" class="form-control" id="telephone" placeholder="Enter telephone">
+        		<input type="text" class="form-control" name="companyTelephone" id="companyTelephone" 
+        				placeholder="Enter telephone">
       			</div>
     		</div>
     		<div class="form-group">
-      			<label class="control-label col-sm-2" for="email">Email:</label>
+      			<label class="control-label col-sm-2" for="companyEmail">Email:</label>
      			<div class="col-sm-10">          
-        		<input type="text" class="form-control" id="email" placeholder="Enter email">
+        		<input type="text" class="form-control" name="companyEmail" id="companyEmail" 
+        				placeholder="Enter email">
       			</div>
     		</div>
     		<div class="form-group">        

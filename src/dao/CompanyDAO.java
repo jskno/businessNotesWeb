@@ -9,5 +9,7 @@ public interface CompanyDAO extends Dao {
 	public List<Company> getCompaniesList();
 	public List<Company> searchCompaniesByName(String name);
 	public Company getCompanyById(int companyId);
+	public List<Company> getNoCustomerCompanies();
+	public List<Company> getNoSupplierCompanies();
 	
 }

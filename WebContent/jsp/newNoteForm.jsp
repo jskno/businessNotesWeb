@@ -1,5 +1,20 @@
+<%@page import="model.Product"%>
+<%@page import="model.Supplier"%>
+<%@page import="model.Customer"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%
+    @SuppressWarnings("unchecked")
+    List<Customer> customersList =
+            (List<Customer>)request.getAttribute("customersList");
+	@SuppressWarnings("unchecked")
+	List<Supplier> suppliersList =
+			(List<Supplier>) request.getAttribute("suppliersList");
+	@SuppressWarnings("unchecked")
+	List<Product> productsList =
+			(List<Product>) request.getAttribute("productsList");
+%>
 <!DOCTYPE html >
 <html lang="en">
 <head>
@@ -21,41 +36,53 @@
 			<h3>New Note</h3>
   			<p>Form to introduce a new note.</p>
   		</div>
-  		<form class="form-horizontal" role="form" action="" method="POST">
+  		<form class="form-horizontal" role="form" action="notes" method="POST">
+  		<input type="hidden" name="action" value="createNote"/>
     		<div class="form-group">
       			<label class="control-label col-sm-2" for="noteTitle">Note title:</label>
       			<div class="col-sm-10">
-        		<input type="text" class="form-control" id="noteTitle" placeholder="Enter title">
+        		<input type="text" class="form-control" name="noteTitle" id="noteTitle" 
+        				placeholder="Enter title">
       			</div>
     		</div>
     		<div class="form-group">
       			<label class="control-label col-sm-2" for="noteText">Note Text:</label>
      			<div class="col-sm-10">          
-        		<textarea class="form-control" rows="5" id="noteText"></textarea>
+        		<textarea class="form-control" rows="5" name="noteText" id="noteText"></textarea>
       			</div>
     		</div>
     		<div class="form-group">
-      			<label for="customer" class="control-label col-sm-2">Customer:</label>
+      			<label class="control-label col-sm-2" for="customerId">Customer:</label>
       			<div class="col-sm-8">
-    				<select class="form-control col-sm-8" id="customer">
-        				<option>1</option>
-        				<option>2</option>
-        				<option>3</option>
-        				<option>4</option>
-      				</select>
+    				<select class="form-control col-sm-8" name="customerId" id="customerId">
+    					<%
+    					for(Customer eachCustomer : customersList) {
+    					%>
+    					<option value="<%=eachCustomer.getId()%>">
+    					<%=eachCustomer.getCompany().getCompanyName()%>
+    					</option>
+    					<%
+    					}
+    					%>
+        			</select>
       			</div>
       			<div class="col-sm-2">
       				<a href="newCustomer.jsp" class="btn btn-info" role="button">New Customer</a>
       			</div>
       		</div>
       		<div class="form-group">
-      			<label for="supplier" class="control-label col-sm-2">Supplier:</label>
+      			<label class="control-label col-sm-2" for="supplierId">Supplier:</label>
       			<div class="col-sm-8">
-    				<select class="form-control col-sm-8" id="supplier">
-        				<option>1</option>
-        				<option>2</option>
-        				<option>3</option>
-        				<option>4</option>
+    				<select class="form-control col-sm-8" name="supplierId" id="supplierId">
+        				<%
+    					for(Supplier eachSupplier : suppliersList) {
+    					%>
+    					<option value="<%=eachSupplier.getId()%>">
+    					<%=eachSupplier.getCompany().getCompanyName()%>
+    					</option>
+    					<%
+    					}
+    					%>
       				</select>
       			</div>
       			<div class="col-sm-2">
@@ -63,13 +90,18 @@
       			</div>
       		</div>
       		<div class="form-group">
-      			<label for="product" class="control-label col-sm-2">Product:</label>
+      			<label class="control-label col-sm-2" for="productId">Product:</label>
       			<div class="col-sm-8">
-    				<select class="form-control" id="product">
-        				<option>1</option>
-        				<option>2</option>
-        				<option>3</option>
-        				<option>4</option>
+    				<select class="form-control" name="productId" id="productId">
+        				<%
+    					for(Product eachProduct : productsList) {
+    					%>
+    					<option value="<%=eachProduct.getId()%>">
+    					<%=eachProduct.getProductCode() + eachProduct.getProductDescription()%>
+    					</option>
+    					<%
+    					}
+    					%>
       				</select>
       			</div>
       			<div class="col-sm-2">

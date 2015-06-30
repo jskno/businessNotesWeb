@@ -11,8 +11,27 @@ import model.Product;
 
 public class ProductDAOImpl extends DaoImpl implements ProductDAO {
 	
+	private static final String INSERT = "insert into product (product_code, product_description) "
+			+ "values (?,?)";
+	
 	public void insert(Object o){
+		Product product = (Product) o;
+		String productCode = product.getProductCode();
+		String productDescription = product.getProductDescription();
 		
+		Connection connection = null;
+		PreparedStatement ps = null;
+		try {
+			connection = getConnection();
+			ps = connection.prepareStatement(INSERT);
+			ps.setString(1, productCode);
+			ps.setString(2, productDescription);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			closeTwoConnection(connection, ps);
+		}
 	}
 	
 	public Object search(Object o) {
@@ -59,12 +78,13 @@ public class ProductDAOImpl extends DaoImpl implements ProductDAO {
 		String sql = "select * from product";
 		
 		Connection connection = null;
+		Product product;
 		try {
 			connection = getConnection();
 			PreparedStatement statement = connection.prepareStatement(sql);
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				Product product = new Product();
+				product = new Product();
 				product.setId(resultSet.getInt("id"));
 				product.setProductCode(resultSet.getString("product_code"));
 				product.setProductDescription(resultSet.getString("product_description"));

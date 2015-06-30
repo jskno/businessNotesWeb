@@ -1,5 +1,12 @@
+<%@page import="model.Company"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%
+    @SuppressWarnings("unchecked")
+    List<Company> companiesList =
+            (List<Company>)request.getAttribute("companiesList");
+%>
 <!DOCTYPE html >
 <html lang="en">
 <head>
@@ -21,31 +28,41 @@
 			<h3>New Supplier</h3>
   			<p>Form to introduce a new supplier.</p>
   		</div>
-  		<form class="form-horizontal" role="form" action="" method="POST">
+  		<form class="form-horizontal" role="form" action="notes" method="POST">
+  		<input type="hidden" name="action" value="createSupplier"/>
     		<div class="form-group">
-      			<label class="control-label col-sm-2" for="name">Company Name:</label>
+      			<label class="control-label col-sm-2" for="companyId">Company Name:</label>
       			<div class="col-sm-8">
-    				<select class="form-control col-sm-10" id="customer">
-        				<option>1</option>
-        				<option>2</option>
-        				<option>3</option>
-        				<option>4</option>
-      				</select>
+    				<select class="form-control" data-header="Select a Company" name="companyId" 
+    						id="companyId">
+    				<% 
+    					for(Company eachCompany : companiesList) {
+    				%>
+    						<option value="<%= eachCompany.getId() %>">
+    							<%= eachCompany.getCompanyName()%>
+    						</option>
+    						
+    				<%	
+						}
+    				%>
+        			</select>
       			</div>
       			<div class="col-sm-2">
       				<a href="#" class="btn btn-info" role="button">New Company</a>
       			</div>
     		</div>
     		<div class="form-group">
-      			<label class="control-label col-sm-2" for="name">Contact Name:</label>
+      			<label class="control-label col-sm-2" for="contactName">Contact Name:</label>
      			<div class="col-sm-10">          
-        		<input type="text" class="form-control" id="name" placeholder="Enter the contact name">
+        		<input type="text" class="form-control" name="contactName" id="contactName"
+        				placeholder="Enter the contact name">
       			</div>
     		</div>
     		<div class="form-group">
-      			<label class="control-label col-sm-2" for="telephone">Contact Telephone:</label>
+      			<label class="control-label col-sm-2" for="contactTelephone">Contact Telephone:</label>
      			<div class="col-sm-10">          
-        		<input type="text" class="form-control" id="telephone" placeholder="Enter the contact telephone">
+        		<input type="text" class="form-control" name="contactTelephone" id="contactTelephone"
+        				placeholder="Enter the contact telephone">
       			</div>
     		</div>
     		<div class="form-group">        

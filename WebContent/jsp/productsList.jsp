@@ -32,7 +32,8 @@
    			</thead>
     		<tbody>
     		<%
-	        	List<Product> productsList = (List<Product>)request.getAttribute("productsList");
+    			@SuppressWarnings("unchecked")
+    			List<Product> productsList = (List<Product>)request.getAttribute("productsList");
     	    	Iterator<Product> iterator = productsList.iterator();
 	        	while (iterator.hasNext()) {
 	        	Product product = (Product) iterator.next();

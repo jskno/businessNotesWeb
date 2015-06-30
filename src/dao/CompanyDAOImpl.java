@@ -11,8 +11,33 @@ import model.Company;
 
 public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 	
+	private static final String INSERT = "insert into company (company_name, company_telephone, " +
+			"company_email) values (?,?,?)";
+	private static final String NO_CUSTOMER_COMPANIES = "select * from company where id not in (" +
+			"select distinct company_id from customer)";
+	private static final String NO_SUPPLIER_COMPANIES = "select * from company where id not in (" +
+			"select distinct company_id from supplier)";
+	
 	public void insert(Object o){
-				
+		Company company = (Company) o;
+		String companyName = company.getCompanyName();
+		String companyTelephone = company.getCompanyTelephone();
+		String companyEmail = company.getCompanyEmail();
+		
+		Connection connection = null;
+		PreparedStatement ps = null;
+		try {
+			connection = getConnection();
+			ps = connection.prepareStatement(INSERT);
+			ps.setString(1, companyName);
+			ps.setString(2, companyTelephone);
+			ps.setString(3, companyEmail);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			closeTwoConnection(connection, ps);
+		}
 	}
 	
 	public Object search(Object o) {
@@ -20,7 +45,7 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 	}
 	
 	public void update(Object o) {
-		
+				
 	}
 	
 	public void delete(Object o) {
@@ -31,15 +56,70 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 		
 		List<Company> result = new ArrayList<Company>();
 				
-		String sql = "select * from company";
+		String sql = "select * from company order by company_name";
 		
 		Connection connection = null;
+		Company company;
 		try {
 			connection = getConnection();
 			PreparedStatement statement = connection.prepareStatement(sql);
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				Company company = new Company();
+				company = new Company();
+				company.setId(resultSet.getInt("id"));
+				company.setCompanyName(resultSet.getString("company_name"));
+				company.setCompanyTelephone(resultSet.getString("company_telephone"));
+				company.setCompanyEmail(resultSet.getString("company_email"));
+				result.add(company);
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			closeConnection(connection);
+		}
+		return result;
+	}
+	
+	@Override
+	public List<Company> getNoCustomerCompanies() {
+		
+		List<Company> result = new ArrayList<Company>();
+				
+		Connection connection = null;
+		Company company;
+		try {
+			connection = getConnection();
+			PreparedStatement statement = connection.prepareStatement(NO_CUSTOMER_COMPANIES);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				company = new Company();
+				company.setId(resultSet.getInt("id"));
+				company.setCompanyName(resultSet.getString("company_name"));
+				company.setCompanyTelephone(resultSet.getString("company_telephone"));
+				company.setCompanyEmail(resultSet.getString("company_email"));
+				result.add(company);
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			closeConnection(connection);
+		}
+		return result;
+	}
+	
+	@Override
+	public List<Company> getNoSupplierCompanies() {
+		
+		List<Company> result = new ArrayList<Company>();
+				
+		Connection connection = null;
+		Company company;
+		try {
+			connection = getConnection();
+			PreparedStatement statement = connection.prepareStatement(NO_SUPPLIER_COMPANIES);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				company = new Company();
 				company.setId(resultSet.getInt("id"));
 				company.setCompanyName(resultSet.getString("company_name"));
 				company.setCompanyTelephone(resultSet.getString("company_telephone"));

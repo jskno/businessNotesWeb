@@ -17,6 +17,8 @@ import model.Supplier;
 public class NoteDAOImpl extends DaoImpl implements NoteDAO {
 	
 	private static final int LAST_NOTES_DAYS = -30;
+	private static final String INSERT = "insert into note (customer_id, supplier_id, product_id, " +
+			" creation_date, note_title, note_text) values (?,?,?,?,?,?)";
 	private CustomerDAO customerDao;
     private SupplierDAO supplierDao;
     private ProductDAO productDao;
@@ -28,7 +30,31 @@ public class NoteDAOImpl extends DaoImpl implements NoteDAO {
     }
 	@Override
 	public void insert(Object o){
+		Note note = (Note) o;
+		int customerId = note.getCustomer().getId();
+		int supplierId = note.getSupplier().getId();
+		int productId = note.getProduct().getId();
+		java.sql.Date creationDate = new java.sql.Date(note.getNoteDate().getTime());
+		String noteTitle = note.getNoteTitle();
+		String noteText = note.getNoteText();
 		
+		Connection connection = null;
+		PreparedStatement ps = null;
+		try {
+			connection = getConnection();
+			ps = connection.prepareStatement(INSERT);
+			ps.setInt(1, customerId);
+			ps.setInt(2, supplierId);
+			ps.setInt(3, productId);
+			ps.setDate(4, creationDate);
+			ps.setString(5, noteTitle);
+			ps.setString(6, noteText);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			closeTwoConnection(connection, ps);
+		}
 	}
 	
 	@Override
@@ -78,6 +104,8 @@ public class NoteDAOImpl extends DaoImpl implements NoteDAO {
 				note.setCustomer(customer);
 				note.setSupplier(supplier);
 				note.setProduct(product);
+				note.setNoteDate(resultSet.getDate("creation_date"));
+				note.setNoteTitle(resultSet.getString("note_title"));				
 				note.setNoteText(resultSet.getString("note_text"));
 				result.add(note);
 			}

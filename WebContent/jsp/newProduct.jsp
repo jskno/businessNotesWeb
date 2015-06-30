@@ -21,17 +21,20 @@
 			<h3>New Product</h3>
   			<p>Form to introduce a new product.</p>
   		</div>
-  		<form class="form-horizontal" role="form" action="" method="POST">
+  		<form class="form-horizontal" role="form" action="notes" method="POST">
+  		<input type="hidden" name="action" value="createProduct"/>
     		<div class="form-group">
-      			<label class="control-label col-sm-2" for="code">Product Code:</label>
+      			<label class="control-label col-sm-2" for="productCode">Product Code:</label>
      			<div class="col-sm-10">          
-        		<input type="text" class="form-control" id="code" placeholder="Enter the product code">
+        		<input type="text" class="form-control" name="productCode" id="productCode"
+        				placeholder="Enter the product code">
       			</div>
     		</div>
     		<div class="form-group">
-      			<label class="control-label col-sm-2" for="description">Product Description:</label>
+      			<label class="control-label col-sm-2" for="productDescription">Product Description:</label>
      			<div class="col-sm-10">          
-        		<input type="text" class="form-control" id="description" placeholder="Enter the product description">
+        		<input type="text" class="form-control" name="productDescription" id="productDescription" 
+        				placeholder="Enter the product description">
       			</div>
     		</div>
     		<div class="form-group">        

@@ -30,7 +30,13 @@
                 <ul class="nav navbar-nav" role="menu">
                     <!-- existing links -->
                     <li><a href="#" class="active">Current Page</a><span class="sr-only">current</span></li>
-                    <li><a href="#">Note</a></li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown">Note<span class="caret" /></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/BusinessNotesWeb/notes?action=newNote">New Note</a></li>
+                            <li><a href="/BusinessNotesWeb/notes?action=notesList">Notes List</a></li>
+                        </ul>
+                    </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" role="button" data-toggle="dropdown">Customer<span class="caret" /></a>
                         <ul class="dropdown-menu">
@@ -41,15 +47,22 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle" role="button" data-toggle="dropdown">Supplier<span class="caret" /></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Option one</a></li>
-                            <li><a href="#">Option two</a></li>
+                            <li><a href="/BusinessNotesWeb/notes?action=newSupplier">New Supplier</a></li>
+                            <li><a href="/BusinessNotesWeb/notes?action=suppliersList">Suppliers List</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
                         <a class="dropdown-toggle" role="button" data-toggle="dropdown">Product<span class="caret" /></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Option one</a></li>
-                            <li><a href="#">Option two</a></li>
+                            <li><a href="/BusinessNotesWeb/notes?action=newProduct">New Product</a></li>
+                            <li><a href="/BusinessNotesWeb/notes?action=productsList">Products List</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" role="button" data-toggle="dropdown">Company<span class="caret" /></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/BusinessNotesWeb/notes?action=newCompany">New Company</a></li>
+                            <li><a href="/BusinessNotesWeb/notes?action=companiesList">Companies List</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">

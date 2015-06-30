@@ -14,13 +14,34 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 	
 	private CompanyDAO companyDao;
 	
+	private static final String INSERT = "insert into customer (company_id, contact_name,"
+			+ "contact_telephone) values (?,?,?)";
+	
 	public CustomerDAOImpl() {
 		companyDao = new CompanyDAOImpl();
 		
 	}
 	
 	public void insert(Object o){
+		Customer customer = (Customer) o;
+		int companyId = customer.getCompany().getId();
+		String contactName = customer.getContactName();
+		String contactTelephone = customer.getContactTelephone();
 		
+		Connection connection = null;
+		PreparedStatement ps = null;
+		try {
+			connection = getConnection();
+			ps = connection.prepareStatement(INSERT);
+			ps.setInt(1, companyId);
+			ps.setString(2, contactName);
+			ps.setString(3, contactTelephone);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			closeTwoConnection(connection, ps);
+		}
 	}
 	
 	public Object search(Object o) {
@@ -41,11 +62,13 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 		String sql = "select * from customer where id = " + customerId;
 		Customer customer = new Customer();
 		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
 		
 		try {
 			connection = getConnection();
-			PreparedStatement statement = connection.prepareStatement(sql);
-			ResultSet resultSet = statement.executeQuery();
+			statement = connection.prepareStatement(sql);
+			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				Company company = companyDao.getCompanyById(
 						resultSet.getInt("company_id"));
@@ -57,7 +80,7 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {
-			closeConnection(connection);
+			closeTripleConnection(connection, statement, resultSet);
 		}
 		return customer;
 	}
@@ -70,7 +93,7 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 		String sql = "select * from customer";
 		
 		Connection connection = null;
-		Customer customer = new Customer();
+		Customer customer;
 		Company company;
 		try {
 			connection = getConnection();
@@ -78,10 +101,11 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				
+				customer = new Customer();
 				customer.setId(resultSet.getInt("id"));
 				
 				company = companyDao.getCompanyById(
-						resultSet.getInt("id"));
+						resultSet.getInt("company_id"));
 				
 				customer.setCompany(company);
 				customer.setContactName(resultSet.getString("contact_name"));

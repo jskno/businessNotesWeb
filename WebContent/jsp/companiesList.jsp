@@ -33,7 +33,8 @@
    			</thead>
     		<tbody>
     		<%
-	        	List<Company> companiesList = (List<Company>)request.getAttribute("companiesList");
+    			@SuppressWarnings("unchecked")
+    			List<Company> companiesList = (List<Company>)request.getAttribute("companiesList");
     	    	Iterator<Company> iterator = companiesList.iterator();
 	        	while (iterator.hasNext()) {
 	        	Company company = (Company) iterator.next();

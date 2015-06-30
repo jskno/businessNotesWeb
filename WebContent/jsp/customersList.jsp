@@ -33,6 +33,7 @@
    			</thead>
     		<tbody>
     		<%
+    			@SuppressWarnings("unchecked")
 	        	List<Customer> customersList = (List<Customer>)request.getAttribute("customersList");
     	    	Iterator<Customer> iterator = customersList.iterator();
 	        	while (iterator.hasNext()) {

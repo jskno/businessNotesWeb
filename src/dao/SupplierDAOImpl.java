@@ -8,17 +8,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Company;
+import model.Customer;
 import model.Supplier;
 
 public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
 	
 	private CompanyDAO companyDao;
 	
+	private static final String INSERT = "insert into supplier (company_id, contact_name,"
+			+ "contact_telephone) values (?,?,?)";
+	
 	public SupplierDAOImpl() {
 		companyDao = new CompanyDAOImpl();
 	}
 	
 	public void insert(Object o){
+		Supplier supplier = (Supplier) o;
+		int companyId = supplier.getCompany().getId();
+		String contactName = supplier.getContactName();
+		String contactTelephone = supplier.getContactTelephone();
+		
+		Connection connection = null;
+		PreparedStatement ps = null;
+		try {
+			connection = getConnection();
+			ps = connection.prepareStatement(INSERT);
+			ps.setInt(1, companyId);
+			ps.setString(2, contactName);
+			ps.setString(3, contactTelephone);
+			ps.executeUpdate();
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			closeTwoConnection(connection, ps);
+		}
 		
 	}
 	
@@ -63,14 +86,14 @@ public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
 	}
 
 	@Override
-	public List<Supplier> getSuppliesList() {
+	public List<Supplier> getSuppliersList() {
 		
 		List<Supplier> result = new ArrayList<Supplier>();
 		
 		String sql = "select * from supplier";
 		
 		Connection connection = null;
-		Supplier supplier = new Supplier();
+		Supplier supplier;
 		Company company;
 		try {
 			connection = getConnection();
@@ -78,10 +101,11 @@ public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
 			ResultSet resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				
+				supplier = new Supplier();
 				supplier.setId(resultSet.getInt("id"));
 				
 				company = companyDao.getCompanyById(
-						resultSet.getInt("id"));
+						resultSet.getInt("company_id"));
 				
 				supplier.setCompany(company);
 				supplier.setContactName(resultSet.getString("contact_name"));
