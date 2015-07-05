@@ -65,16 +65,12 @@
     					}
     					%>
         			</select>
+        		</div>
      			<div class="col-sm-2">
       				<!-- Trigger the modal with a button -->
       				<button type="button" class="btn btn-info btn-md" data-toggle="modal" 
       						data-target="#newCustomerModal">New Customer</button>
       			</div>        			
-      			</div>
-      			<div class="col-sm-2">
-      				<button type="button" class="btn btn-info btn-md" data-toggle="modal" 
-      						data-target="#newCustomer">New Customer</button>
-      			</div>
       		</div>
       		<div class="form-group">
       			<label class="control-label col-sm-2" for="supplierId">Supplier:</label>
@@ -90,16 +86,12 @@
     					}
     					%>
       				</select>
+      			</div>
      			<div class="col-sm-2">
       				<!-- Trigger the modal with a button -->
       				<button type="button" class="btn btn-info btn-md" data-toggle="modal" 
       						data-target="#newSupplierModal">New Supplier</button>
       			</div>      				
-      			</div>
-      			<div class="col-sm-2">
-      				<button type="button" class="btn btn-info btn-md" data-toggle="modal" 
-      						data-target="#newSupplier">New Supplier</button>
-      			</div>
       		</div>
       		<div class="form-group">
       			<label class="control-label col-sm-2" for="productId">Product:</label>
@@ -115,16 +107,12 @@
     					}
     					%>
       				</select>
+      			</div>
      			<div class="col-sm-2">
       				<!-- Trigger the modal with a button -->
       				<button type="button" class="btn btn-info btn-md" data-toggle="modal" 
       						data-target="#newProductModal">New Product</button>
       			</div>      				
-      			</div>
-      			<div class="col-sm-2">
-      				<button type="button" class="btn btn-info btn-md" data-toggle="modal" 
-      						data-target="#newProduct">New Product</button>
-      			</div>
       		</div>
     		<div class="form-group">        
 				<div class="col-sm-offset-2 col-sm-10">

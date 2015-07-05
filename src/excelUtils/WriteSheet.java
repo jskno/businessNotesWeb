@@ -1,7 +1,9 @@
 package excelUtils;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 import model.Company;
@@ -31,13 +33,17 @@ import dao.SupplierDAOImpl;
 
 public class WriteSheet 
 {
-   public static void main(String[] args) throws Exception 
-   {
-	   importProductTable();
-   }
-   
-   public static void importCompanyTable() throws Exception 
-   {
+	public static void main (String [] args) {
+		try {
+			exportNoteTable();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void exportCompanyTable()
+	{
       //Create blank workbook
       XSSFWorkbook workbook = new XSSFWorkbook(); 
       //Create a blank sheet
@@ -50,15 +56,18 @@ public class WriteSheet
       List<Company> companiesList = companyDao.getCompaniesList();
       //Iterate over data and write to sheet
       Object eachCompany;
-      for (int i = 0; i < companiesList.size(); i++)
-      {
+      for (int i = 0; i < companiesList.size(); i++) {
          row = spreadsheet.createRow(i + 1);
          int cellid = 0;
          eachCompany = companiesList.get(i);
          for (Field field : eachCompany.getClass().getDeclaredFields()) {
              field.setAccessible(true); // if you want to modify private fields
              Cell cell = row.createCell(cellid);
-             cell.setCellValue("" + field.get(eachCompany));
+             try {
+				cell.setCellValue("" + field.get(eachCompany));
+			} catch (IllegalArgumentException | IllegalAccessException e) {
+				e.printStackTrace();
+			}
              if(i == 0) {
             	 Cell headerCell = headerRow.createCell(cellid);
             	 headerCell.setCellValue(field.getName());
@@ -66,16 +75,29 @@ public class WriteSheet
              cellid++;
          }
       }
+      
       //Write the workbook in file system
-      FileOutputStream out = new FileOutputStream(new File("CompanyTable.xlsx"));
-      workbook.write(out);
-      out.close();
-      System.out.println( 
-      "Writesheet.xlsx written successfully" );
-      workbook.close();
+      FileOutputStream out = null;
+	try {
+		out = new FileOutputStream(new File("CompanyTable.xlsx"));
+	} catch (FileNotFoundException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+      try {
+		workbook.write(out);
+		out.close();
+		System.out.println( 
+				"Writesheet.xlsx written successfully" );
+		workbook.close();
+	} catch (IOException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
    }
    
-   public static void importProductTable() throws Exception 
+   public static void exportProductTable() throws Exception 
    {
       //Create blank workbook
       XSSFWorkbook workbook = new XSSFWorkbook(); 
@@ -127,7 +149,7 @@ public class WriteSheet
 	
    }
    
-   public static void importCustomerTable() throws Exception 
+   public static void exportCustomerTable() throws Exception 
    {
       //Create blank workbook
       XSSFWorkbook workbook = new XSSFWorkbook(); 
@@ -166,7 +188,7 @@ public class WriteSheet
       workbook.close();
    }
    
-   public static void importSupplierTable() throws Exception 
+   public static void exportSupplierTable() throws Exception 
    {
       //Create blank workbook
       XSSFWorkbook workbook = new XSSFWorkbook(); 
@@ -205,7 +227,7 @@ public class WriteSheet
       workbook.close();
    }
    
-   public static void importNoteTable() throws Exception 
+   public static void exportNoteTable() throws Exception 
    {
       //Create blank workbook
       XSSFWorkbook workbook = new XSSFWorkbook(); 

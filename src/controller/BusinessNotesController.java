@@ -30,6 +30,7 @@ import dao.SubMenuDAO;
 import dao.SubMenuDAOImpl;
 import dao.SupplierDAO;
 import dao.SupplierDAOImpl;
+import excelUtils.WriteSheet;
 
 public class BusinessNotesController extends HttpServlet {
 	
@@ -161,7 +162,51 @@ public class BusinessNotesController extends HttpServlet {
 			createCompany(request, response);
 			response.sendRedirect("notes?action=newCustomer");
 			break;
+		case "exportTable":
+			//getTablesList(request, response);
+			//url = BASE + "exportTable.jsp";
+			//requestDispatcher = getServletContext().
+			//		getRequestDispatcher(url);
+			//requestDispatcher.forward(request, response);
+			exportTable(request, response);
+			break;
+		case "importTable":
+			//getTablesList(request, response);
+			url = BASE + "importTable.jsp";
+			requestDispatcher = getServletContext().
+					getRequestDispatcher(url);
+			requestDispatcher.forward(request, response);
+			break;
 		}
+	}
+
+	private void exportTable(HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		String table = request.getParameter("tableName");
+		try {
+			
+			switch (table) {
+			case "company":
+				WriteSheet.exportCompanyTable();
+				break;
+			case "customer":
+				WriteSheet.exportCustomerTable();
+				break;
+			case "supplier":
+				WriteSheet.exportSupplierTable();		
+				break;
+			case "product":
+				WriteSheet.exportProductTable();
+				break;
+			case "note":
+				WriteSheet.exportNoteTable();
+				break;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 	}
 
 	private void showNewCompanyForm(HttpServletRequest request,

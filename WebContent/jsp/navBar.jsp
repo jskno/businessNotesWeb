@@ -6,6 +6,7 @@
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 <script src="bootstrap/jquery/jquery-2.1.3.min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="jsp/exportTable.jsp"></script>
     <style>
         body {
             padding-top: 70px;
@@ -68,8 +69,8 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle" role="button" data-toggle="dropdown">Database<span class="caret" /></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Import Table</a></li>
-                            <li><a href="#">Export Table</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="/BusinessNotesWeb/jsp/exportTable.jsp">Import Table</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#exportTableModal">Export Table</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
@@ -85,4 +86,45 @@
         </div>
    </nav>
 </body>
+
+<!-- INI MODALS -->
+<div id="exportTableModal" class="modal fade in" role="dialog">
+	<div class="modal-dialog">
+
+	<!-- Modal content-->
+	<div class="modal-content">
+		<form id="exportTable" class="form-horizontal" role="form" action="notes" method="POST">
+		<input type="hidden" name="action" value="exportTable"/>
+	
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Export Table</h4>
+			</div>
+	
+			<div class="modal-body">
+	    		<div class="form-group">
+	      			<label class="control-label col-sm-2" for="tableName">Table Name:</label>
+	      			<div class="col-sm-10">
+		        		<select class="form-control" data-header="Select a Table" name="tableName" 
+    						id="tableName">
+    						<option value="company">Companies Table</option>
+    						<option value="customer">Customers Table</option>
+    						<option value="note">Notes Table</option>
+    						<option value="product">Products Table</option>
+    						<option value="suplier">Suppliers Table</option>
+    					</select>
+    				</div>
+	    		</div>
+	    	</div>
+ 			<div class="modal-footer">
+ 				<button type="submit" class="btn btn-default">Submit</button>
+ 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+ 			</div>
+ 		</form>
+	</div>
+	</div>
+</div>
+
+<!-- END MODALS -->
+
 </html>
