@@ -6,6 +6,18 @@ public class Supplier {
 	private Company company;
 	private String contactName;
 	private String contactTelephone;
+	
+	public Supplier() {
+		
+	}
+	
+	public Supplier(Company company, String contactName,
+			String contactTelephone) {
+		
+		this.company = company;
+		this.contactName = contactName;
+		this.contactTelephone = contactTelephone;
+	}
 	public int getId() {
 		return id;
 	}

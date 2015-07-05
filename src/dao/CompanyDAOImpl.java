@@ -190,6 +190,15 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 		}
 		return company;
 	}
+
+	@Override
+	public void insertList(List<Company> companiesList) {
+		
+		for(Company eachCompany : companiesList) {
+			insert(eachCompany);
+		}
+		
+	}
 	
 	
 

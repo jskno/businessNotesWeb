@@ -11,4 +11,6 @@ public interface NoteDAO extends Dao {
 
 	List<PersistenceNote> getPersistenceCustomerList();
 
+	void insertList(List<Note> notesList);
+
 }

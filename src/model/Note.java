@@ -12,6 +12,20 @@ public class Note {
 	private String noteTitle;
 	private Date noteDate;
 	
+	public Note() {
+		
+	}
+	
+	public Note(Customer customer, Supplier supplier, Product product,
+			String noteTitle, String noteText, Date creationDate) {
+
+		this.customer = customer;
+		this.supplier = supplier;
+		this.product = product;
+		this.noteTitle = noteTitle;
+		this.noteText = noteText;
+		this.noteDate = creationDate;
+	}
 	public int getId() {
 		return id;
 	}

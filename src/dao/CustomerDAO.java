@@ -13,4 +13,6 @@ public interface CustomerDAO extends Dao {
 
 	List<PersistenceCustomer> getPersistenceCustomerList();
 
+	void insertList(List<Customer> customersList);
+
 }

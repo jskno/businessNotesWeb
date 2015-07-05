@@ -161,5 +161,12 @@ public class NoteDAOImpl extends DaoImpl implements NoteDAO {
 			
 		return result;
 	}
+	@Override
+	public void insertList(List<Note> notesList) {
+
+		for(Note eachNote : notesList) {
+			insert(eachNote);
+		}
+	}
 
 }

@@ -31,7 +31,7 @@ import dao.ProductDAOImpl;
 import dao.SupplierDAO;
 import dao.SupplierDAOImpl;
 
-public class WriteSheet 
+public class ExportTable 
 {
 	public static void main (String [] args) {
 		try {
@@ -79,7 +79,7 @@ public class WriteSheet
       //Write the workbook in file system
       FileOutputStream out = null;
 	try {
-		out = new FileOutputStream(new File("CompanyTable.xlsx"));
+		out = new FileOutputStream(new File("C:\\Users\\Jose\\Desktop\\CompanyTable.xlsx"));
 	} catch (FileNotFoundException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -88,8 +88,7 @@ public class WriteSheet
       try {
 		workbook.write(out);
 		out.close();
-		System.out.println( 
-				"Writesheet.xlsx written successfully" );
+		System.out.println("CompanyTable.xlsx written successfully" );
 		workbook.close();
 	} catch (IOException e) {
 		// TODO Auto-generated catch block
@@ -128,11 +127,11 @@ public class WriteSheet
          }
       }
       //Write the workbook in file system
-      FileOutputStream out = new FileOutputStream(new File("ProductTable.xlsx"));
+      FileOutputStream out = new FileOutputStream(new File("C:\\Users\\Jose\\Desktop\\ProductTable.xlsx"));
       workbook.write(out);
       out.close();
       System.out.println( 
-      "Writesheet.xlsx written successfully" );
+      "ProductTable.xlsx written successfully" );
       workbook.close();
    }
 
@@ -180,11 +179,11 @@ public class WriteSheet
          }
       }
       //Write the workbook in file system
-      FileOutputStream out = new FileOutputStream(new File("CustomerTable.xlsx"));
+      FileOutputStream out = new FileOutputStream(new File("C:\\Users\\Jose\\Desktop\\CustomerTable.xlsx"));
       workbook.write(out);
       out.close();
       System.out.println( 
-      "Writesheet.xlsx written successfully" );
+      "CustomerTable.xlsx written successfully" );
       workbook.close();
    }
    
@@ -219,11 +218,11 @@ public class WriteSheet
          }
       }
       //Write the workbook in file system
-      FileOutputStream out = new FileOutputStream(new File("SupplierTable.xlsx"));
+      FileOutputStream out = new FileOutputStream(new File("C:\\Users\\Jose\\Desktop\\SupplierTable.xlsx"));
       workbook.write(out);
       out.close();
       System.out.println( 
-      "Writesheet.xlsx written successfully" );
+      "SupplierTable.xlsx written successfully" );
       workbook.close();
    }
    
@@ -258,11 +257,11 @@ public class WriteSheet
          }
       }
       //Write the workbook in file system
-      FileOutputStream out = new FileOutputStream(new File("NoteTable.xlsx"));
+      FileOutputStream out = new FileOutputStream(new File("C:\\Users\\Jose\\Desktop\\NoteTable.xlsx"));
       workbook.write(out);
       out.close();
       System.out.println( 
-      "Writesheet.xlsx written successfully" );
+      "NoteTable.xlsx written successfully" );
       workbook.close();
    }
 

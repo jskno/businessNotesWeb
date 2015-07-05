@@ -152,6 +152,14 @@ public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
 		return result;
 	}
 
+	@Override
+	public void insertList(List<Supplier> suppliersList) {
+
+		for(Supplier eachSupplier : suppliersList) {
+			insert(eachSupplier);
+		}
+	}
+
 }
 
 

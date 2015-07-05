@@ -98,4 +98,12 @@ public class ProductDAOImpl extends DaoImpl implements ProductDAO {
 		return result;
 	}
 
+	@Override
+	public void insertList(List<Product> productList) {
+		
+		for(Product eachProduct : productList) {
+			insert(eachProduct);
+		}
+	}
+
 }

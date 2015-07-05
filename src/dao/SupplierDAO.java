@@ -13,4 +13,6 @@ public interface SupplierDAO extends Dao {
 
 	List<PersistenceSupplier> getPersistenceCustomerList();
 
+	void insertList(List<Supplier> suppliersList);
+
 }

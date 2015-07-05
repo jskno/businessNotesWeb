@@ -152,6 +152,14 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 		}
 		return result;
 	}
+
+	@Override
+	public void insertList(List<Customer> customersList) {
+
+		for(Customer eachCustomer : customersList) {
+			insert(eachCustomer);
+		}
+	}
 		
 }
 	

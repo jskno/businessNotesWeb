@@ -6,6 +6,19 @@ public class Company {
 	private String companyName;
 	private String companyTelephone;
 	private String companyEmail;
+	
+	public Company () {
+		
+	}
+	public Company(String companyName, String companyTelephone,
+			String companyEmail) {
+		
+		this.companyName = companyName;
+		this.companyTelephone = companyTelephone;
+		this.companyEmail = companyEmail;
+		
+		
+	}
 	public int getId() {
 		return id;
 	}

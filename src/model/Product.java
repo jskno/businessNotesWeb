@@ -5,6 +5,17 @@ public class Product {
 	private int id;
 	private String productCode;
 	private String productDescription;
+	
+	public Product() {
+		
+	}
+	
+	public Product(String productCode, String productDescription) {
+		
+		this.productCode = productCode;
+		this.productDescription = productDescription;
+	}
+	
 	public int getId() {
 		return id;
 	}

@@ -11,5 +11,6 @@ public interface CompanyDAO extends Dao {
 	public Company getCompanyById(int companyId);
 	public List<Company> getNoCustomerCompanies();
 	public List<Company> getNoSupplierCompanies();
+	public void insertList(List<Company> companiesList);
 	
 }

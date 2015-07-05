@@ -111,7 +111,7 @@
     						<option value="customer">Customers Table</option>
     						<option value="note">Notes Table</option>
     						<option value="product">Products Table</option>
-    						<option value="suplier">Suppliers Table</option>
+    						<option value="supplier">Suppliers Table</option>
     					</select>
     				</div>
 	    		</div>
