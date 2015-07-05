@@ -14,5 +14,16 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry kind="lib" path="C:/Users/Jose/Copy/BusinessNotesApp/mysql-connector-java-5.1.35-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jose/Dropbox/OU/TM470_NotesApp/Software/ApachePOI_Library/poi-bin-3.12-20150511/poi-3.12/poi-3.12-20150511.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jose/Dropbox/OU/TM470_NotesApp/Software/ApachePOI_Library/poi-bin-3.12-20150511/poi-3.12/poi-examples-3.12-20150511.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jose/Dropbox/OU/TM470_NotesApp/Software/ApachePOI_Library/poi-bin-3.12-20150511/poi-3.12/poi-excelant-3.12-20150511.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jose/Dropbox/OU/TM470_NotesApp/Software/ApachePOI_Library/poi-bin-3.12-20150511/poi-3.12/poi-ooxml-3.12-20150511.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jose/Dropbox/OU/TM470_NotesApp/Software/ApachePOI_Library/poi-bin-3.12-20150511/poi-3.12/poi-ooxml-schemas-3.12-20150511.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jose/Dropbox/OU/TM470_NotesApp/Software/ApachePOI_Library/poi-bin-3.12-20150511/poi-3.12/poi-scratchpad-3.12-20150511.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jose/Dropbox/OU/TM470_NotesApp/Software/ApachePOI_Library/poi-bin-3.12-20150511/poi-3.12/lib/commons-codec-1.9.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jose/Dropbox/OU/TM470_NotesApp/Software/ApachePOI_Library/poi-bin-3.12-20150511/poi-3.12/lib/commons-logging-1.1.3.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jose/Dropbox/OU/TM470_NotesApp/Software/ApachePOI_Library/poi-bin-3.12-20150511/poi-3.12/lib/junit-4.12.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jose/Dropbox/OU/TM470_NotesApp/Software/ApachePOI_Library/poi-bin-3.12-20150511/poi-3.12/lib/log4j-1.2.17.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jose/Dropbox/OU/TM470_NotesApp/Software/ApachePOI_Library/poi-bin-3.12-20150511/poi-3.12/ooxml-lib/xmlbeans-2.6.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

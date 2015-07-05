@@ -33,6 +33,9 @@ import dao.SupplierDAOImpl;
 
 public class BusinessNotesController extends HttpServlet {
 	
+	private static final String BASE = "/jsp/";
+	private String url;
+	
 	public void init(ServletConfig config) throws ServletException {
 		
 		super.init(config);
@@ -49,82 +52,126 @@ public class BusinessNotesController extends HttpServlet {
 	
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
-		String base = "/jsp/";
-		String url = base + "newNoteForm.jsp"; //"newNoteForm.jsp"; "navBar.jsp"; / "newNoteHome2.jsp"; / home.jsp
 		String action = request.getParameter("action");
 		String keyWord = request.getParameter("keyWord");
+		RequestDispatcher requestDispatcher;
 		if (action == null) {
-			action = "newNote";
+			action = "homePage";
 		}
 		
 		switch(action) {
+		case "homePage":
 		case "newNote":
 			showNewNoteForm(request, response);
-			url = base + "newNoteForm.jsp?";
+			url = BASE + "newNoteForm.jsp?";
+			requestDispatcher = getServletContext().
+					getRequestDispatcher(url);
+			requestDispatcher.forward(request, response);
 			break;
 		case "notesList":
 			getNotesList(request, response);
-			url = base + "notesList.jsp";
+			url = BASE + "notesList.jsp";
+			requestDispatcher = getServletContext().
+					getRequestDispatcher(url);
+			requestDispatcher.forward(request, response);
 			break;
 		case "newCustomer":
 			showNewCustomerForm(request, response);
-			url = base + "newCustomer.jsp?";
+			url = BASE + "newCustomer.jsp";
+			requestDispatcher = getServletContext().
+					getRequestDispatcher(url);
+			requestDispatcher.forward(request, response);
 			break;
 		case "customersList":
 			getCustomersList(request, response);
-			url = base + "customersList.jsp";
+			url = BASE + "customersList.jsp";
+			requestDispatcher = getServletContext().
+					getRequestDispatcher(url);
+			requestDispatcher.forward(request, response);
 			break;
 		case "newSupplier":
 			showNewSupplierForm(request, response);
-			url = base + "newSupplier.jsp";
+			url = BASE + "newSupplier.jsp";
+			requestDispatcher = getServletContext().
+					getRequestDispatcher(url);
+			requestDispatcher.forward(request, response);
 			break;
 		case "suppliersList":
 			getSuppliersList(request, response);
-			url = base + "suppliersList.jsp";
+			url = BASE + "suppliersList.jsp";
+			requestDispatcher = getServletContext().
+					getRequestDispatcher(url);
+			requestDispatcher.forward(request, response);
 			break;
 		case "newProduct":
-			url = base + "newProduct.jsp";
+			url = BASE + "newProduct.jsp";
+			requestDispatcher = getServletContext().
+					getRequestDispatcher(url);
+			requestDispatcher.forward(request, response);
 			break;
 		case "productsList":
 			getProductsList(request, response);
-			url = base + "productsList.jsp";
+			url = BASE + "productsList.jsp";
+			requestDispatcher = getServletContext().
+					getRequestDispatcher(url);
+			requestDispatcher.forward(request, response);
 			break;
 		case "newCompany":
-			url = base + "newCompany.jsp";
+			showNewCompanyForm(request, response);
+			url = BASE + "newCompany.jsp";
+			requestDispatcher = getServletContext().
+					getRequestDispatcher(url);
+			requestDispatcher.forward(request, response);
 			break;
 		case "companiesList":
 			getCompaniesList(request, response);
-			url = base + "companiesList.jsp";
+			url = BASE + "companiesList.jsp";
+			requestDispatcher = getServletContext().
+					getRequestDispatcher(url);
+			requestDispatcher.forward(request, response);
 			break;
 		case "createCustomer":
 			createCustomer(request, response);
-			showNewNoteForm(request, response);
-			url = base + "newNoteForm.jsp";
+			response.sendRedirect("notes?action=newCustomer");
 			break;
 		case "createSupplier":
 			createSupplier(request, response);
-			showNewNoteForm(request, response);
-			url = base + "newNoteForm.jsp";
+			response.sendRedirect("notes?action=newSupplier");
 			break;
 		case "createProduct":
 			createProduct(request, response);
-			showNewNoteForm(request, response);
-			url = base + "newNoteForm.jsp";
+			response.sendRedirect("notes?action=newProduct");
 			break;
 		case "createCompany":
 			createCompany(request, response);
-			showNewNoteForm(request, response);
-			url = base + "newNoteForm.jsp";
+			url = BASE + "newCompany.jsp";
+			requestDispatcher = getServletContext().
+					getRequestDispatcher(url);
+			requestDispatcher.forward(request, response);
 			break;
 		case "createNote":
 			createNote(request, response);
-			showNewNoteForm(request, response);
-			url = base + "newNoteForm.jsp";
+			response.sendRedirect("notes?action=newNote");
+			break;
+		case "onlyCreateCompany":
+			createCompany(request, response);
+			response.sendRedirect("notes?action=newSupplier");
+			break;
+		case "onlyCreateCompany2":
+			createCompany(request, response);
+			response.sendRedirect("notes?action=newCustomer");
 			break;
 		}
-		RequestDispatcher requestDispatcher = getServletContext().
-				getRequestDispatcher(url);
-		requestDispatcher.forward(request, response);
+	}
+
+	private void showNewCompanyForm(HttpServletRequest request,
+			HttpServletResponse response) throws ServletException, IOException {
+		
+//		url = BASE + "newCompany.jsp";
+//		RequestDispatcher requestDispatcher = getServletContext().
+//				getRequestDispatcher(url);
+//		requestDispatcher.forward(request, response);
+		
 	}
 
 	private void showNewSupplierForm(HttpServletRequest request,
@@ -189,7 +236,7 @@ public class BusinessNotesController extends HttpServlet {
 		company.setCompanyEmail((String) request.getParameter("companyEmail"));
 		
 		companyDao.insert(company);
-		
+			
 	}
 
 	private void createProduct(HttpServletRequest request,
@@ -243,7 +290,7 @@ public class BusinessNotesController extends HttpServlet {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		
+			
 	}
 	
 	private void getNoCustomerCompanies(HttpServletRequest request,
@@ -295,7 +342,7 @@ public class BusinessNotesController extends HttpServlet {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		
+	
 	}
 
 	private void getCustomersList(HttpServletRequest request,
