@@ -7,8 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import persistence.PersistenceSupplier;
 import model.Company;
-import model.Customer;
 import model.Supplier;
 
 public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
@@ -121,4 +121,37 @@ public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
 		return result;
 	}
 
+	@Override
+	public List<PersistenceSupplier> getPersistenceCustomerList() {
+		
+		List<PersistenceSupplier> result = new ArrayList<PersistenceSupplier>();
+		
+		String sql = "select * from supplier";
+		
+		Connection connection = null;
+		PersistenceSupplier perSupplier;
+		try {
+			connection = getConnection();
+			PreparedStatement statement = connection.prepareStatement(sql);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				
+				perSupplier = new PersistenceSupplier();
+				perSupplier.setId(resultSet.getInt("id"));
+				perSupplier.setCompanyId(resultSet.getInt("company_id"));
+				perSupplier.setContactName(resultSet.getString("contact_name"));
+				perSupplier.setContactTelephone(resultSet.getString("contact_telephone"));
+				
+				result.add(perSupplier);
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			closeConnection(connection);
+		}
+		return result;
+	}
+
 }
+
+

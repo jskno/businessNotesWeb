@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import persistence.PersistenceNote;
 import utils.DateUtils;
 import model.Customer;
 import model.Note;
@@ -108,6 +109,44 @@ public class NoteDAOImpl extends DaoImpl implements NoteDAO {
 				note.setNoteTitle(resultSet.getString("note_title"));				
 				note.setNoteText(resultSet.getString("note_text"));
 				result.add(note);
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println(e.getCause().toString());
+			System.out.println(e.getClass().toString());
+			System.out.println(e.getMessage());
+		} finally {
+			closeConnection(connection);
+		}
+			
+		return result;
+	}
+	@Override
+	public List<PersistenceNote> getPersistenceCustomerList() {
+		
+		List<PersistenceNote> result = new ArrayList<PersistenceNote>();
+		
+		String sql = "select * from note";
+		
+		Connection connection = null;
+		try {
+			
+			connection = getConnection();
+			PreparedStatement statement = connection.prepareStatement(sql);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				PersistenceNote perNote = new PersistenceNote();
+				
+				perNote.setId(resultSet.getInt("id"));
+				perNote.setCustomerId(resultSet.getInt("customer_id"));
+				perNote.setSupplierId(resultSet.getInt("supplier_id"));
+				perNote.setProductId(resultSet.getInt("product_id"));
+				perNote.setNoteDate(resultSet.getDate("creation_date"));
+				perNote.setNoteTitle(resultSet.getString("note_title"));				
+				perNote.setNoteText(resultSet.getString("note_text"));
+				result.add(perNote);
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();

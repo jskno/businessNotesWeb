@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import persistence.PersistenceCustomer;
 import model.Company;
 import model.Customer;
 
@@ -121,4 +122,39 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 		return result;
 	}
 
+	@Override
+	public List<PersistenceCustomer> getPersistenceCustomerList() {
+		
+		List<PersistenceCustomer> result = new ArrayList<PersistenceCustomer>();
+		
+		String sql = "select * from customer";
+		
+		Connection connection = null;
+		PersistenceCustomer perCustomer;
+		try {
+			connection = getConnection();
+			PreparedStatement statement = connection.prepareStatement(sql);
+			ResultSet resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				
+				perCustomer = new PersistenceCustomer();
+				perCustomer.setId(resultSet.getInt("id"));
+				perCustomer.setCompanyId(resultSet.getInt("company_id"));
+				perCustomer.setContactName(resultSet.getString("contact_name"));
+				perCustomer.setContactTelephone(resultSet.getString("contact_telephone"));
+				
+				result.add(perCustomer);
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			closeConnection(connection);
+		}
+		return result;
+	}
+		
 }
+	
+	
+
+

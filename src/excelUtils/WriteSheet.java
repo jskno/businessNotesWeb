@@ -2,55 +2,72 @@ package excelUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.Map;
-import java.util.Set;
-import java.util.TreeMap;
+import java.util.List;
+
+import model.Company;
+import model.Product;
+
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import persistence.PersistenceCustomer;
+import persistence.PersistenceNote;
+import persistence.PersistenceSupplier;
+
+import java.lang.reflect.Field;
+
+import dao.CompanyDAO;
+import dao.CompanyDAOImpl;
+import dao.CustomerDAO;
+import dao.CustomerDAOImpl;
+import dao.NoteDAO;
+import dao.NoteDAOImpl;
+import dao.ProductDAO;
+import dao.ProductDAOImpl;
+import dao.SupplierDAO;
+import dao.SupplierDAOImpl;
+
 public class WriteSheet 
 {
    public static void main(String[] args) throws Exception 
    {
+	   importProductTable();
+   }
+   
+   public static void importCompanyTable() throws Exception 
+   {
       //Create blank workbook
       XSSFWorkbook workbook = new XSSFWorkbook(); 
       //Create a blank sheet
-      XSSFSheet spreadsheet = workbook.createSheet(" Employee Info ");
-      //Create row object
+      XSSFSheet spreadsheet = workbook.createSheet(" Table Info ");
+      //Create row objects
       XSSFRow row;
-      //This data needs to be written (Object[])
-      Map < String, Object[] > empinfo = 
-      new TreeMap < String, Object[] >();
-      empinfo.put( "1", new Object[] { 
-      "EMP ID", "EMP NAME", "DESIGNATION" });
-      empinfo.put( "2", new Object[] { 
-      "tp01", "Gopal", "Technical Manager" });
-      empinfo.put( "3", new Object[] { 
-      "tp02", "Manisha", "Proof Reader" });
-      empinfo.put( "4", new Object[] { 
-      "tp03", "Masthan", "Technical Writer" });
-      empinfo.put( "5", new Object[] { 
-      "tp04", "Satish", "Technical Writer" });
-      empinfo.put( "6", new Object[] { 
-      "tp05", "Krishna", "Technical Writer" });
+      XSSFRow headerRow = spreadsheet.createRow(0);
+      //This data needs to be written.
+      CompanyDAO companyDao = new CompanyDAOImpl();
+      List<Company> companiesList = companyDao.getCompaniesList();
       //Iterate over data and write to sheet
-      Set < String > keyid = empinfo.keySet();
-      int rowid = 0;
-      for (String key : keyid)
+      Object eachCompany;
+      for (int i = 0; i < companiesList.size(); i++)
       {
-         row = spreadsheet.createRow(rowid++);
-         Object [] objectArr = empinfo.get(key);
+         row = spreadsheet.createRow(i + 1);
          int cellid = 0;
-         for (Object obj : objectArr)
-         {
-            Cell cell = row.createCell(cellid++);
-            cell.setCellValue((String)obj);
+         eachCompany = companiesList.get(i);
+         for (Field field : eachCompany.getClass().getDeclaredFields()) {
+             field.setAccessible(true); // if you want to modify private fields
+             Cell cell = row.createCell(cellid);
+             cell.setCellValue("" + field.get(eachCompany));
+             if(i == 0) {
+            	 Cell headerCell = headerRow.createCell(cellid);
+            	 headerCell.setCellValue(field.getName());
+             }
+             cellid++;
          }
       }
       //Write the workbook in file system
-      FileOutputStream out = new FileOutputStream(new File("Writesheet.xlsx"));
+      FileOutputStream out = new FileOutputStream(new File("CompanyTable.xlsx"));
       workbook.write(out);
       out.close();
       System.out.println( 
@@ -58,50 +75,174 @@ public class WriteSheet
       workbook.close();
    }
    
-   public static void importTable() throws Exception 
+   public static void importProductTable() throws Exception 
    {
       //Create blank workbook
       XSSFWorkbook workbook = new XSSFWorkbook(); 
       //Create a blank sheet
       XSSFSheet spreadsheet = workbook.createSheet(" Table Info ");
-      //Create row object
+      //Create row objects
       XSSFRow row;
-      //This data needs to be written (Object[])
-      
-      Map < String, Object[] > empinfo = 
-      new TreeMap < String, Object[] >();
-      empinfo.put( "1", new Object[] { 
-      "EMP ID", "EMP NAME", "DESIGNATION" });
-      empinfo.put( "2", new Object[] { 
-      "tp01", "Gopal", "Technical Manager" });
-      empinfo.put( "3", new Object[] { 
-      "tp02", "Manisha", "Proof Reader" });
-      empinfo.put( "4", new Object[] { 
-      "tp03", "Masthan", "Technical Writer" });
-      empinfo.put( "5", new Object[] { 
-      "tp04", "Satish", "Technical Writer" });
-      empinfo.put( "6", new Object[] { 
-      "tp05", "Krishna", "Technical Writer" });
+      XSSFRow headerRow = spreadsheet.createRow(0);
+      //This data needs to be written.
+      ProductDAO productDao = new ProductDAOImpl();
+      List<Product> productsList = productDao.getProductsList();
       //Iterate over data and write to sheet
-      Set < String > keyid = empinfo.keySet();
-      int rowid = 0;
-      for (String key : keyid)
+      Object eachProduct;
+      for (int i = 0; i < productsList.size(); i++)
       {
-         row = spreadsheet.createRow(rowid++);
-         Object [] objectArr = empinfo.get(key);
+         row = spreadsheet.createRow(i + 1);
          int cellid = 0;
-         for (Object obj : objectArr)
-         {
-            Cell cell = row.createCell(cellid++);
-            cell.setCellValue((String)obj);
+         eachProduct = productsList.get(i);
+         for (Field field : eachProduct.getClass().getDeclaredFields()) {
+             field.setAccessible(true); // if you want to modify private fields
+             Cell cell = row.createCell(cellid);
+             cell.setCellValue("" + field.get(eachProduct));
+             if(i == 0) {
+            	 Cell headerCell = headerRow.createCell(cellid);
+            	 headerCell.setCellValue(field.getName());
+             }
+             cellid++;
          }
       }
       //Write the workbook in file system
-      FileOutputStream out = new FileOutputStream(new File("Writesheet.xlsx"));
+      FileOutputStream out = new FileOutputStream(new File("ProductTable.xlsx"));
       workbook.write(out);
       out.close();
       System.out.println( 
       "Writesheet.xlsx written successfully" );
       workbook.close();
    }
+
+   private static void createHeader(XSSFSheet spreadsheet) {
+	
+	   XSSFRow row;
+	   row = spreadsheet.createRow(1);
+	   int cellid = 0;
+		for (Field field : Company.class.getClass().getDeclaredFields())
+	    {
+	       Cell cell = row.createCell(cellid++);
+	       cell.setCellValue(field.getName());
+	    }
+	
+   }
+   
+   public static void importCustomerTable() throws Exception 
+   {
+      //Create blank workbook
+      XSSFWorkbook workbook = new XSSFWorkbook(); 
+      //Create a blank sheet
+      XSSFSheet spreadsheet = workbook.createSheet(" Table Info ");
+      //Create row objects
+      XSSFRow row;
+      XSSFRow headerRow = spreadsheet.createRow(0);
+      //This data needs to be written.
+      CustomerDAO customerDao = new CustomerDAOImpl();
+      List<PersistenceCustomer> persistenceCustomersList = customerDao.getPersistenceCustomerList();
+      //Iterate over data and write to sheet
+      Object eachCustomer;
+      for (int i = 0; i < persistenceCustomersList.size(); i++)
+      {
+         row = spreadsheet.createRow(i + 1);
+         int cellid = 0;
+         eachCustomer = persistenceCustomersList.get(i);
+         for (Field field : eachCustomer.getClass().getDeclaredFields()) {
+             field.setAccessible(true); // if you want to modify private fields
+             Cell cell = row.createCell(cellid);
+             cell.setCellValue("" + field.get(eachCustomer));
+             if(i == 0) {
+            	 Cell headerCell = headerRow.createCell(cellid);
+            	 headerCell.setCellValue(field.getName());
+             }
+             cellid++;
+         }
+      }
+      //Write the workbook in file system
+      FileOutputStream out = new FileOutputStream(new File("CustomerTable.xlsx"));
+      workbook.write(out);
+      out.close();
+      System.out.println( 
+      "Writesheet.xlsx written successfully" );
+      workbook.close();
+   }
+   
+   public static void importSupplierTable() throws Exception 
+   {
+      //Create blank workbook
+      XSSFWorkbook workbook = new XSSFWorkbook(); 
+      //Create a blank sheet
+      XSSFSheet spreadsheet = workbook.createSheet(" Table Info ");
+      //Create row objects
+      XSSFRow row;
+      XSSFRow headerRow = spreadsheet.createRow(0);
+      //This data needs to be written.
+      SupplierDAO supplierDao = new SupplierDAOImpl();
+      List<PersistenceSupplier> persistenceSuppliersList = supplierDao.getPersistenceCustomerList();
+      //Iterate over data and write to sheet
+      Object eachCustomer;
+      for (int i = 0; i < persistenceSuppliersList.size(); i++)
+      {
+         row = spreadsheet.createRow(i + 1);
+         int cellid = 0;
+         eachCustomer = persistenceSuppliersList.get(i);
+         for (Field field : eachCustomer.getClass().getDeclaredFields()) {
+             field.setAccessible(true); // if you want to modify private fields
+             Cell cell = row.createCell(cellid);
+             cell.setCellValue("" + field.get(eachCustomer));
+             if(i == 0) {
+            	 Cell headerCell = headerRow.createCell(cellid);
+            	 headerCell.setCellValue(field.getName());
+             }
+             cellid++;
+         }
+      }
+      //Write the workbook in file system
+      FileOutputStream out = new FileOutputStream(new File("SupplierTable.xlsx"));
+      workbook.write(out);
+      out.close();
+      System.out.println( 
+      "Writesheet.xlsx written successfully" );
+      workbook.close();
+   }
+   
+   public static void importNoteTable() throws Exception 
+   {
+      //Create blank workbook
+      XSSFWorkbook workbook = new XSSFWorkbook(); 
+      //Create a blank sheet
+      XSSFSheet spreadsheet = workbook.createSheet(" Table Info ");
+      //Create row objects
+      XSSFRow row;
+      XSSFRow headerRow = spreadsheet.createRow(0);
+      //This data needs to be written.
+      NoteDAO noteDao = new NoteDAOImpl();
+      List<PersistenceNote> persistenceNotesList = noteDao.getPersistenceCustomerList();
+      //Iterate over data and write to sheet
+      Object eachNote;
+      for (int i = 0; i < persistenceNotesList.size(); i++)
+      {
+         row = spreadsheet.createRow(i + 1);
+         int cellid = 0;
+         eachNote = persistenceNotesList.get(i);
+         for (Field field : eachNote.getClass().getDeclaredFields()) {
+             field.setAccessible(true); // if you want to modify private fields
+             Cell cell = row.createCell(cellid);
+             cell.setCellValue("" + field.get(eachNote));
+             if(i == 0) {
+            	 Cell headerCell = headerRow.createCell(cellid);
+            	 headerCell.setCellValue(field.getName());
+             }
+             cellid++;
+         }
+      }
+      //Write the workbook in file system
+      FileOutputStream out = new FileOutputStream(new File("NoteTable.xlsx"));
+      workbook.write(out);
+      out.close();
+      System.out.println( 
+      "Writesheet.xlsx written successfully" );
+      workbook.close();
+   }
+
+
 }

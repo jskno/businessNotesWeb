@@ -68,8 +68,8 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle" role="button" data-toggle="dropdown">Database<span class="caret" /></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Option one</a></li>
-                            <li><a href="#">Option two</a></li>
+                            <li><a href="#">Import Table</a></li>
+                            <li><a href="#">Export Table</a></li>
                         </ul>
                     </li>
                     <li class="dropdown">
