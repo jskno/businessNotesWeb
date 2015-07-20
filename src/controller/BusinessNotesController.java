@@ -31,6 +31,7 @@ import dao.SubMenuDAOImpl;
 import dao.SupplierDAO;
 import dao.SupplierDAOImpl;
 import excelUtils.ExportTable;
+import excelUtils.ImportTable;
 
 public class BusinessNotesController extends HttpServlet {
 	
@@ -170,8 +171,8 @@ public class BusinessNotesController extends HttpServlet {
 			requestDispatcher.forward(request, response);
 			break;
 		case "importTable":
-			//getTablesList(request, response);
-			url = BASE + "importTable.jsp";
+			importTable(request, response);
+			url = BASE + "importSuccessModal.jsp";
 			requestDispatcher = getServletContext().
 					getRequestDispatcher(url);
 			requestDispatcher.forward(request, response);
@@ -179,27 +180,58 @@ public class BusinessNotesController extends HttpServlet {
 		}
 	}
 
-	private void exportTable(HttpServletRequest request,
+	private void importTable(HttpServletRequest request,
 			HttpServletResponse response) {
-		
+
 		String table = request.getParameter("tableName");
+		String file = request.getParameter("myFile");
 		try {
 			
 			switch (table) {
 			case "company":
-				ExportTable.exportCompanyTable();
+				ImportTable.importCompanyTable(file);
 				break;
 			case "customer":
-				ExportTable.exportCustomerTable();
+				ImportTable.importCustomerTable(file);
 				break;
 			case "supplier":
-				ExportTable.exportSupplierTable();		
+				ImportTable.importSupplierTable(file);		
 				break;
 			case "product":
-				ExportTable.exportProductTable();
+				ImportTable.importProductTable(file);
 				break;
 			case "note":
-				ExportTable.exportNoteTable();
+				ImportTable.importNoteTable(file);
+				break;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	private void exportTable(HttpServletRequest request,
+			HttpServletResponse response) {
+		
+		String table = request.getParameter("tableName");
+		String fileName = request.getParameter("fileName");
+		
+		try {
+			
+			switch (table) {
+			case "company":
+				ExportTable.exportCompanyTable(fileName);
+				break;
+			case "customer":
+				ExportTable.exportCustomerTable(fileName);
+				break;
+			case "supplier":
+				ExportTable.exportSupplierTable(fileName);		
+				break;
+			case "product":
+				ExportTable.exportProductTable(fileName);
+				break;
+			case "note":
+				ExportTable.exportNoteTable(fileName);
 				break;
 			}
 		} catch (Exception e) {

@@ -33,16 +33,20 @@ import dao.SupplierDAOImpl;
 
 public class ExportTable 
 {
+	
+	private static final String ENDING = ".xlsx";
+	private static final String PATH = "C:\\Users\\Jose\\Desktop\\";
+	
 	public static void main (String [] args) {
 		try {
-			exportNoteTable();
+			exportNoteTable("NoteTable");
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public static void exportCompanyTable()
+	public static void exportCompanyTable(String fileName)
 	{
       //Create blank workbook
       XSSFWorkbook workbook = new XSSFWorkbook(); 
@@ -79,7 +83,7 @@ public class ExportTable
       //Write the workbook in file system
       FileOutputStream out = null;
 	try {
-		out = new FileOutputStream(new File("C:\\Users\\Jose\\Desktop\\CompanyTable.xlsx"));
+		out = new FileOutputStream(new File(PATH + fileName + ENDING));
 	} catch (FileNotFoundException e) {
 		// TODO Auto-generated catch block
 		e.printStackTrace();
@@ -96,7 +100,7 @@ public class ExportTable
 	}
    }
    
-   public static void exportProductTable() throws Exception 
+   public static void exportProductTable(String fileName) throws Exception 
    {
       //Create blank workbook
       XSSFWorkbook workbook = new XSSFWorkbook(); 
@@ -127,7 +131,7 @@ public class ExportTable
          }
       }
       //Write the workbook in file system
-      FileOutputStream out = new FileOutputStream(new File("C:\\Users\\Jose\\Desktop\\ProductTable.xlsx"));
+      FileOutputStream out = new FileOutputStream(new File(PATH + fileName + ENDING));
       workbook.write(out);
       out.close();
       System.out.println( 
@@ -148,7 +152,7 @@ public class ExportTable
 	
    }
    
-   public static void exportCustomerTable() throws Exception 
+   public static void exportCustomerTable(String fileName) throws Exception 
    {
       //Create blank workbook
       XSSFWorkbook workbook = new XSSFWorkbook(); 
@@ -179,7 +183,7 @@ public class ExportTable
          }
       }
       //Write the workbook in file system
-      FileOutputStream out = new FileOutputStream(new File("C:\\Users\\Jose\\Desktop\\CustomerTable.xlsx"));
+      FileOutputStream out = new FileOutputStream(new File(PATH + fileName + ENDING));
       workbook.write(out);
       out.close();
       System.out.println( 
@@ -187,7 +191,7 @@ public class ExportTable
       workbook.close();
    }
    
-   public static void exportSupplierTable() throws Exception 
+   public static void exportSupplierTable(String fileName) throws Exception 
    {
       //Create blank workbook
       XSSFWorkbook workbook = new XSSFWorkbook(); 
@@ -218,7 +222,7 @@ public class ExportTable
          }
       }
       //Write the workbook in file system
-      FileOutputStream out = new FileOutputStream(new File("C:\\Users\\Jose\\Desktop\\SupplierTable.xlsx"));
+      FileOutputStream out = new FileOutputStream(new File(PATH + fileName + ENDING));
       workbook.write(out);
       out.close();
       System.out.println( 
@@ -226,7 +230,7 @@ public class ExportTable
       workbook.close();
    }
    
-   public static void exportNoteTable() throws Exception 
+   public static void exportNoteTable(String fileName) throws Exception 
    {
       //Create blank workbook
       XSSFWorkbook workbook = new XSSFWorkbook(); 
@@ -257,7 +261,7 @@ public class ExportTable
          }
       }
       //Write the workbook in file system
-      FileOutputStream out = new FileOutputStream(new File("C:\\Users\\Jose\\Desktop\\NoteTable.xlsx"));
+      FileOutputStream out = new FileOutputStream(new File(PATH + fileName + ENDING));
       workbook.write(out);
       out.close();
       System.out.println( 

@@ -13,36 +13,14 @@
 <body>
 
 <div class="container">
-
-	<!-- -->
 	
 	<h2>Alerts</h2>
 	<div class="alert alert-success">
-		<strong>Success!</strong> The file has been exported successfully !
+		<strong>Success!</strong> The file has been imported successfully !
 	  	<a href="/BusinessNotesWeb/notes" class="btn btn-default col-sm-offset-8" data-dismiss="alert" 
 	  			aria-label="close">Close</a>
 	</div>
-	 
 	
-	
-	<!--  
-	
-	<div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
-        </div>
-        <div class="modal-body">
-          <p>Some text in the modal.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div> 
-      
-      -->
-	 
-
 </div>
 
 </body>

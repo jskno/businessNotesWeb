@@ -69,7 +69,7 @@
                     <li class="dropdown">
                         <a class="dropdown-toggle" role="button" data-toggle="dropdown">Database<span class="caret" /></a>
                         <ul class="dropdown-menu">
-                            <li><a href="#" data-toggle="modal" data-target="/BusinessNotesWeb/jsp/exportTable.jsp">Import Table</a></li>
+                            <li><a href="#" data-toggle="modal" data-target="#importTableModal">Import Table</a></li>
                             <li><a href="#" data-toggle="modal" data-target="#exportTableModal">Export Table</a></li>
                         </ul>
                     </li>
@@ -114,7 +114,17 @@
     						<option value="supplier">Suppliers Table</option>
     					</select>
     				</div>
+    				<div class="col-sm-10 col-sm-offset-2">
+	    				<h5> The file will be saved in your desktop directory </h5>
+	    			</div>
 	    		</div>
+	    		<div class="form-group">
+      				<label class="control-label col-sm-2" for="fileName">Note title:</label>
+      				<div class="col-sm-10">
+        				<input type="text" class="form-control" name="fileName" id="fileName" 
+        					placeholder="Enter name">
+      				</div>
+    		</div>
 	    	</div>
  			<div class="modal-footer">
  				<button type="submit" class="btn btn-default">Submit</button>
@@ -125,6 +135,49 @@
 	</div>
 </div>
 
+<div id="importTableModal" class="modal fade in" role="dialog">
+	<div class="modal-dialog">
+	
+<div class="modal-content">
+		<form id="importTable" class="form-horizontal" role="form" action="notes" method="POST">
+		<input type="hidden" name="action" value="importTable"/>
+	
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">Import Table</h4>
+			</div>
+	
+			<div class="modal-body">
+	    		<div class="form-group">
+	      			<label class="control-label col-sm-2" for="tableName">Table Name:</label>
+	      			<div class="col-sm-10">
+		        		<select class="form-control" data-header="Select a Table" name="tableName" 
+    						id="tableName">
+    						<option value="company">Companies Table</option>
+    						<option value="customer">Customers Table</option>
+    						<option value="note">Notes Table</option>
+    						<option value="product">Products Table</option>
+    						<option value="supplier">Suppliers Table</option>
+    					</select>
+    				</div>
+	    		</div>
+	    		<div class="col-sm-10 col-sm-offset-2">
+	    			<h3> Select a file from your desktop </h3>
+	    		</div>
+	    		<div class="form-group">
+	    			<div class="col-sm-10 col-sm-offset-2">
+		    			<input type="file" name="myFile" id="myFile">
+	    			</div>
+	    		</div>
+	    	</div>
+ 			<div class="modal-footer">
+ 				<button type="submit" class="btn btn-default">Submit</button>
+ 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+ 			</div>
+ 		</form>
+	</div>
+	</div>
+</div>
 <!-- END MODALS -->
 
 </html>
