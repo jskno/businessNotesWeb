@@ -103,8 +103,8 @@
 	
 			<div class="modal-body">
 	    		<div class="form-group">
-	      			<label class="control-label col-sm-2" for="tableName">Table Name:</label>
-	      			<div class="col-sm-10">
+	      			<label class="control-label col-sm-4" for="tableName">Table Name:</label>
+	      			<div class="col-sm-8">
 		        		<select class="form-control" data-header="Select a Table" name="tableName" 
     						id="tableName">
     						<option value="company">Companies Table</option>
@@ -119,8 +119,8 @@
 	    			</div>
 	    		</div>
 	    		<div class="form-group">
-      				<label class="control-label col-sm-2" for="fileName">Note title:</label>
-      				<div class="col-sm-10">
+      				<label class="control-label col-sm-4" for="fileName">File Name:</label>
+      				<div class="col-sm-8">
         				<input type="text" class="form-control" name="fileName" id="fileName" 
         					placeholder="Enter name">
       				</div>
