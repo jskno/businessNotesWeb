@@ -7,10 +7,16 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import model.Company;
 
 public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 	
+	public CompanyDAOImpl(Connection connection, HttpSession session) {
+		super(connection, session);
+	}
+
 	private static final String INSERT = "insert into company (company_name, company_telephone, " +
 			"company_email) values (?,?,?)";
 	private static final String NO_CUSTOMER_COMPANIES = "select * from company where id not in (" +

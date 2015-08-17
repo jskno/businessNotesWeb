@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import service.Service;
 import model.Company;
 import model.Customer;
 import model.Note;
@@ -37,11 +38,13 @@ public class BusinessNotesController extends HttpServlet {
 	
 	private static final String BASE = "/jsp/";
 	private String url;
+	private Service service;
+	private BusinessLookUp lookupService = new BusinessLookUp();
 	
 	public void init(ServletConfig config) throws ServletException {
 		
 		super.init(config);
-		SubMenuDAO subMenuDao = new SubMenuDAOImpl();
+		SubMenuDAO subMenuDao = new SubMenuDAOImpl(null, null);
 		Map<String, List<String>> subMenusList = subMenuDao.getSubMenus();
 		ServletContext context = config.getServletContext();
 		context.setAttribute("subMenusList", subMenusList);
@@ -60,11 +63,14 @@ public class BusinessNotesController extends HttpServlet {
 		if (action == null) {
 			action = "homePage";
 		}
+		service = lookupService.getBusinessService(action);
+		service.execute(request, response);
 		
 		switch(action) {
 		case "homePage":
 		case "newNote":
-			showNewNoteForm(request, response);
+			
+			//showNewNoteForm(request, response);
 			url = BASE + "newNoteForm.jsp?";
 			requestDispatcher = getServletContext().
 					getRequestDispatcher(url);
@@ -85,7 +91,7 @@ public class BusinessNotesController extends HttpServlet {
 			requestDispatcher.forward(request, response);
 			break;
 		case "customersList":
-			getCustomersList(request, response);
+			//getCustomersList(request, response);
 			url = BASE + "customersList.jsp";
 			requestDispatcher = getServletContext().
 					getRequestDispatcher(url);
@@ -99,7 +105,7 @@ public class BusinessNotesController extends HttpServlet {
 			requestDispatcher.forward(request, response);
 			break;
 		case "suppliersList":
-			getSuppliersList(request, response);
+			//getSuppliersList(request, response);
 			url = BASE + "suppliersList.jsp";
 			requestDispatcher = getServletContext().
 					getRequestDispatcher(url);
@@ -112,7 +118,7 @@ public class BusinessNotesController extends HttpServlet {
 			requestDispatcher.forward(request, response);
 			break;
 		case "productsList":
-			getProductsList(request, response);
+			//getProductsList(request, response);
 			url = BASE + "productsList.jsp";
 			requestDispatcher = getServletContext().
 					getRequestDispatcher(url);
@@ -265,14 +271,6 @@ public class BusinessNotesController extends HttpServlet {
 		
 	}
 	
-	private void showNewNoteForm(HttpServletRequest request,
-			HttpServletResponse response) {
-		
-		getCustomersList(request, response);
-		getSuppliersList(request, response);
-		getProductsList(request, response);
-	}
-
 	private void createNote(HttpServletRequest request,
 			HttpServletResponse response) {
 		
@@ -281,10 +279,10 @@ public class BusinessNotesController extends HttpServlet {
 		Supplier supplier;
 		Product product;
 		
-		NoteDAO noteDao = new NoteDAOImpl();
-		CustomerDAO customerDao = new CustomerDAOImpl();
-		SupplierDAO supplierDao = new SupplierDAOImpl();
-		ProductDAO productDao = new ProductDAOImpl();
+		NoteDAO noteDao = new NoteDAOImpl(null, null);
+		CustomerDAO customerDao = new CustomerDAOImpl(null, null);
+		SupplierDAO supplierDao = new SupplierDAOImpl(null, null);
+		ProductDAO productDao = new ProductDAOImpl(null, null);
 		
 		customer = customerDao.getCustomerById(Integer.parseInt(request.getParameter("customerId")));
 		supplier = supplierDao.getSupplierById(Integer.parseInt(request.getParameter("supplierId")));
@@ -307,7 +305,7 @@ public class BusinessNotesController extends HttpServlet {
 			HttpServletResponse response) {
 		
 		Company company = new Company();
-		CompanyDAO companyDao = new CompanyDAOImpl();
+		CompanyDAO companyDao = new CompanyDAOImpl(null, null);
 		company.setCompanyName((String) request.getParameter("companyName"));
 		company.setCompanyTelephone((String) request.getParameter("companyTelephone"));
 		company.setCompanyEmail((String) request.getParameter("companyEmail"));
@@ -320,7 +318,7 @@ public class BusinessNotesController extends HttpServlet {
 			HttpServletResponse response) {
 
 		Product product = new Product();
-		ProductDAO productDao = new ProductDAOImpl();
+		ProductDAO productDao = new ProductDAOImpl(null, null);
 		product.setProductCode((String) request.getParameter("productCode"));
 		product.setProductDescription((String) request.getParameter("productDescription"));
 		
@@ -331,8 +329,8 @@ public class BusinessNotesController extends HttpServlet {
 			HttpServletResponse response) {
 		
 		Supplier supplier = new Supplier();
-		CompanyDAO companyDao = new CompanyDAOImpl();
-		SupplierDAO supplierDao = new SupplierDAOImpl();
+		CompanyDAO companyDao = new CompanyDAOImpl(null, null);
+		SupplierDAO supplierDao = new SupplierDAOImpl(null, null);
 		Company company = companyDao.getCompanyById(Integer.parseInt(request.getParameter("companyId")));
 		supplier.setCompany(company);
 		supplier.setContactName((String) request.getParameter("contactName"));
@@ -346,8 +344,8 @@ public class BusinessNotesController extends HttpServlet {
 			HttpServletResponse response) {
 		
 		Customer customer = new Customer();
-		CompanyDAO companyDao = new CompanyDAOImpl();
-		CustomerDAO customerDao = new CustomerDAOImpl();
+		CompanyDAO companyDao = new CompanyDAOImpl(null, null);
+		CustomerDAO customerDao = new CustomerDAOImpl(null, null);
 		Company company = companyDao.getCompanyById(Integer.parseInt(request.getParameter("companyId")));
 		customer.setCompany(company);
 		customer.setContactName((String) request.getParameter("contactName"));
@@ -361,7 +359,7 @@ public class BusinessNotesController extends HttpServlet {
 			HttpServletResponse response) {
 		
 		try {
-			CompanyDAO companyDao = new CompanyDAOImpl();
+			CompanyDAO companyDao = new CompanyDAOImpl(null, null);
 			List<Company> companiesList = companyDao.getCompaniesList();
 			request.setAttribute("companiesList", companiesList);
 		} catch (Exception e) {
@@ -374,7 +372,7 @@ public class BusinessNotesController extends HttpServlet {
 			HttpServletResponse response) {
 		
 		try {
-			CompanyDAO companyDao = new CompanyDAOImpl();
+			CompanyDAO companyDao = new CompanyDAOImpl(null, null);
 			List<Company> companiesList = companyDao.getNoCustomerCompanies();
 			request.setAttribute("companiesList", companiesList);
 		} catch (Exception e) {
@@ -387,48 +385,9 @@ public class BusinessNotesController extends HttpServlet {
 			HttpServletResponse response) {
 		
 		try {
-			CompanyDAO companyDao = new CompanyDAOImpl();
+			CompanyDAO companyDao = new CompanyDAOImpl(null, null);
 			List<Company> companiesList = companyDao.getNoSupplierCompanies();
 			request.setAttribute("companiesList", companiesList);
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		
-	}
-
-	private void getProductsList(HttpServletRequest request,
-			HttpServletResponse response) {
-
-		try {
-			ProductDAO productDao = new ProductDAOImpl();
-			List<Product> productsList = productDao.getProductsList();
-			request.setAttribute("productsList", productsList);
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-		
-	}
-
-	private void getSuppliersList(HttpServletRequest request,
-			HttpServletResponse response) {
-		
-		try {
-			SupplierDAO supplierDao = new SupplierDAOImpl();
-			List<Supplier> suppliersList = supplierDao.getSuppliersList();
-			request.setAttribute("suppliersList", suppliersList);
-		} catch (Exception e) {
-			System.out.println(e);
-		}
-	
-	}
-
-	private void getCustomersList(HttpServletRequest request,
-			HttpServletResponse response) {
-		
-		try {
-			CustomerDAO customerDao = new CustomerDAOImpl();
-			List<Customer> customersList = customerDao.getCustomersList();
-			request.setAttribute("customersList", customersList);
 		} catch (Exception e) {
 			System.out.println(e);
 		}
@@ -439,7 +398,7 @@ public class BusinessNotesController extends HttpServlet {
 			HttpServletResponse response) {
 		
 		try {
-			NoteDAO noteDao = new NoteDAOImpl();
+			NoteDAO noteDao = new NoteDAOImpl(null, null);
 			List<Note> notesList = noteDao.getLastNotes();
 			request.setAttribute("notesList", notesList);
 		} catch (Exception e) {
@@ -450,7 +409,7 @@ public class BusinessNotesController extends HttpServlet {
 	private void lastNotes(HttpServletRequest request,
 			HttpServletResponse response) {
 		try {
-			NoteDAO noteDao = new NoteDAOImpl();
+			NoteDAO noteDao = new NoteDAOImpl(null, null);
 			List<Note> notesList = noteDao.getLastNotes();
 			request.setAttribute("notesList", notesList);
 		} catch (Exception e) {
@@ -461,7 +420,7 @@ public class BusinessNotesController extends HttpServlet {
 	private void searchCompanies(HttpServletRequest request,
 			HttpServletResponse response, String keyWord) {
 		try {
-			CompanyDAO companyDao = new CompanyDAOImpl();
+			CompanyDAO companyDao = new CompanyDAOImpl(null, null);
 			List<Company> companiesList = companyDao.searchCompaniesByName(keyWord);
 			request.setAttribute("companiesList", companiesList);
 		} catch (Exception e) {

@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import persistence.PersistenceSupplier;
 import model.Company;
 import model.Supplier;
@@ -18,8 +20,9 @@ public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
 	private static final String INSERT = "insert into supplier (company_id, contact_name,"
 			+ "contact_telephone) values (?,?,?)";
 	
-	public SupplierDAOImpl() {
-		companyDao = new CompanyDAOImpl();
+	public SupplierDAOImpl(Connection connection, HttpSession session) {
+		super(connection, session);
+		companyDao = new CompanyDAOImpl(connection, session);
 	}
 	
 	public void insert(Object o){

@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import persistence.PersistenceNote;
 import utils.DateUtils;
 import model.Customer;
@@ -24,10 +26,11 @@ public class NoteDAOImpl extends DaoImpl implements NoteDAO {
     private SupplierDAO supplierDao;
     private ProductDAO productDao;
     
-    public NoteDAOImpl() {
-    	customerDao = new CustomerDAOImpl();
-    	supplierDao = new SupplierDAOImpl();
-    	productDao = new ProductDAOImpl();
+    public NoteDAOImpl(Connection connection, HttpSession session) {
+    	super(connection, session);
+    	customerDao = new CustomerDAOImpl(connection, session);
+    	supplierDao = new SupplierDAOImpl(connection, session);
+    	productDao = new ProductDAOImpl(connection, session);
     }
 	@Override
 	public void insert(Object o){

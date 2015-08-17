@@ -6,13 +6,16 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.servlet.http.HttpSession;
+
 public abstract class DaoImpl implements Dao {
 	
-	static {
-		try {
-			Class.forName("com.mysql.jdbc.Driver");
-		} catch (ClassNotFoundException ex) {
-		}
+	protected Connection connection;
+	protected HttpSession session;
+	
+	protected DaoImpl(Connection connection, HttpSession session) {
+		this.connection = connection;
+		this.session = session;
 	}
 	
 	public Connection getConnection() throws SQLException {

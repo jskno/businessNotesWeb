@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import persistence.PersistenceCustomer;
 import model.Company;
 import model.Customer;
@@ -18,8 +20,9 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 	private static final String INSERT = "insert into customer (company_id, contact_name,"
 			+ "contact_telephone) values (?,?,?)";
 	
-	public CustomerDAOImpl() {
-		companyDao = new CompanyDAOImpl();
+	public CustomerDAOImpl(Connection connection, HttpSession session) {
+		super(connection, session);
+		companyDao = new CompanyDAOImpl(connection, session);
 		
 	}
 	

@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import model.Product;
 
 public class ProductDAOImpl extends DaoImpl implements ProductDAO {
@@ -14,6 +16,10 @@ public class ProductDAOImpl extends DaoImpl implements ProductDAO {
 	private static final String INSERT = "insert into product (product_code, product_description) "
 			+ "values (?,?)";
 	
+	public ProductDAOImpl(Connection connection, HttpSession session) {
+		super(connection, session);
+	}
+
 	public void insert(Object o){
 		Product product = (Product) o;
 		String productCode = product.getProductCode();

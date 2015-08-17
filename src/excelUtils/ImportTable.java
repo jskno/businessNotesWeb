@@ -79,7 +79,7 @@ public class ImportTable {
 		String companyEmail;
 		Company company = null;
 		List<Company> companiesList = new ArrayList<Company>();
-		CompanyDAO companyDao = new CompanyDAOImpl();
+		CompanyDAO companyDao = new CompanyDAOImpl(null, null);
 
 		while (rowIterator.hasNext()) {
 			row = (XSSFRow) rowIterator.next();
@@ -111,7 +111,7 @@ public class ImportTable {
 		String productDescription;
 		Product product = null;
 		List<Product> productList = new ArrayList<Product>();
-		ProductDAO productDao = new ProductDAOImpl();
+		ProductDAO productDao = new ProductDAOImpl(null, null);
 
 		while (rowIterator.hasNext()) {
 			row = (XSSFRow) rowIterator.next();
@@ -143,8 +143,8 @@ public class ImportTable {
 		Customer customer = null;
 		Company company = null;
 		List<Customer> customersList = new ArrayList<Customer>();
-		CustomerDAO customerDao = new CustomerDAOImpl();
-		CompanyDAO companyDao = new CompanyDAOImpl();
+		CustomerDAO customerDao = new CustomerDAOImpl(null, null);
+		CompanyDAO companyDao = new CompanyDAOImpl(null, null);
 
 		while (rowIterator.hasNext()) {
 			row = (XSSFRow) rowIterator.next();
@@ -182,8 +182,8 @@ public class ImportTable {
 			Supplier supplier = null;
 			Company company = null;
 			List<Supplier> suppliersList = new ArrayList<Supplier>();
-			SupplierDAO supplierDao = new SupplierDAOImpl();
-			CompanyDAO companyDao = new CompanyDAOImpl();
+			SupplierDAO supplierDao = new SupplierDAOImpl(null, null);
+			CompanyDAO companyDao = new CompanyDAOImpl(null, null);
 
 			while (rowIterator.hasNext()) {
 				row = (XSSFRow) rowIterator.next();
@@ -238,10 +238,10 @@ public class ImportTable {
 			Supplier supplier = null;
 			Product product = null;
 			List<Note> notesList = new ArrayList<Note>();
-			NoteDAO noteDao = new NoteDAOImpl();
-			CustomerDAO customerDao = new CustomerDAOImpl();
-			SupplierDAO supplierDao = new SupplierDAOImpl();
-			ProductDAO productDao = new ProductDAOImpl();
+			NoteDAO noteDao = new NoteDAOImpl(null, null);
+			CustomerDAO customerDao = new CustomerDAOImpl(null, null);
+			SupplierDAO supplierDao = new SupplierDAOImpl(null, null);
+			ProductDAO productDao = new ProductDAOImpl(null, null);
 
 			while (rowIterator.hasNext()) {
 				row = (XSSFRow) rowIterator.next();

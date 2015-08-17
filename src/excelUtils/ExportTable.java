@@ -56,7 +56,7 @@ public class ExportTable
       XSSFRow row;
       XSSFRow headerRow = spreadsheet.createRow(0);
       //This data needs to be written.
-      CompanyDAO companyDao = new CompanyDAOImpl();
+      CompanyDAO companyDao = new CompanyDAOImpl(null, null);
       List<Company> companiesList = companyDao.getCompaniesList();
       //Iterate over data and write to sheet
       Object eachCompany;
@@ -110,7 +110,7 @@ public class ExportTable
       XSSFRow row;
       XSSFRow headerRow = spreadsheet.createRow(0);
       //This data needs to be written.
-      ProductDAO productDao = new ProductDAOImpl();
+      ProductDAO productDao = new ProductDAOImpl(null, null);
       List<Product> productsList = productDao.getProductsList();
       //Iterate over data and write to sheet
       Object eachProduct;
@@ -162,7 +162,7 @@ public class ExportTable
       XSSFRow row;
       XSSFRow headerRow = spreadsheet.createRow(0);
       //This data needs to be written.
-      CustomerDAO customerDao = new CustomerDAOImpl();
+      CustomerDAO customerDao = new CustomerDAOImpl(null, null);
       List<PersistenceCustomer> persistenceCustomersList = customerDao.getPersistenceCustomerList();
       //Iterate over data and write to sheet
       Object eachCustomer;
@@ -201,7 +201,7 @@ public class ExportTable
       XSSFRow row;
       XSSFRow headerRow = spreadsheet.createRow(0);
       //This data needs to be written.
-      SupplierDAO supplierDao = new SupplierDAOImpl();
+      SupplierDAO supplierDao = new SupplierDAOImpl(null, null);
       List<PersistenceSupplier> persistenceSuppliersList = supplierDao.getPersistenceCustomerList();
       //Iterate over data and write to sheet
       Object eachCustomer;
@@ -240,7 +240,7 @@ public class ExportTable
       XSSFRow row;
       XSSFRow headerRow = spreadsheet.createRow(0);
       //This data needs to be written.
-      NoteDAO noteDao = new NoteDAOImpl();
+      NoteDAO noteDao = new NoteDAOImpl(null, null);
       List<PersistenceNote> persistenceNotesList = noteDao.getPersistenceCustomerList();
       //Iterate over data and write to sheet
       Object eachNote;
