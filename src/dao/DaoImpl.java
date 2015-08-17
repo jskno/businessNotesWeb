@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class DaoImpl implements Dao {
+public abstract class DaoImpl implements Dao {
 	
 	static {
 		try {
