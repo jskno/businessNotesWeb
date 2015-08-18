@@ -14,6 +14,19 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	<servlet>
+		<servlet-name>businessNotesControllerRedirect</servlet-name>
+		<servlet-class>controller.BusinessNotesControllerRedirect</servlet-class>
+		<init-param>
+			<param-name>base</param-name>
+			<param-value>/BusinessNotesWeb/notes/addElement</param-value>
+		</init-param>
+		<init-param>
+			<param-name>imageURL</param-name>
+			<param-value>/BusinessNotesWeb/images</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
 	<context-param>
 		<param-name>param1</param-name>
 		<param-value>/BusinessNotesWeb/notes</param-value>
@@ -24,7 +37,11 @@
 	</context-param>
 	<servlet-mapping>
 		<servlet-name>businessNotesController</servlet-name>
-		<url-pattern>/notes </url-pattern>
+		<url-pattern>/notes</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>businessNotesControllerRedirect</servlet-name>
+		<url-pattern>/notes/addElement</url-pattern>
 	</servlet-mapping>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

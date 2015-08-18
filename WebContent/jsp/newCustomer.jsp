@@ -28,9 +28,9 @@
 			<h3>New Customer</h3>
   			<p>Form to introduce a new customer.</p>
   		</div>
-  		<form class="form-horizontal" role="form" action="notes" method="POST">
-  		<input type="hidden" name="action" value="createCustomer"/>
-    		<div class="form-group">
+  		<form class="form-horizontal" role="form" action="notes/addElement" method="POST">
+  		<input type="hidden" name="action" value="addCustomer"/>
+  		   		<div class="form-group">
       			<label class="control-label col-sm-2" for="companyId">Company Name:</label>
       			<div class="col-sm-8">
     				<select class="form-control" data-header="Select a Company" name="companyId" 
@@ -84,8 +84,8 @@
 	<!-- Modal content-->
 	<div class="modal-content">
 		<form id="newCompanyModalForm" class="form-horizontal" role="form" action="notes" method="POST">
-		<input type="hidden" name="action" value="onlyCreateCompany2"/>
-	
+		<input type="hidden" name="action" value="addCompany"/>
+		<input type="hidden" name="originScreen" value="newCustomerForm"/>	
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title">New Company</h4>

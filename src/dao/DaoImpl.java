@@ -18,57 +18,20 @@ public abstract class DaoImpl implements Dao {
 		this.session = session;
 	}
 	
-	public Connection getConnection() throws SQLException {
-		return DriverManager.getConnection("jdbc:mysql://localhost:3306/businessnotesapp",
-				"jskno","1510pkpk");
+	public Connection getConnection() {
+		return connection;
 	}
-	protected void closeConnection(Connection connection) {
-		if(connection == null) {
-			return;
-		}
-		try {
-			connection.close();
-		} catch (SQLException ex) {
-		}
+
+	public void setConnection(Connection connection) {
+		this.connection = connection;
 	}
-	
-	@Override
-	public void closeTripleConnection(Connection conn, PreparedStatement stmt,
-			ResultSet rs) {
-		if(conn == null) {
-			return;
-		}
-		try {
-			if (rs != null) {
-				rs.close();
-			}
-			if (stmt != null) {
-				stmt.close();
-			}
-			if (conn != null) {
-				conn.close();
-			}
-		} catch (SQLException e) {
-			
-		}
+
+	public HttpSession getSession() {
+		return session;
 	}
-	
-	@Override
-	public void closeTwoConnection(Connection connection, PreparedStatement ps) {
-		if(connection == null) {
-			return;
-		}
-		try {
-			if (ps != null) {
-				ps.close();
-			}
-			if (connection != null) {
-				connection.close();
-			}
-		} catch (SQLException e) {
-			
-		}
-		
+
+	public void setSession(HttpSession session) {
+		this.session = session;
 	}
 	
 	public void insert(Object o){
@@ -83,6 +46,34 @@ public abstract class DaoImpl implements Dao {
 	
 	public void delete(Object o) {
 	}
+	
+	public void closeStmtAndRs(PreparedStatement stmt,
+			ResultSet rs) {
+		
+		try {
+			if (rs != null) {
+				rs.close();
+			}
+			if (stmt != null) {
+				stmt.close();
+			}
+		} catch (SQLException e) {
+			
+		}
+	}
+	
+	public void closeStmt(PreparedStatement ps) {
+		
+		try {
+			if (ps != null) {
+				ps.close();
+			}
+		} catch (SQLException e) {
+			
+		}
+	}
+
+	
 	
 
 }

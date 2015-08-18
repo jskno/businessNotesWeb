@@ -32,10 +32,8 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 		String contactName = customer.getContactName();
 		String contactTelephone = customer.getContactTelephone();
 		
-		Connection connection = null;
 		PreparedStatement ps = null;
 		try {
-			connection = getConnection();
 			ps = connection.prepareStatement(INSERT);
 			ps.setInt(1, companyId);
 			ps.setString(2, contactName);
@@ -44,7 +42,7 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
-			closeTwoConnection(connection, ps);
+			closeStmt(ps);
 		}
 	}
 	
@@ -70,7 +68,6 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 		ResultSet resultSet = null;
 		
 		try {
-			connection = getConnection();
 			statement = connection.prepareStatement(sql);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
@@ -84,7 +81,7 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {
-			closeTripleConnection(connection, statement, resultSet);
+			closeStmtAndRs(statement, resultSet);
 		}
 		return customer;
 	}
@@ -95,14 +92,14 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 		List<Customer> result = new ArrayList<Customer>();
 		
 		String sql = "select * from customer";
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
 		
-		Connection connection = null;
 		Customer customer;
 		Company company;
 		try {
-			connection = getConnection();
-			PreparedStatement statement = connection.prepareStatement(sql);
-			ResultSet resultSet = statement.executeQuery();
+			statement = connection.prepareStatement(sql);
+			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				
 				customer = new Customer();
@@ -120,7 +117,7 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {
-			closeConnection(connection);
+			closeStmtAndRs(statement, resultSet);
 		}
 		return result;
 	}
@@ -131,13 +128,13 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 		List<PersistenceCustomer> result = new ArrayList<PersistenceCustomer>();
 		
 		String sql = "select * from customer";
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
 		
-		Connection connection = null;
 		PersistenceCustomer perCustomer;
 		try {
-			connection = getConnection();
-			PreparedStatement statement = connection.prepareStatement(sql);
-			ResultSet resultSet = statement.executeQuery();
+			statement = connection.prepareStatement(sql);
+			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				
 				perCustomer = new PersistenceCustomer();
@@ -151,7 +148,7 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {
-			closeConnection(connection);
+			closeStmtAndRs(statement, resultSet);
 		}
 		return result;
 	}

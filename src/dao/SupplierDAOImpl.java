@@ -31,10 +31,8 @@ public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
 		String contactName = supplier.getContactName();
 		String contactTelephone = supplier.getContactTelephone();
 		
-		Connection connection = null;
 		PreparedStatement ps = null;
 		try {
-			connection = getConnection();
 			ps = connection.prepareStatement(INSERT);
 			ps.setInt(1, companyId);
 			ps.setString(2, contactName);
@@ -43,7 +41,7 @@ public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
-			closeTwoConnection(connection, ps);
+			closeStmt(ps);
 		}
 		
 	}
@@ -64,13 +62,14 @@ public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
 	public Supplier getSupplierById(int supplierId) {
 		
 		String sql = "select * from supplier where id = " + supplierId;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
 		Supplier supplier = new Supplier();
 		Company company;
-		Connection connection = null;
 		try {
-			connection = getConnection();
-			PreparedStatement statement = connection.prepareStatement(sql);
-			ResultSet resultSet = statement.executeQuery();
+			statement = connection.prepareStatement(sql);
+			resultSet = statement.executeQuery();
 			
 			while (resultSet.next()) {
 				company = companyDao.getCompanyById(
@@ -83,7 +82,7 @@ public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {
-			closeConnection(connection);
+			closeStmtAndRs(statement, resultSet);
 		}
 		return supplier;
 	}
@@ -94,14 +93,14 @@ public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
 		List<Supplier> result = new ArrayList<Supplier>();
 		
 		String sql = "select * from supplier";
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
 		
-		Connection connection = null;
 		Supplier supplier;
 		Company company;
 		try {
-			connection = getConnection();
-			PreparedStatement statement = connection.prepareStatement(sql);
-			ResultSet resultSet = statement.executeQuery();
+			statement = connection.prepareStatement(sql);
+			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				
 				supplier = new Supplier();
@@ -119,7 +118,7 @@ public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {
-			closeConnection(connection);
+			closeStmtAndRs(statement, resultSet);
 		}
 		return result;
 	}
@@ -130,13 +129,13 @@ public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
 		List<PersistenceSupplier> result = new ArrayList<PersistenceSupplier>();
 		
 		String sql = "select * from supplier";
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
 		
-		Connection connection = null;
 		PersistenceSupplier perSupplier;
 		try {
-			connection = getConnection();
-			PreparedStatement statement = connection.prepareStatement(sql);
-			ResultSet resultSet = statement.executeQuery();
+			statement = connection.prepareStatement(sql);
+			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				
 				perSupplier = new PersistenceSupplier();
@@ -150,7 +149,7 @@ public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {
-			closeConnection(connection);
+			closeStmtAndRs(statement, resultSet);;
 		}
 		return result;
 	}

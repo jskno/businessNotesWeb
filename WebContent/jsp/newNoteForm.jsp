@@ -36,8 +36,8 @@
 			<h3>New Note</h3>
   			<p>Form to introduce a new note.</p>
   		</div>
-  		<form class="form-horizontal" role="form" action="notes" method="POST">
-  		<input type="hidden" name="action" value="createNote"/>
+  		<form class="form-horizontal" role="form" action="notes/addElement" method="POST">
+  		<input type="hidden" name="action" value="addNote"/>
     		<div class="form-group">
       			<label class="control-label col-sm-2" for="noteTitle">Note title:</label>
       			<div class="col-sm-10">

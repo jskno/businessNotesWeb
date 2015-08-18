@@ -42,10 +42,8 @@ public class NoteDAOImpl extends DaoImpl implements NoteDAO {
 		String noteTitle = note.getNoteTitle();
 		String noteText = note.getNoteText();
 		
-		Connection connection = null;
 		PreparedStatement ps = null;
 		try {
-			connection = getConnection();
 			ps = connection.prepareStatement(INSERT);
 			ps.setInt(1, customerId);
 			ps.setInt(2, supplierId);
@@ -57,7 +55,7 @@ public class NoteDAOImpl extends DaoImpl implements NoteDAO {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
-			closeTwoConnection(connection, ps);
+			closeStmt(ps);
 		}
 	}
 	
@@ -87,13 +85,12 @@ public class NoteDAOImpl extends DaoImpl implements NoteDAO {
 				//+ date
 				//+ "%'"
 				;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
 		
-		Connection connection = null;
 		try {
-			
-			connection = getConnection();
-			PreparedStatement statement = connection.prepareStatement(sql);
-			ResultSet resultSet = statement.executeQuery();
+			statement = connection.prepareStatement(sql);
+			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				Note note = new Note();
 				int idCustomer = resultSet.getInt("customer_id");
@@ -121,7 +118,7 @@ public class NoteDAOImpl extends DaoImpl implements NoteDAO {
 			System.out.println(e.getClass().toString());
 			System.out.println(e.getMessage());
 		} finally {
-			closeConnection(connection);
+			closeStmtAndRs(statement, resultSet);
 		}
 			
 		return result;
@@ -132,13 +129,12 @@ public class NoteDAOImpl extends DaoImpl implements NoteDAO {
 		List<PersistenceNote> result = new ArrayList<PersistenceNote>();
 		
 		String sql = "select * from note";
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
 		
-		Connection connection = null;
 		try {
-			
-			connection = getConnection();
-			PreparedStatement statement = connection.prepareStatement(sql);
-			ResultSet resultSet = statement.executeQuery();
+			statement = connection.prepareStatement(sql);
+			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				PersistenceNote perNote = new PersistenceNote();
 				
@@ -159,7 +155,7 @@ public class NoteDAOImpl extends DaoImpl implements NoteDAO {
 			System.out.println(e.getClass().toString());
 			System.out.println(e.getMessage());
 		} finally {
-			closeConnection(connection);
+			closeStmtAndRs(statement, resultSet);
 		}
 			
 		return result;

@@ -25,10 +25,8 @@ public class ProductDAOImpl extends DaoImpl implements ProductDAO {
 		String productCode = product.getProductCode();
 		String productDescription = product.getProductDescription();
 		
-		Connection connection = null;
 		PreparedStatement ps = null;
 		try {
-			connection = getConnection();
 			ps = connection.prepareStatement(INSERT);
 			ps.setString(1, productCode);
 			ps.setString(2, productDescription);
@@ -36,7 +34,7 @@ public class ProductDAOImpl extends DaoImpl implements ProductDAO {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
-			closeTwoConnection(connection, ps);
+			closeStmt(ps);
 		}
 	}
 	
@@ -56,12 +54,13 @@ public class ProductDAOImpl extends DaoImpl implements ProductDAO {
 	public Product getProductById(int productId) {
 		
 		String sql = "select * from product where id = " + productId;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
 		Product product = new Product();
-		Connection connection = null;
 		try {
-			connection = getConnection();
-			PreparedStatement statement = connection.prepareStatement(sql);
-			ResultSet resultSet = statement.executeQuery();
+			statement = connection.prepareStatement(sql);
+			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				product.setId(resultSet.getInt("id"));
 				product.setProductCode(resultSet.getString("product_code"));
@@ -70,7 +69,7 @@ public class ProductDAOImpl extends DaoImpl implements ProductDAO {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {
-			closeConnection(connection);
+			closeStmtAndRs(statement, resultSet);
 		}
 		return product;
 		
@@ -82,13 +81,13 @@ public class ProductDAOImpl extends DaoImpl implements ProductDAO {
 		List<Product> result = new ArrayList<Product>();
 		
 		String sql = "select * from product";
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
 		
-		Connection connection = null;
 		Product product;
 		try {
-			connection = getConnection();
-			PreparedStatement statement = connection.prepareStatement(sql);
-			ResultSet resultSet = statement.executeQuery();
+			statement = connection.prepareStatement(sql);
+			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				product = new Product();
 				product.setId(resultSet.getInt("id"));
@@ -99,7 +98,7 @@ public class ProductDAOImpl extends DaoImpl implements ProductDAO {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {
-			closeConnection(connection);
+			closeStmtAndRs(statement, resultSet);
 		}
 		return result;
 	}

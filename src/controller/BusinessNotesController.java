@@ -52,11 +52,14 @@ public class BusinessNotesController extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		
+		
 		doPost(request, response);
 	}
 	
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
+		
 		String action = request.getParameter("action");
 		String keyWord = request.getParameter("keyWord");
 		RequestDispatcher requestDispatcher;
@@ -66,101 +69,108 @@ public class BusinessNotesController extends HttpServlet {
 		service = lookupService.getBusinessService(action);
 		service.execute(request, response);
 		
+		url = BASE + request.getAttribute("url");
+		requestDispatcher = getServletContext().
+				getRequestDispatcher(url);
+		requestDispatcher.forward(request, response);
+		
+		// From here it's over.
+		
 		switch(action) {
-		case "homePage":
-		case "newNote":
-			
-			//showNewNoteForm(request, response);
-			url = BASE + "newNoteForm.jsp?";
-			requestDispatcher = getServletContext().
-					getRequestDispatcher(url);
-			requestDispatcher.forward(request, response);
-			break;
-		case "notesList":
-			getNotesList(request, response);
-			url = BASE + "notesList.jsp";
-			requestDispatcher = getServletContext().
-					getRequestDispatcher(url);
-			requestDispatcher.forward(request, response);
-			break;
-		case "newCustomer":
-			showNewCustomerForm(request, response);
-			url = BASE + "newCustomer.jsp";
-			requestDispatcher = getServletContext().
-					getRequestDispatcher(url);
-			requestDispatcher.forward(request, response);
-			break;
-		case "customersList":
-			//getCustomersList(request, response);
-			url = BASE + "customersList.jsp";
-			requestDispatcher = getServletContext().
-					getRequestDispatcher(url);
-			requestDispatcher.forward(request, response);
-			break;
-		case "newSupplier":
-			showNewSupplierForm(request, response);
-			url = BASE + "newSupplier.jsp";
-			requestDispatcher = getServletContext().
-					getRequestDispatcher(url);
-			requestDispatcher.forward(request, response);
-			break;
-		case "suppliersList":
-			//getSuppliersList(request, response);
-			url = BASE + "suppliersList.jsp";
-			requestDispatcher = getServletContext().
-					getRequestDispatcher(url);
-			requestDispatcher.forward(request, response);
-			break;
-		case "newProduct":
-			url = BASE + "newProduct.jsp";
-			requestDispatcher = getServletContext().
-					getRequestDispatcher(url);
-			requestDispatcher.forward(request, response);
-			break;
-		case "productsList":
-			//getProductsList(request, response);
-			url = BASE + "productsList.jsp";
-			requestDispatcher = getServletContext().
-					getRequestDispatcher(url);
-			requestDispatcher.forward(request, response);
-			break;
-		case "newCompany":
-			showNewCompanyForm(request, response);
-			url = BASE + "newCompany.jsp";
-			requestDispatcher = getServletContext().
-					getRequestDispatcher(url);
-			requestDispatcher.forward(request, response);
-			break;
-		case "companiesList":
-			getCompaniesList(request, response);
-			url = BASE + "companiesList.jsp";
-			requestDispatcher = getServletContext().
-					getRequestDispatcher(url);
-			requestDispatcher.forward(request, response);
-			break;
-		case "createCustomer":
-			createCustomer(request, response);
-			response.sendRedirect("notes?action=newCustomer");
-			break;
-		case "createSupplier":
-			createSupplier(request, response);
-			response.sendRedirect("notes?action=newSupplier");
-			break;
-		case "createProduct":
-			createProduct(request, response);
-			response.sendRedirect("notes?action=newProduct");
-			break;
-		case "createCompany":
-			createCompany(request, response);
-			url = BASE + "newCompany.jsp";
-			requestDispatcher = getServletContext().
-					getRequestDispatcher(url);
-			requestDispatcher.forward(request, response);
-			break;
-		case "createNote":
-			createNote(request, response);
-			response.sendRedirect("notes?action=newNote");
-			break;
+//		case "homePage":
+//		case "newNote":
+//			
+//			showNewNoteForm(request, response);
+//			url = BASE + "newNoteForm.jsp?";
+//			requestDispatcher = getServletContext().
+//					getRequestDispatcher(url);
+//			requestDispatcher.forward(request, response);
+//			break;
+//		case "notesList":
+//			getNotesList(request, response);
+//			url = BASE + "notesList.jsp";
+//			requestDispatcher = getServletContext().
+//					getRequestDispatcher(url);
+//			requestDispatcher.forward(request, response);
+//			break;
+//		case "newCustomer":
+//			showNewCustomerForm(request, response);
+//			url = BASE + "newCustomer.jsp";
+//			requestDispatcher = getServletContext().
+//					getRequestDispatcher(url);
+//			requestDispatcher.forward(request, response);
+//			break;
+//		case "customersList":
+//			getCustomersList(request, response);
+//			url = BASE + "customersList.jsp";
+//			requestDispatcher = getServletContext().
+//					getRequestDispatcher(url);
+//			requestDispatcher.forward(request, response);
+//			break;
+//		case "newSupplier":
+//			showNewSupplierForm(request, response);
+//			url = BASE + "newSupplier.jsp";
+//			requestDispatcher = getServletContext().
+//					getRequestDispatcher(url);
+//			requestDispatcher.forward(request, response);
+//			break;
+//		case "suppliersList":
+//			//getSuppliersList(request, response);
+//			url = BASE + "suppliersList.jsp";
+//			requestDispatcher = getServletContext().
+//					getRequestDispatcher(url);
+//			requestDispatcher.forward(request, response);
+//			break;
+//		case "newProduct":
+//			url = BASE + "newProduct.jsp";
+//			requestDispatcher = getServletContext().
+//					getRequestDispatcher(url);
+//			requestDispatcher.forward(request, response);
+//			break;
+//		case "productsList":
+//			//getProductsList(request, response);
+//			url = BASE + "productsList.jsp";
+//			requestDispatcher = getServletContext().
+//					getRequestDispatcher(url);
+//			requestDispatcher.forward(request, response);
+//			break;
+//		case "newCompany":
+//			showNewCompanyForm(request, response);
+//			url = BASE + "newCompany.jsp";
+//			requestDispatcher = getServletContext().
+//					getRequestDispatcher(url);
+//			requestDispatcher.forward(request, response);
+//			break;
+//		case "companiesList":
+//			getCompaniesList(request, response);
+//			url = BASE + "companiesList.jsp";
+//			requestDispatcher = getServletContext().
+//					getRequestDispatcher(url);
+//			requestDispatcher.forward(request, response);
+//			break;
+//		case "addCustomer":
+//			createCustomer(request, response);
+//			response.sendRedirect("notes?action=newCustomer");
+//			break;
+//		case "addSupplier":
+//			createSupplier(request, response);
+//			response.sendRedirect("notes?action=newSupplier");
+//			break;
+//		case "addProduct":
+//			createProduct(request, response);
+//			response.sendRedirect("notes?action=newProduct");
+//			break;
+//		case "addCompany":
+//			createCompany(request, response);
+//			url = BASE + "newCompany.jsp";
+//			requestDispatcher = getServletContext().
+//					getRequestDispatcher(url);
+//			requestDispatcher.forward(request, response);
+//			break;
+//		case "addNote":
+//			createNote(request, response);
+//			response.sendRedirect("notes?action=newNote");
+//			break;
 		case "onlyCreateCompany":
 			createCompany(request, response);
 			response.sendRedirect("notes?action=newSupplier");
@@ -169,20 +179,20 @@ public class BusinessNotesController extends HttpServlet {
 			createCompany(request, response);
 			response.sendRedirect("notes?action=newCustomer");
 			break;
-		case "exportTable":
-			exportTable(request, response);
-			url = 	BASE + "exportSuccessModal.jsp";
-			requestDispatcher = getServletContext().
-					getRequestDispatcher(url);
-			requestDispatcher.forward(request, response);
-			break;
-		case "importTable":
-			importTable(request, response);
-			url = BASE + "importSuccessModal.jsp";
-			requestDispatcher = getServletContext().
-					getRequestDispatcher(url);
-			requestDispatcher.forward(request, response);
-			break;
+//		case "exportTable":
+//			exportTable(request, response);
+//			url = 	BASE + "exportSuccessModal.jsp";
+//			requestDispatcher = getServletContext().
+//					getRequestDispatcher(url);
+//			requestDispatcher.forward(request, response);
+//			break;
+//		case "importTable":
+//			importTable(request, response);
+//			url = BASE + "importSuccessModal.jsp";
+//			requestDispatcher = getServletContext().
+//					getRequestDispatcher(url);
+//			requestDispatcher.forward(request, response);
+//			break;
 		}
 	}
 

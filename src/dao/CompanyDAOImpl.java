@@ -30,10 +30,8 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 		String companyTelephone = company.getCompanyTelephone();
 		String companyEmail = company.getCompanyEmail();
 		
-		Connection connection = null;
 		PreparedStatement ps = null;
 		try {
-			connection = getConnection();
 			ps = connection.prepareStatement(INSERT);
 			ps.setString(1, companyName);
 			ps.setString(2, companyTelephone);
@@ -42,7 +40,7 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
-			closeTwoConnection(connection, ps);
+			closeStmt(ps);
 		}
 	}
 	
@@ -66,10 +64,12 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 		
 		Connection connection = null;
 		Company company;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
 		try {
-			connection = getConnection();
-			PreparedStatement statement = connection.prepareStatement(sql);
-			ResultSet resultSet = statement.executeQuery();
+			statement = connection.prepareStatement(sql);
+			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				company = new Company();
 				company.setId(resultSet.getInt("id"));
@@ -81,7 +81,7 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {
-			closeConnection(connection);
+			closeStmtAndRs(statement, resultSet);
 		}
 		return result;
 	}
@@ -90,13 +90,12 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 	public List<Company> getNoCustomerCompanies() {
 		
 		List<Company> result = new ArrayList<Company>();
-				
-		Connection connection = null;
 		Company company;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
 		try {
-			connection = getConnection();
-			PreparedStatement statement = connection.prepareStatement(NO_CUSTOMER_COMPANIES);
-			ResultSet resultSet = statement.executeQuery();
+			statement = connection.prepareStatement(NO_CUSTOMER_COMPANIES);
+			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				company = new Company();
 				company.setId(resultSet.getInt("id"));
@@ -108,7 +107,7 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {
-			closeConnection(connection);
+			closeStmtAndRs(statement, resultSet);
 		}
 		return result;
 	}
@@ -117,13 +116,13 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 	public List<Company> getNoSupplierCompanies() {
 		
 		List<Company> result = new ArrayList<Company>();
-				
-		Connection connection = null;
 		Company company;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
 		try {
-			connection = getConnection();
-			PreparedStatement statement = connection.prepareStatement(NO_SUPPLIER_COMPANIES);
-			ResultSet resultSet = statement.executeQuery();
+			statement = connection.prepareStatement(NO_SUPPLIER_COMPANIES);
+			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				company = new Company();
 				company.setId(resultSet.getInt("id"));
@@ -135,7 +134,7 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {
-			closeConnection(connection);
+			closeStmtAndRs(statement, resultSet);
 		}
 		return result;
 	}
@@ -148,12 +147,13 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 				+ name.trim()
 				+ "%'";
 		
-		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
 		try {
 			
-			connection = getConnection();
-			PreparedStatement statement = connection.prepareStatement(sql);
-			ResultSet resultSet = statement.executeQuery();
+			statement = connection.prepareStatement(sql);
+			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				Company company = new Company();
 				company.setId(resultSet.getInt("id"));
@@ -165,7 +165,7 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {
-			closeConnection(connection);
+			closeStmtAndRs(statement, resultSet);
 		}
 			
 		return result;
@@ -177,12 +177,12 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 		
 		String sql = "select * from company where id = " + companyId;
 		Company company = new Company();
-		Connection connection = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
 		
 		try {
-			connection = getConnection();
-			PreparedStatement statement = connection.prepareStatement(sql);
-			ResultSet resultSet = statement.executeQuery();
+			statement = connection.prepareStatement(sql);
+			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				company.setId(resultSet.getInt("id"));
 				company.setCompanyName(resultSet.getString("company_name"));
@@ -192,7 +192,7 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {
-			closeConnection(connection);
+			closeStmtAndRs(statement, resultSet);
 		}
 		return company;
 	}

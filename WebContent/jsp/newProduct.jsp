@@ -21,8 +21,8 @@
 			<h3>New Product</h3>
   			<p>Form to introduce a new product.</p>
   		</div>
-  		<form class="form-horizontal" role="form" action="notes" method="POST">
-  		<input type="hidden" name="action" value="createProduct"/>
+  		<form class="form-horizontal" role="form" action="notes/addElement" method="POST">
+  		<input type="hidden" name="action" value="addProduct"/>
     		<div class="form-group">
       			<label class="control-label col-sm-2" for="productCode">Product Code:</label>
      			<div class="col-sm-10">          
