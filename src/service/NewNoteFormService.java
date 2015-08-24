@@ -56,9 +56,5 @@ public class NewNoteFormService extends ServiceImpl {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-	
 	}
-
-	
-
 }

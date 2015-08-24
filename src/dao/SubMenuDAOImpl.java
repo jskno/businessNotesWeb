@@ -6,7 +6,9 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-public class SubMenuDAOImpl extends DaoImpl implements SubMenuDAO {
+import model.Menu;
+
+public class SubMenuDAOImpl extends DaoImpl implements MenuDAO {
 
 	public SubMenuDAOImpl(Connection connection, HttpSession session) {
 		super(connection, session);
@@ -14,7 +16,7 @@ public class SubMenuDAOImpl extends DaoImpl implements SubMenuDAO {
 	}
 
 	@Override
-	public Map<String, List<String>> getSubMenus() {
+	public Map<Integer, Menu> getMenu() {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -28,8 +28,8 @@
 	<div class="container-fluid">
 		<div class="row">
     		<div class="col-sm-12">
-    			<jsp:include page="navBar.jsp" flush="true" />
-    			<%@ include file="navBar.jsp" %>
+    			<jsp:include page="dynamicNavBar.jsp" flush="true" />
+    			<%@ include file="dynamicNavBar.jsp" %>
     		</div>
     	</div>
 		<div class="well">

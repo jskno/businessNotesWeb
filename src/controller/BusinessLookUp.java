@@ -12,6 +12,7 @@ import service.GetNotesListService;
 import service.GetSuppliersListService;
 import service.ImportTableService;
 import service.NewCompanyFormService;
+import service.NewCustomer2Service;
 import service.NewCustomerService;
 import service.NewNoteFormService;
 import service.GetProductsListService;
@@ -25,6 +26,7 @@ public class BusinessLookUp {
 	private final String NEW_NOTE = "newNote";
 	private final String NOTE_LIST = "notesList";
 	private final String NEW_CUSTOMER = "newCustomer";
+	private final String NEW_CUSTOMER_2 = "newCustomer2";
 	private final String CUSTOMER_LIST = "customersList";
 	private final String NEW_SUPPLIER = "newSupplier";
 	private final String SUPPLIERS_LIST = "suppliersList";
@@ -55,6 +57,9 @@ public class BusinessLookUp {
 			break;
 		case NEW_CUSTOMER:
 			serviceClass = new NewCustomerService();
+			break;
+		case NEW_CUSTOMER_2:
+			serviceClass = new NewCustomer2Service();
 			break;
 		case CUSTOMER_LIST:
 			serviceClass = new GetCustomerListService();

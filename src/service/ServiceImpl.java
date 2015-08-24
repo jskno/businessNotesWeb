@@ -41,8 +41,8 @@ public abstract class ServiceImpl implements Service{
 	public void execute(HttpServletRequest request, HttpServletResponse response) //throws BusinessRuleException,SQLException 
 	{
 		//Pool pool = null;
-		request = request;
-		response = response;
+		setRequest(request);
+		setResponse(response);
 		connection = null;
 		session = request.getSession();
 
@@ -164,6 +164,22 @@ public abstract class ServiceImpl implements Service{
 			
 		}
 		
+	}
+
+	public HttpServletRequest getRequest() {
+		return request;
+	}
+
+	public void setRequest(HttpServletRequest request) {
+		this.request = request;
+	}
+
+	public HttpServletResponse getResponse() {
+		return response;
+	}
+
+	public void setResponse(HttpServletResponse response) {
+		this.response = response;
 	}
 	
 	

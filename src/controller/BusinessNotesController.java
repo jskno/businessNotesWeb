@@ -14,8 +14,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import service.Service;
+import utils.DBUtil;
 import model.Company;
 import model.Customer;
+import model.Menu;
 import model.Note;
 import model.Product;
 import model.Supplier;
@@ -27,8 +29,8 @@ import dao.NoteDAO;
 import dao.NoteDAOImpl;
 import dao.ProductDAO;
 import dao.ProductDAOImpl;
-import dao.SubMenuDAO;
-import dao.SubMenuDAOImpl;
+import dao.MenuDAO;
+import dao.MenuDAOImpl;
 import dao.SupplierDAO;
 import dao.SupplierDAOImpl;
 import excelUtils.ExportTable;
@@ -44,10 +46,10 @@ public class BusinessNotesController extends HttpServlet {
 	public void init(ServletConfig config) throws ServletException {
 		
 		super.init(config);
-		SubMenuDAO subMenuDao = new SubMenuDAOImpl(null, null);
-		Map<String, List<String>> subMenusList = subMenuDao.getSubMenus();
+		MenuDAO menuDao = new MenuDAOImpl(DBUtil.getConnection(), null);
+		Map<Integer, Menu> theMenu = menuDao.getMenu();
 		ServletContext context = config.getServletContext();
-		context.setAttribute("subMenusList", subMenusList);
+		context.setAttribute("theMenu", theMenu);
 	}
 	
 	protected void doGet(HttpServletRequest request,

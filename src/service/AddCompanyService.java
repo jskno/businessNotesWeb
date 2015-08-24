@@ -12,12 +12,12 @@ public class AddCompanyService extends ServiceImpl implements Service {
 	protected void execute() {
 
 		createCompany();
-		String originScreen = request.getParameter("origin");
+		String originScreen = request.getParameter("originScreen");
 		switch (originScreen) {
-		case "newCustomer":
+		case "newCustomerForm":
 			request.setAttribute("newAction", "newCustomer");
 			break;
-		case "newSupplier":
+		case "newSupplierForm":
 			request.setAttribute("newAction", "newSupplier");
 			break;
 		default:

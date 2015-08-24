@@ -12,8 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import service.Service;
-import dao.SubMenuDAO;
-import dao.SubMenuDAOImpl;
+import dao.MenuDAO;
+import dao.MenuDAOImpl;
 
 public class BusinessNotesControllerRedirect extends HttpServlet {
 	
@@ -24,11 +24,11 @@ public class BusinessNotesControllerRedirect extends HttpServlet {
 	
 	public void init(ServletConfig config) throws ServletException {
 		
-		super.init(config);
-		SubMenuDAO subMenuDao = new SubMenuDAOImpl(null, null);
-		Map<String, List<String>> subMenusList = subMenuDao.getSubMenus();
-		ServletContext context = config.getServletContext();
-		context.setAttribute("subMenusList", subMenusList);
+//		super.init(config);
+//		MenuDAO subMenuDao = new MenuDAOImpl(null, null);
+//		Map<String, List<String>> subMenusList = subMenuDao.getSubMenus();
+//		ServletContext context = config.getServletContext();
+//		context.setAttribute("subMenusList", subMenusList);
 	}
 	
 	protected void doGet(HttpServletRequest request,

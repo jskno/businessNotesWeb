@@ -6,7 +6,8 @@ import java.util.Map;
 import model.Menu;
 import model.SubMenu;
 
-public interface SubMenuDAO extends Dao{
+public interface MenuDAO extends Dao{
 
+	Map<Integer, Menu> getMenu();
 
 }

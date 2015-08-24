@@ -21,7 +21,7 @@ public class NewCustomerService extends ServiceImpl{
 			HttpServletResponse response) {
 		
 		try {
-			CompanyDAO companyDao = new CompanyDAOImpl(null, null);
+			CompanyDAO companyDao = new CompanyDAOImpl(getConnection(), getSession());
 			List<Company> companiesList = companyDao.getNoCustomerCompanies();
 			request.setAttribute("companiesList", companiesList);
 		} catch (Exception e) {

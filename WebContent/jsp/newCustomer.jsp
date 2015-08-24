@@ -83,7 +83,7 @@
 
 	<!-- Modal content-->
 	<div class="modal-content">
-		<form id="newCompanyModalForm" class="form-horizontal" role="form" action="notes" method="POST">
+		<form id="newCompanyModalForm" class="form-horizontal" role="form" action="notes/addElement" method="POST">
 		<input type="hidden" name="action" value="addCompany"/>
 		<input type="hidden" name="originScreen" value="newCustomerForm"/>	
 			<div class="modal-header">
