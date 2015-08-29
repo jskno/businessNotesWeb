@@ -46,11 +46,12 @@
                         <ul class="dropdown-menu">
                         <%
                         	for(SubMenu eachSubMenu : theMenu.get(eachMenu).getSubMenus()) {
-                        		if("JSP".equals(eachSubMenu.getKind())) {
+                        		if("jsp".equals(eachSubMenu.getKind())) {
                         %>	
                        				<li><a href=<%=eachSubMenu.getLink()%>><%=eachSubMenu.getName()%></a></li>
                        	<%
-                        		} else if("MODAL".equals(eachSubMenu.getKind())) {
+                        		} 
+                        		else if("modal".equals(eachSubMenu.getKind())) {
                         %>
  		                           <li><a href="#" data-toggle="modal" data-target=<%=eachSubMenu.getLink()%>>eachSubMenu.getName()</a></li>
  		                <%

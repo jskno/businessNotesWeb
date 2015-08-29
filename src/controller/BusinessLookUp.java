@@ -12,6 +12,7 @@ import service.GetNotesListService;
 import service.GetSuppliersListService;
 import service.ImportTableService;
 import service.NewCompanyFormService;
+import service.GetCompanyByTaxIDService;
 import service.NewCustomer2Service;
 import service.NewCustomerService;
 import service.NewNoteFormService;

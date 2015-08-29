@@ -205,6 +205,30 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 		}
 		
 	}
+
+	@Override
+	public Company getCompanyByTaxID(String taxID) {
+		String sql = "select * from company where taxID = " + taxID;
+		Company company = new Company();
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			statement = connection.prepareStatement(sql);
+			resultSet = statement.executeQuery();
+			while (resultSet.next()) {
+				company.setId(resultSet.getInt("id"));
+				company.setCompanyName(resultSet.getString("company_name"));
+				company.setCompanyTelephone(resultSet.getString("company_telephone"));
+				company.setCompanyEmail(resultSet.getString("company_email"));
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			closeStmtAndRs(statement, resultSet);
+		}
+		return company;
+	}
 	
 	
 

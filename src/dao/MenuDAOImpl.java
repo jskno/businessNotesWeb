@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -23,7 +24,6 @@ public class MenuDAOImpl extends DaoImpl implements MenuDAO {
 
 	public MenuDAOImpl(Connection connection, HttpSession session) {
 		super(connection, session);
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -39,23 +39,29 @@ public class MenuDAOImpl extends DaoImpl implements MenuDAO {
 		
 		//Product product = new Product();
 		try {
-			DDBBMenu ddbbMenu = new DDBBMenu();
-			Menu menu = new Menu();
+			DDBBMenu ddbbMenu = null;
+			Menu menu = null;
 			statement = connection.prepareStatement(SQL_MENU);
 			resultSet = statement.executeQuery();
 			
 			while (resultSet.next()) {
+				ddbbMenu = new DDBBMenu();
+				menu = new Menu();
+				
 				ddbbMenu.loadResult(resultSet);
 				menu.setFromPersistence(ddbbMenu);
 				try {
-					DDBBSubMenu ddbbSubMenu = new DDBBSubMenu();
-					SubMenu subMenu = new SubMenu();
+					DDBBSubMenu ddbbSubMenu = null;
+					SubMenu subMenu = null;
 					
 					stmt = connection.prepareStatement(SQL_SUBMENU);
 					stmt.setInt(1, ddbbMenu.getIdMenu());
 					rs = stmt.executeQuery();
 					
 					while(rs.next()) {
+						ddbbSubMenu = new DDBBSubMenu();
+						subMenu = new SubMenu();
+						
 						ddbbSubMenu.loadResult(rs);
 						subMenu.setFromPersistence(ddbbSubMenu);
 						menu.getSubMenus().add(subMenu);
@@ -63,10 +69,9 @@ public class MenuDAOImpl extends DaoImpl implements MenuDAO {
 				} catch(SQLException e) {
 					e.printStackTrace();
 				}
-				
-				
+				Collections.sort(menu.getSubMenus());
+				theMenu.put(menu.getOrder(), menu);
 			}
-			theMenu.put(menu.getOrder(), menu);
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {

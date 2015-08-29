@@ -1,3 +1,4 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page import="model.Company"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
@@ -14,6 +15,7 @@
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 <script src="bootstrap/jquery/jquery-2.1.3.min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
+<script src="js/webSocketScriptModified.js"></script>
 <title>New Customer</title>
 </head>
 <body>
@@ -29,6 +31,14 @@
   			<p>Form to introduce a new customer.</p>
   		</div>
   		
+  		<div id="status">Connecting...</div>
+  		<ul id="messages"></ul>
+  		<form id="message-form" action="#" method="post">
+    		<textarea id="message" placeholder="Write your message here..." required></textarea>
+    		<button type="submit">Send Message</button>
+    		<button type="button" id="close">Close Connection</button>
+  		</form>
+  
   		<form id="newCustomer2" class="form-horizontal" role="form" action="notes/addElement" method="POST">
   		<input type="hidden" name="action" value="addCustomer2"/>
   			<div class="form-group">
@@ -112,5 +122,4 @@ $(document).ready(function() {
     });
 });
 </script>
-
 </html>

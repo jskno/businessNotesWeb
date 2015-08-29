@@ -2,7 +2,7 @@ package model;
 
 import persistence.DDBBSubMenu;
 
-public class SubMenu {
+public class SubMenu implements Comparable<SubMenu>{
 	
 	private Integer idSubMenu;
 	private String name;
@@ -149,6 +149,12 @@ public class SubMenu {
 			ddbbSubMenu.setOrderNull();
 		}
 		return ddbbSubMenu;
+	}
+
+	@Override
+	public int compareTo(SubMenu o) {
+		
+		return this.order - o.order;
 	}
 
 }
