@@ -1,8 +1,11 @@
 package model;
 
+import persistence.DDBBCompany;
+
 public class Company {
 	
-	private int id;
+	private Integer id;
+	private String taxID;
 	private String companyName;
 	private String companyTelephone;
 	private String companyEmail;
@@ -19,11 +22,18 @@ public class Company {
 		
 		
 	}
-	public int getId() {
+	
+	public Integer getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
+	}
+	public String getTaxID() {
+		return taxID;
+	}
+	public void setTaxID(String taxID) {
+		this.taxID = taxID;
 	}
 	public String getCompanyName() {
 		return companyName;
@@ -47,6 +57,67 @@ public class Company {
 	public String toString() {
 		return "Company [companyName=" + companyName + ", companyTelephone="
 				+ companyTelephone + ", companyEmail=" + companyEmail + "]";
+	}
+	
+	public final void setFromPersistence(final DDBBCompany ddbbCompany) {
+		
+		if (!ddbbCompany.isIdNull()) {
+			this.id = ddbbCompany.getId();
+		} else {
+			this.id = null;
+		}
+		if (!ddbbCompany.isTaxIDNull()) {
+			this.taxID = ddbbCompany.getTaxID();
+		} else {
+			this.taxID = null;
+		}
+		if (!ddbbCompany.isCompanyNameNull()) {
+			this.companyName = ddbbCompany.getCompanyName();
+		} else {
+			this.companyName = null;
+		}
+		if (!ddbbCompany.isCompanyTelephoneNull()) {
+			this.companyTelephone = ddbbCompany.getCompanyTelephone();
+		} else {
+			this.companyTelephone = null;
+		}
+		if (!ddbbCompany.isCompanyEmailNull()) {
+			this.companyEmail = ddbbCompany.getCompanyEmail();
+		} else {
+			this.companyEmail = null;
+		}
+	}
+	
+	public DDBBCompany getPersistenceObject() {
+		
+		final DDBBCompany ddbbCompany = new DDBBCompany();
+		if(getId() != null) {
+			ddbbCompany.setId(getId());
+		} else {
+			ddbbCompany.setIdNull();
+		}
+		if(getTaxID() != null) {
+			ddbbCompany.setTaxID(getTaxID());
+		} else {
+			ddbbCompany.setTaxIDNull();
+		}
+		if(getCompanyName() != null) {
+			ddbbCompany.setCompanyName(getCompanyName());
+		} else {
+			ddbbCompany.setCompanyNameNull();
+		}
+		if(getCompanyTelephone() != null) {
+			ddbbCompany.setCompanyTelephone(getCompanyTelephone());
+		} else {
+			ddbbCompany.setCompanyTelephoneNull();
+		}
+		if(getCompanyEmail() != null) {
+			ddbbCompany.setCompanyEmail(getCompanyEmail());
+		} else {
+			ddbbCompany.setCompanyEmailNull();
+		}
+		
+		return ddbbCompany;
 	}
 	
 

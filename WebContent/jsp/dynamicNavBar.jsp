@@ -37,6 +37,7 @@
                     <!-- existing links -->
                     <li><a href="#" class="active">Current Page</a><span class="sr-only">current</span></li>
                     <%
+                @SuppressWarnings("unchecked")
 				Map<Integer, Menu> theMenu = (TreeMap<Integer, Menu>) application.getAttribute(
 						"theMenu");
 				for(Integer eachMenu : theMenu.keySet()) {

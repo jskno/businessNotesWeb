@@ -9,7 +9,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import persistence.PersistenceCustomer;
+import persistence.DDBBCustomer;
 import model.Company;
 import model.Customer;
 
@@ -123,21 +123,21 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 	}
 
 	@Override
-	public List<PersistenceCustomer> getPersistenceCustomerList() {
+	public List<DDBBCustomer> getPersistenceCustomerList() {
 		
-		List<PersistenceCustomer> result = new ArrayList<PersistenceCustomer>();
+		List<DDBBCustomer> result = new ArrayList<DDBBCustomer>();
 		
 		String sql = "select * from customer";
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		
-		PersistenceCustomer perCustomer;
+		DDBBCustomer perCustomer;
 		try {
 			statement = connection.prepareStatement(sql);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				
-				perCustomer = new PersistenceCustomer();
+				perCustomer = new DDBBCustomer();
 				perCustomer.setId(resultSet.getInt("id"));
 				perCustomer.setCompanyId(resultSet.getInt("company_id"));
 				perCustomer.setContactName(resultSet.getString("contact_name"));

@@ -7,7 +7,7 @@ import serviceWS.ServiceWS;
 public class BusinessLookUpWS {
 	
 	private final String HOME_PAGE = "homePage";
-	private final String NEW_CUSTOMER_2 = "newCustomer2";
+	private final String CHECK_TAX_ID = "checkTaxID";
 	
 	
 	private ServiceWS serviceClass;
@@ -17,7 +17,7 @@ public class BusinessLookUpWS {
 		
 		switch (serviceType) {
 		case HOME_PAGE:
-		case NEW_CUSTOMER_2:
+		case CHECK_TAX_ID:
 			serviceClass = new GetCompanyByTaxIDService();
 			break;
 		default:

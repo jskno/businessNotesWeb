@@ -18,7 +18,7 @@ import java.util.Locale;
 import model.Company;
 import model.Customer;
 import model.Note;
-import model.Product;
+import model.ProductVO;
 import model.Supplier;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -109,8 +109,8 @@ public class ImportTable {
 
 		String productCode;
 		String productDescription;
-		Product product = null;
-		List<Product> productList = new ArrayList<Product>();
+		ProductVO product = null;
+		List<ProductVO> productList = new ArrayList<ProductVO>();
 		ProductDAO productDao = new ProductDAOImpl(null, null);
 
 		while (rowIterator.hasNext()) {
@@ -121,7 +121,7 @@ public class ImportTable {
 			productCode = firstCell.getStringCellValue();
 			productDescription = secondCell.getStringCellValue();
 
-			product = new Product(productCode, productDescription);
+			product = new ProductVO(productCode, productDescription);
 
 		}
 		productList.add(product);
@@ -236,7 +236,7 @@ public class ImportTable {
 			Note note = null;
 			Customer customer = null;
 			Supplier supplier = null;
-			Product product = null;
+			ProductVO product = null;
 			List<Note> notesList = new ArrayList<Note>();
 			NoteDAO noteDao = new NoteDAOImpl(null, null);
 			CustomerDAO customerDao = new CustomerDAOImpl(null, null);

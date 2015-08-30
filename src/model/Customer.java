@@ -1,51 +1,70 @@
 package model;
 
-public class Customer {
+import persistence.DDBBCustomer;
+
+public class Customer extends CompanyRole {
 	
-	private int id;
-	private Company company;
-	private String contactName;
-	private String contactTelephone;
+	private Integer creditRating;
+	private Double customerDiscount;
 	
 	public Customer() {
-		
 	}
 	
-	public Customer(Company company, String contactName,
-			String contactTelephone) {
+	public Customer(Integer creditRating, Double customerDiscount) {
 		
-		this.company = company;
-		this.contactName = contactName;
-		this.contactTelephone = contactTelephone;
+		this.creditRating = creditRating;
+		this.customerDiscount = customerDiscount;
 	}
-	public int getId() {
-		return id;
+
+	public Integer getCreditRating() {
+		return creditRating;
 	}
-	public void setId(int id) {
-		this.id = id;
+
+	public void setCreditRating(Integer creditRating) {
+		this.creditRating = creditRating;
 	}
-	public Company getCompany() {
-		return company;
+
+	public Double getCustomerDiscount() {
+		return customerDiscount;
 	}
-	public void setCompany(Company company) {
-		this.company = company;
+
+	public void setCustomerDiscount(Double customerDiscount) {
+		this.customerDiscount = customerDiscount;
 	}
-	public String getContactName() {
-		return contactName;
+	
+	public DDBBCustomer getPersistenceCustomer() {
+
+		DDBBCustomer ddbbCustomer = new DDBBCustomer();
+		if(getRoleId() != null) {
+			ddbbCustomer.setRoleId(getRoleId());
+		} else {
+			ddbbCustomer.setRoleIdNull();
+		}
+		if(getCreditRating() != null) {
+			ddbbCustomer.setCreditRating(getCreditRating());
+		} else {
+			ddbbCustomer.setCreditRatingNull();
+		}
+		if(getCustomerDiscount() != null) {
+			ddbbCustomer.setCustomerDiscount(getCustomerDiscount());
+		} else {
+			ddbbCustomer.setCustomerDiscountNull();
+		}
+		return ddbbCustomer;
 	}
-	public void setContactName(String contactName) {
-		this.contactName = contactName;
-	}
-	public String getContactTelephone() {
-		return contactTelephone;
-	}
-	public void setContactTelephone(String contactTelephone) {
-		this.contactTelephone = contactTelephone;
-	}
-	@Override
-	public String toString() {
-		return "Customer [company=" + company + ", contactName=" + contactName
-				+ ", contactTelephone=" + contactTelephone + "]";
+	
+	public void setFromPersistenceObject(final DDBBCustomer ddbbCustomer) {
+		
+		if(!ddbbCustomer.isCreditRatingNull()) {
+			setCreditRating(ddbbCustomer.getCreditRating());
+		} else {
+			setCreditRating(null);
+		}
+		if(!ddbbCustomer.isCustomerDiscountNull()) {
+			setCustomerDiscount(ddbbCustomer.getCustomerDiscount());
+		} else {
+			setCustomerDiscount(null);
+		}
 	}
 	
 	

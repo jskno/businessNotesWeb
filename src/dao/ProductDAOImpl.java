@@ -9,7 +9,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import model.Product;
+import model.ProductVO;
 
 public class ProductDAOImpl extends DaoImpl implements ProductDAO {
 	
@@ -21,7 +21,7 @@ public class ProductDAOImpl extends DaoImpl implements ProductDAO {
 	}
 
 	public void insert(Object o){
-		Product product = (Product) o;
+		ProductVO product = (ProductVO) o;
 		String productCode = product.getProductCode();
 		String productDescription = product.getProductDescription();
 		
@@ -51,13 +51,13 @@ public class ProductDAOImpl extends DaoImpl implements ProductDAO {
 	}
 
 	@Override
-	public Product getProductById(int productId) {
+	public ProductVO getProductById(int productId) {
 		
 		String sql = "select * from product where id = " + productId;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		
-		Product product = new Product();
+		ProductVO product = new ProductVO();
 		try {
 			statement = connection.prepareStatement(sql);
 			resultSet = statement.executeQuery();
@@ -76,20 +76,20 @@ public class ProductDAOImpl extends DaoImpl implements ProductDAO {
 	}
 
 	@Override
-	public List<Product> getProductsList() {
+	public List<ProductVO> getProductsList() {
 		
-		List<Product> result = new ArrayList<Product>();
+		List<ProductVO> result = new ArrayList<ProductVO>();
 		
 		String sql = "select * from product";
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		
-		Product product;
+		ProductVO product;
 		try {
 			statement = connection.prepareStatement(sql);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				product = new Product();
+				product = new ProductVO();
 				product.setId(resultSet.getInt("id"));
 				product.setProductCode(resultSet.getString("product_code"));
 				product.setProductDescription(resultSet.getString("product_description"));
@@ -104,9 +104,9 @@ public class ProductDAOImpl extends DaoImpl implements ProductDAO {
 	}
 
 	@Override
-	public void insertList(List<Product> productList) {
+	public void insertList(List<ProductVO> productList) {
 		
-		for(Product eachProduct : productList) {
+		for(ProductVO eachProduct : productList) {
 			insert(eachProduct);
 		}
 	}

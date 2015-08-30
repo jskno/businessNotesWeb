@@ -4,7 +4,7 @@ import java.sql.SQLException;
 
 import dao.ProductDAO;
 import dao.ProductDAOImpl;
-import model.Product;
+import model.ProductVO;
 
 public class AddProductService extends ServiceImpl implements Service {
 
@@ -17,7 +17,7 @@ public class AddProductService extends ServiceImpl implements Service {
 	
 	private void createProduct() {
 
-		Product product = new Product();
+		ProductVO product = new ProductVO();
 		ProductDAO productDao = null;
 		try {
 			productDao = new ProductDAOImpl(getConnection(), getSession());

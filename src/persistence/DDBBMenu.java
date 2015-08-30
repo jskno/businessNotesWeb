@@ -39,7 +39,7 @@ public class DDBBMenu {
 		this.indActive = indActive;
 	}
 	
-	// 1 is not null, 2 is null
+	// 0 is not null, 2 is null
 	public boolean isIdMenuNull() {
 		return idMenuNull == 2;
 	}

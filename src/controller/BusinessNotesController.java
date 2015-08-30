@@ -19,7 +19,7 @@ import model.Company;
 import model.Customer;
 import model.Menu;
 import model.Note;
-import model.Product;
+import model.ProductVO;
 import model.Supplier;
 import dao.CompanyDAO;
 import dao.CompanyDAOImpl;
@@ -43,6 +43,7 @@ public class BusinessNotesController extends HttpServlet {
 	private Service service;
 	private BusinessLookUp lookupService = new BusinessLookUp();
 	
+	@Override
 	public void init(ServletConfig config) throws ServletException {
 		
 		super.init(config);
@@ -52,6 +53,7 @@ public class BusinessNotesController extends HttpServlet {
 		context.setAttribute("theMenu", theMenu);
 	}
 	
+	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
@@ -59,6 +61,7 @@ public class BusinessNotesController extends HttpServlet {
 		doPost(request, response);
 	}
 	
+	@Override
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
@@ -289,7 +292,7 @@ public class BusinessNotesController extends HttpServlet {
 		Note note = new Note();
 		Customer customer;
 		Supplier supplier;
-		Product product;
+		ProductVO product;
 		
 		NoteDAO noteDao = new NoteDAOImpl(null, null);
 		CustomerDAO customerDao = new CustomerDAOImpl(null, null);
@@ -329,7 +332,7 @@ public class BusinessNotesController extends HttpServlet {
 	private void createProduct(HttpServletRequest request,
 			HttpServletResponse response) {
 
-		Product product = new Product();
+		ProductVO product = new ProductVO();
 		ProductDAO productDao = new ProductDAOImpl(null, null);
 		product.setProductCode((String) request.getParameter("productCode"));
 		product.setProductDescription((String) request.getParameter("productDescription"));

@@ -3,11 +3,6 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<%
-    @SuppressWarnings("unchecked")
-    List<Company> companiesList =
-            (List<Company>)request.getAttribute("companiesList");
-%>
 <!DOCTYPE html >
 <html lang="en">
 <head>
@@ -15,8 +10,8 @@
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 <script src="bootstrap/jquery/jquery-2.1.3.min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
-<script src="js/webSocketScriptModified.js"></script>
-<title>New Customer</title>
+<!-- <script src="js/webSocketScriptModified.js"></script>  -->
+<title>New Customer2</title>
 </head>
 <body>
 	<div class="container-fluid">
@@ -27,25 +22,17 @@
     	</div>
 		
 		<div class="well">
-			<h3>New Customer</h3>
-  			<p>Form to introduce a new customer.</p>
+			<h3>New Customer2</h3>
+  			<p>Form to introduce a new customer2.</p>
   		</div>
   		
-  		<div id="status">Connecting...</div>
-  		<ul id="messages"></ul>
-  		<form id="message-form" action="#" method="post">
-    		<textarea id="message" placeholder="Write your message here..." required></textarea>
-    		<button type="submit">Send Message</button>
-    		<button type="button" id="close">Close Connection</button>
-  		</form>
-  
   		<form id="newCustomer2" class="form-horizontal" role="form" action="notes/addElement" method="POST">
   		<input type="hidden" name="action" value="addCustomer2"/>
   			<div class="form-group">
       			<label class="control-label col-sm-2" for="taxID">Tax ID:</label>
      			<div class="col-sm-10">          
         		<input type="text" class="form-control" name="taxID" id="taxID" 
-        				placeholder="Enter the tax ID">
+        				onchange="checkTaxID()" placeholder="Enter the tax ID">
       			</div>
     		</div>
     		<div class="form-group">
@@ -78,48 +65,26 @@
 	</div>
 
 </body>
-
 <script>
-$(document).ready(function() {
-    $('#newCustomer2').formValidation({
-        framework: 'bootstrap',
-        excluded: [':disabled'],
-        icon: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
-        },
-        fields: {
-        	taxID: {
-                validators: {
-                    notEmpty: {
-                        message: 'The tax ID is required'
-                    }
-                }
-            },
-        	companyName: {
-                validators: {
-                    notEmpty: {
-                        message: 'The company name is required'
-                    }
-                }
-            },
-            companyTelephone: {
-                validators: {
-                    notEmpty: {
-                        message: 'The company telephone is required'
-                    }
-                }
-            },
-            companyEmail: {
-                validators: {
-                    notEmpty: {
-                        message: 'The company email is required'
-                    }
-                }
-            },
-        }
-    });
-});
+function checkTaxID() {
+	var xmlhttp;
+	if (window.XMLHttpRequest)
+	  {// code for IE7+, Firefox, Chrome, Opera, Safari
+	  xmlhttp=new XMLHttpRequest();
+	  }
+	else
+	  {// code for IE6, IE5
+	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	  }
+	xmlhttp.onreadystatechange=function()
+	  {
+	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+	    {
+	    document.getElementById("companyName").innerHTML=xmlhttp.responseText;
+	    }
+	  }
+	xmlhttp.open("GET","notes/ajax",true);
+	xmlhttp.send();
+	}
 </script>
 </html>

@@ -26,5 +26,9 @@
 	<classpathentry kind="lib" path="C:/Users/Jose/Dropbox/OU/TM470_NotesApp/Software/ApachePOI_Library/poi-bin-3.12-20150511/poi-3.12/lib/log4j-1.2.17.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Jose/Dropbox/OU/TM470_NotesApp/Software/ApachePOI_Library/poi-bin-3.12-20150511/poi-3.12/ooxml-lib/xmlbeans-2.6.0.jar"/>
 	<classpathentry kind="lib" path="C:/Users/Jose/Dropbox/OU/TM470_NotesApp/Software/jstl-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jose/Dropbox/OU/TM470_NotesApp/Software/jackson-annotations-2.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jose/Dropbox/OU/TM470_NotesApp/Software/jackson-core-2.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jose/Dropbox/OU/TM470_NotesApp/Software/jackson-databind-2.6.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/Jose/Dropbox/OU/TM470_NotesApp/Software/jackson-datatype-jsr310-2.6.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

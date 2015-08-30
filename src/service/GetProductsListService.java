@@ -2,7 +2,7 @@ package service;
 
 import java.util.List;
 
-import model.Product;
+import model.ProductVO;
 import dao.ProductDAO;
 import dao.ProductDAOImpl;
 
@@ -19,7 +19,7 @@ public class GetProductsListService extends ServiceImpl implements Service {
 
 		try {
 			ProductDAO productDao = new ProductDAOImpl(getConnection(), getSession());
-			List<Product> productsList = productDao.getProductsList();
+			List<ProductVO> productsList = productDao.getProductsList();
 			request.setAttribute("productsList", productsList);
 		} catch (Exception e) {
 			System.out.println(e);

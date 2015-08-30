@@ -2,12 +2,12 @@ package dao;
 
 import java.util.List;
 
-import model.Product;
+import model.ProductVO;
 
 public interface ProductDAO extends Dao {
 
-	Product getProductById(int productId);
-	List<Product> getProductsList();
-	void insertList(List<Product> productList);
+	ProductVO getProductById(int productId);
+	List<ProductVO> getProductsList();
+	void insertList(List<ProductVO> productList);
 
 }

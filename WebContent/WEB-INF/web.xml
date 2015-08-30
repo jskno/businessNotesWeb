@@ -27,6 +27,19 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	<servlet>
+		<servlet-name>businessNotesAjaxServlet</servlet-name>
+		<servlet-class>controller.BusinessNotesAjaxServlet</servlet-class>
+		<init-param>
+			<param-name>base</param-name>
+			<param-value>/BusinessNotesWeb/notes/ajax</param-value>
+		</init-param>
+		<init-param>
+			<param-name>imageURL</param-name>
+			<param-value>/BusinessNotesWeb/images</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
 	<context-param>
 		<param-name>param1</param-name>
 		<param-value>/BusinessNotesWeb/notes</param-value>
@@ -42,6 +55,10 @@
 	<servlet-mapping>
 		<servlet-name>businessNotesControllerRedirect</servlet-name>
 		<url-pattern>/notes/addElement</url-pattern>
+	</servlet-mapping>
+	<servlet-mapping>
+		<servlet-name>businessNotesAjaxServlet</servlet-name>
+		<url-pattern>/notes/ajax</url-pattern>
 	</servlet-mapping>
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>

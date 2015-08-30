@@ -3,7 +3,7 @@ package service;
 import java.util.List;
 
 import model.Customer;
-import model.Product;
+import model.ProductVO;
 import model.Supplier;
 import dao.CustomerDAO;
 import dao.CustomerDAOImpl;
@@ -39,7 +39,7 @@ public class NewNoteFormService extends ServiceImpl {
 
 		try {
 			ProductDAO productDao = new ProductDAOImpl(getConnection(), getSession());
-			List<Product> productsList = productDao.getProductsList();
+			List<ProductVO> productsList = productDao.getProductsList();
 			request.setAttribute("productsList", productsList);
 		} catch (Exception e) {
 			System.out.println(e);

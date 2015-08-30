@@ -22,15 +22,11 @@ public class BusinessNotesControllerRedirect extends HttpServlet {
 	private Service service;
 	private BusinessLookUp lookupService = new BusinessLookUp();
 	
+	@Override
 	public void init(ServletConfig config) throws ServletException {
-		
-//		super.init(config);
-//		MenuDAO subMenuDao = new MenuDAOImpl(null, null);
-//		Map<String, List<String>> subMenusList = subMenuDao.getSubMenus();
-//		ServletContext context = config.getServletContext();
-//		context.setAttribute("subMenusList", subMenusList);
 	}
 	
+	@Override
 	protected void doGet(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
@@ -38,6 +34,7 @@ public class BusinessNotesControllerRedirect extends HttpServlet {
 		doPost(request, response);
 	}
 	
+	@Override
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		

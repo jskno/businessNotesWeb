@@ -2,7 +2,7 @@ package dao;
 
 import java.util.List;
 
-import persistence.PersistenceSupplier;
+import persistence.DDBBSupplier;
 import model.Supplier;
 
 public interface SupplierDAO extends Dao {
@@ -11,7 +11,7 @@ public interface SupplierDAO extends Dao {
 
 	List<Supplier> getSuppliersList();
 
-	List<PersistenceSupplier> getPersistenceCustomerList();
+	List<DDBBSupplier> getPersistenceCustomerList();
 
 	void insertList(List<Supplier> suppliersList);
 

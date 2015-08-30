@@ -1,51 +1,50 @@
 package model;
 
-public class Supplier {
+import persistence.DDBBSupplier;
+
+public class Supplier extends CompanyRole {
 	
-	private int id;
-	private Company company;
-	private String contactName;
-	private String contactTelephone;
+	private Integer deliveryDays;
 	
 	public Supplier() {
-		
 	}
 	
-	public Supplier(Company company, String contactName,
-			String contactTelephone) {
+	public Supplier(Integer deliveryDays) {
+		this.deliveryDays = deliveryDays;
+	}
+	
+	public Integer getDeliveryDays() {
+		return deliveryDays;
+	}
+	public void setDeliveryDays(Integer deliveryDays) {
+		this.deliveryDays = deliveryDays;
+	}
+
+	public DDBBSupplier getPersistenceSupplier() {
 		
-		this.company = company;
-		this.contactName = contactName;
-		this.contactTelephone = contactTelephone;
+		DDBBSupplier ddbbSupplier = new DDBBSupplier();
+		if(getRoleId() != null) {
+			ddbbSupplier.setRoleId(getRoleId());
+		} else {
+			ddbbSupplier.setRoleIdNull();
+		}
+		if(getDeliveryDays() != null) {
+			ddbbSupplier.setDeliveryDays(getDeliveryDays());
+		} else {
+			ddbbSupplier.setDeliveryDaysNull();
+		}
+		
+		return ddbbSupplier;
 	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
-	public Company getCompany() {
-		return company;
-	}
-	public void setCompany(Company company) {
-		this.company = company;
-	}
-	public String getContactName() {
-		return contactName;
-	}
-	public void setContactName(String contactName) {
-		this.contactName = contactName;
-	}
-	public String getContactTelephone() {
-		return contactTelephone;
-	}
-	public void setContactTelephone(String contactTelephone) {
-		this.contactTelephone = contactTelephone;
-	}
-	@Override
-	public String toString() {
-		return "Supplier [company=" + company + ", contactName=" + contactName
-				+ ", contactTelephone=" + contactTelephone + "]";
+	
+	public void setFromPersistenceObject(DDBBSupplier ddbbSupplier) {
+		
+		if(!ddbbSupplier.isDeliveryDaysNull()) {
+			setDeliveryDays(ddbbSupplier.getDeliveryDays());
+		} else {
+			setDeliveryDays(null);
+		}
+		
 	}
 	
 	

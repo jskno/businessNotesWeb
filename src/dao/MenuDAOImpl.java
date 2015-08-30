@@ -13,7 +13,7 @@ import javax.servlet.http.HttpSession;
 import persistence.DDBBMenu;
 import persistence.DDBBSubMenu;
 import model.Menu;
-import model.Product;
+import model.ProductVO;
 import model.SubMenu;
 
 public class MenuDAOImpl extends DaoImpl implements MenuDAO {

@@ -13,7 +13,7 @@ import dao.SupplierDAO;
 import dao.SupplierDAOImpl;
 import model.Customer;
 import model.Note;
-import model.Product;
+import model.ProductVO;
 import model.Supplier;
 
 public class AddNoteService extends ServiceImpl implements Service {
@@ -30,7 +30,7 @@ public class AddNoteService extends ServiceImpl implements Service {
 		Note note = new Note();
 		Customer customer;
 		Supplier supplier;
-		Product product;
+		ProductVO product;
 		
 		NoteDAO noteDao = null;
 		CustomerDAO customerDao = null;

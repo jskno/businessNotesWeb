@@ -13,9 +13,8 @@ $(document).ready(function() {
 	  
 	var socket;
 	try {
-		socket = new WebSocket('ws://' + window.location.host + 
-				'<c:url value="/notes/ws/"> \
-					<c:param name="action" value="${action}" ></c:url>');
+		socket = new WebSocket(
+			'ws://localhost:8080/BusinessNotesWeb/notes/ws'); //?action=checkTaxID
 	} catch(error) {
 		return;
 	}

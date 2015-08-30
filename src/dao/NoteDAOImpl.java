@@ -10,11 +10,11 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import persistence.PersistenceNote;
+import persistence.DDBBNote;
 import utils.DateUtils;
 import model.Customer;
 import model.Note;
-import model.Product;
+import model.ProductVO;
 import model.Supplier;
 
 public class NoteDAOImpl extends DaoImpl implements NoteDAO {
@@ -98,7 +98,7 @@ public class NoteDAOImpl extends DaoImpl implements NoteDAO {
 						idCustomer);
 				Supplier supplier = supplierDao.getSupplierById(
 						resultSet.getInt("supplier_id"));
-				Product product = productDao.getProductById(
+				ProductVO product = productDao.getProductById(
 						resultSet.getInt("product_id"));
 								
 				note.setId(resultSet.getInt("id"));
@@ -124,9 +124,9 @@ public class NoteDAOImpl extends DaoImpl implements NoteDAO {
 		return result;
 	}
 	@Override
-	public List<PersistenceNote> getPersistenceCustomerList() {
+	public List<DDBBNote> getPersistenceCustomerList() {
 		
-		List<PersistenceNote> result = new ArrayList<PersistenceNote>();
+		List<DDBBNote> result = new ArrayList<DDBBNote>();
 		
 		String sql = "select * from note";
 		PreparedStatement statement = null;
@@ -136,7 +136,7 @@ public class NoteDAOImpl extends DaoImpl implements NoteDAO {
 			statement = connection.prepareStatement(sql);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				PersistenceNote perNote = new PersistenceNote();
+				DDBBNote perNote = new DDBBNote();
 				
 				perNote.setId(resultSet.getInt("id"));
 				perNote.setCustomerId(resultSet.getInt("customer_id"));

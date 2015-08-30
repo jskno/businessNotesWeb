@@ -7,16 +7,16 @@ import java.io.IOException;
 import java.util.List;
 
 import model.Company;
-import model.Product;
+import model.ProductVO;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
-import persistence.PersistenceCustomer;
-import persistence.PersistenceNote;
-import persistence.PersistenceSupplier;
+import persistence.DDBBCustomer;
+import persistence.DDBBNote;
+import persistence.DDBBSupplier;
 
 import java.lang.reflect.Field;
 
@@ -111,7 +111,7 @@ public class ExportTable
       XSSFRow headerRow = spreadsheet.createRow(0);
       //This data needs to be written.
       ProductDAO productDao = new ProductDAOImpl(null, null);
-      List<Product> productsList = productDao.getProductsList();
+      List<ProductVO> productsList = productDao.getProductsList();
       //Iterate over data and write to sheet
       Object eachProduct;
       for (int i = 0; i < productsList.size(); i++)
@@ -163,7 +163,7 @@ public class ExportTable
       XSSFRow headerRow = spreadsheet.createRow(0);
       //This data needs to be written.
       CustomerDAO customerDao = new CustomerDAOImpl(null, null);
-      List<PersistenceCustomer> persistenceCustomersList = customerDao.getPersistenceCustomerList();
+      List<DDBBCustomer> persistenceCustomersList = customerDao.getPersistenceCustomerList();
       //Iterate over data and write to sheet
       Object eachCustomer;
       for (int i = 0; i < persistenceCustomersList.size(); i++)
@@ -202,7 +202,7 @@ public class ExportTable
       XSSFRow headerRow = spreadsheet.createRow(0);
       //This data needs to be written.
       SupplierDAO supplierDao = new SupplierDAOImpl(null, null);
-      List<PersistenceSupplier> persistenceSuppliersList = supplierDao.getPersistenceCustomerList();
+      List<DDBBSupplier> persistenceSuppliersList = supplierDao.getPersistenceCustomerList();
       //Iterate over data and write to sheet
       Object eachCustomer;
       for (int i = 0; i < persistenceSuppliersList.size(); i++)
@@ -241,7 +241,7 @@ public class ExportTable
       XSSFRow headerRow = spreadsheet.createRow(0);
       //This data needs to be written.
       NoteDAO noteDao = new NoteDAOImpl(null, null);
-      List<PersistenceNote> persistenceNotesList = noteDao.getPersistenceCustomerList();
+      List<DDBBNote> persistenceNotesList = noteDao.getPersistenceCustomerList();
       //Iterate over data and write to sheet
       Object eachNote;
       for (int i = 0; i < persistenceNotesList.size(); i++)
