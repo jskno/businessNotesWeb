@@ -9,35 +9,28 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import persistence.DDBBCustomer;
-import model.Company;
 import model.Customer;
+import persistence.DDBBCustomer;
 
 public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 	
-	private CompanyDAO companyDao;
 	
-	private static final String INSERT = "insert into customer (company_id, contact_name,"
-			+ "contact_telephone) values (?,?,?)";
+	private static final String INSERT = "INSERT /*INSERT_ALL*/ INTO customer(ROLE_ID, CREDIT_RATING, CUSTOMER_DISCOUNT) VALUES(?,?,?)";
 	
 	public CustomerDAOImpl(Connection connection, HttpSession session) {
 		super(connection, session);
-		companyDao = new CompanyDAOImpl(connection, session);
-		
 	}
 	
 	public void insert(Object o){
 		Customer customer = (Customer) o;
-		int companyId = customer.getCompany().getId();
-		String contactName = customer.getContactName();
-		String contactTelephone = customer.getContactTelephone();
+		DDBBCustomer ddbbCustomer = customer.getPersistenceCustomer();
 		
 		PreparedStatement ps = null;
 		try {
 			ps = connection.prepareStatement(INSERT);
-			ps.setInt(1, companyId);
-			ps.setString(2, contactName);
-			ps.setString(3, contactTelephone);
+			ps.setInt(1, ddbbCustomer.getRoleId());
+			ps.setInt(2, ddbbCustomer.getCreditRating());
+			ps.setDouble(3, ddbbCustomer.getCustomerDiscount());
 			ps.executeUpdate();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
@@ -59,25 +52,19 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 	}
 
 	@Override
-	public Customer getCustomerById(int customerId) {
+	public Customer getCustomerById(int roleId) {
 		
-		String sql = "select * from customer where id = " + customerId;
+		String sql = "select * from customer where role_id = " + roleId;
+		DDBBCustomer ddbbCustomer = new DDBBCustomer();
 		Customer customer = new Customer();
-		Connection connection = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		
 		try {
 			statement = connection.prepareStatement(sql);
 			resultSet = statement.executeQuery();
-			while (resultSet.next()) {
-				Company company = companyDao.getCompanyById(
-						resultSet.getInt("company_id"));
-				customer.setId(resultSet.getInt("id"));
-				customer.setCompany(company);
-				customer.setContactName(resultSet.getString("contact_name"));
-				customer.setContactTelephone(resultSet.getString("contact_telephone"));
-			}
+			ddbbCustomer.loadResult(resultSet);
+			customer.setFromPersistenceObject(ddbbCustomer);
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {
@@ -89,68 +76,54 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 	@Override
 	public List<Customer> getCustomersList() {
 		
-		List<Customer> result = new ArrayList<Customer>();
+		List<Customer> customerList = new ArrayList<Customer>();
 		
 		String sql = "select * from customer";
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		
-		Customer customer;
-		Company company;
+		DDBBCustomer ddbbCustomer = new DDBBCustomer();
+		Customer customer = new Customer();
+		
 		try {
 			statement = connection.prepareStatement(sql);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				
-				customer = new Customer();
-				customer.setId(resultSet.getInt("id"));
-				
-				company = companyDao.getCompanyById(
-						resultSet.getInt("company_id"));
-				
-				customer.setCompany(company);
-				customer.setContactName(resultSet.getString("contact_name"));
-				customer.setContactTelephone(resultSet.getString("contact_telephone"));
-				
-				result.add(customer);
+				ddbbCustomer.loadResult(resultSet);
+				customer.setFromPersistenceObject(ddbbCustomer);
+				customerList.add(customer);
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {
 			closeStmtAndRs(statement, resultSet);
 		}
-		return result;
+		return customerList;
 	}
 
 	@Override
 	public List<DDBBCustomer> getPersistenceCustomerList() {
 		
-		List<DDBBCustomer> result = new ArrayList<DDBBCustomer>();
+		List<DDBBCustomer> list = new ArrayList<DDBBCustomer>();
 		
 		String sql = "select * from customer";
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		
-		DDBBCustomer perCustomer;
+		DDBBCustomer ddbbCustomer = new DDBBCustomer();
 		try {
 			statement = connection.prepareStatement(sql);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				
-				perCustomer = new DDBBCustomer();
-				perCustomer.setId(resultSet.getInt("id"));
-				perCustomer.setCompanyId(resultSet.getInt("company_id"));
-				perCustomer.setContactName(resultSet.getString("contact_name"));
-				perCustomer.setContactTelephone(resultSet.getString("contact_telephone"));
-				
-				result.add(perCustomer);
+				ddbbCustomer.loadResult(resultSet);
+				list.add(ddbbCustomer);
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {
 			closeStmtAndRs(statement, resultSet);
 		}
-		return result;
+		return list;
 	}
 
 	@Override

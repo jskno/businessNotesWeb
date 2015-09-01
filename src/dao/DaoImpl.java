@@ -72,8 +72,4 @@ public abstract class DaoImpl implements Dao {
 			
 		}
 	}
-
-	
-	
-
 }

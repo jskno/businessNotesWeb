@@ -1,7 +1,5 @@
 package dao;
 
-
-
 public interface Dao {
 	
 	public void insert(Object o);

@@ -5,6 +5,18 @@ import java.sql.SQLException;
 
 public class DDBBCustomer {
 	
+	/** Static SQL FOR UPDATE sentence: SELECT ... FOR UPDATE. */
+	private static final java.lang.String SQL_READ_FOR_UPDATE="SELECT /*UPDATE LOB*/ * FROM GCCC_VP_SUPPLIES_LIST WHERE ID_SUPPLIES_LIST=? FOR UPDATE";
+
+	/** Static SQL sentence: INSERT (all columns). */
+	private static final java.lang.String SQL_INSERT_ALL="INSERT /*INSERT_ALL*/ INTO customer(CREDIT_RATING, CUSTOMER_DISCOUNT) VALUES(?,?)"; //SEC_GCCC_VPSUPPLIESLIST1.NEXTVAL
+
+	/** Static SQL sentence: DELETE. */
+	private static final java.lang.String SQL_DELETE="DELETE /*DELETE*/ FROM customer WHERE ROLE_ID=?"; // AND OPTIMIST_LOCK=?";
+
+	/** Static SQL sentence: SELECT. */
+	private static final java.lang.String SQL_READ="SELECT /*READ*/ * FROM customer WHERE ROLE_ID=?";
+
 	private int roleId;
 	private int creditRating;
 	private double customerDiscount;
