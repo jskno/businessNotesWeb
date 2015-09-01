@@ -62,7 +62,6 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 				
 		String sql = "select * from company order by company_name";
 		
-		Connection connection = null;
 		Company company;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
