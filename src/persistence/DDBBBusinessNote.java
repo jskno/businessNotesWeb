@@ -1,9 +1,16 @@
 package persistence;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class DDBBBusinessNote {
+	
+	private static final String SQL_INSERT_ALL = "insert into businness_note (NOTE_ID, CUSTOMER_ID, SUPPLIER_ID, " +
+			"PRODUCT_ID) values (?,?,?,?)";
+	private static final String SQL_READ="SELECT * FROM businness_note WHERE NOTE_ID=?";
+	private static final String SQL_DELETE="DELETE FROM businness_note WHERE NOTE_ID=?";
 	
 	private int noteId;
 	private int customerId;
@@ -96,6 +103,102 @@ public class DDBBBusinessNote {
 			setProductIdNull();
 		}
 	}
+	
+	public void insert(Connection connection) throws SQLException {
+		
+		final PreparedStatement ps = connection.prepareStatement(SQL_INSERT_ALL);
+		int p=1;
+		
+		try
+		{
+			// SQL: NOTE_ID (INT):
+			if (isNoteIdNull())
+			{
+				ps.setNull(p, java.sql.Types.NUMERIC);
+			}
+			else
+			{
+				ps.setInt(p, getNoteId());
+			}
+			p++;
+			// SQL: CUSTOMER_ID (INT):
+			if (isCustomerIdNull())
+			{
+				ps.setNull(p, java.sql.Types.NUMERIC);
+			}
+			else
+			{
+				ps.setInt(p, getCustomerId());
+			}
+			p++;
+			// SQL: SUPPLIER_ID (INT):
+			if (isSupplierIdNull())
+			{
+				ps.setNull(p, java.sql.Types.NUMERIC);
+			}
+			else
+			{
+				ps.setInt(p, getSupplierId());
+			}
+			// SQL: PRODUCT_ID (INT):
+			if (isProductIdNull())
+			{
+				ps.setNull(p, java.sql.Types.NUMERIC);
+			}
+			else
+			{
+				ps.setInt(p, getProductId());
+			}
+			ps.executeUpdate();
+						
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			ps.close();
+		}
+	}
 
+	public static DDBBBusinessNote read(final Connection connection, int noteId)
+			throws SQLException {
+		
+		final PreparedStatement ps = connection.prepareStatement(SQL_READ);
+		ResultSet rs = null;
+		int p = 1;
+		try {
+			ps.setInt(p, noteId);
+			rs = ps.executeQuery();
+			DDBBBusinessNote ddbbNote;
+			if(rs.next()) {
+				ddbbNote = new DDBBBusinessNote();
+				ddbbNote.loadResult(rs);
+			} else {
+				ddbbNote = null;
+			}
+			return ddbbNote;
+		} finally {
+			if(rs != null) {
+				rs.close();
+			}
+			ps.close();
+		}
+	}
+	
+	public boolean delete(final Connection connection)
+			throws java.sql.SQLException {
+		
+		PreparedStatement ps=connection.prepareStatement(SQL_DELETE);
+		int p=1;
+		try	{
+			ps.setInt(p++, getNoteId());
+			//ps.setLong(p++, this.myOptimistLock);
+					
+			if (ps.executeUpdate() <= 0) {
+				throw new SQLException();
+			}
+		} finally {
+			ps.close();
+		}
+		return true;
+	}
 	
 }

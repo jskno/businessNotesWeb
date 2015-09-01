@@ -1,10 +1,19 @@
 package persistence;
 
+import java.sql.Connection;
 import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DDBBProductsOrder {
+	
+	private static final String INSERT_ALL = "insert into products_order (CREATION_DATE, " +
+		"SUPPLIER_ID, CUSTOMER_ID) values (?,?,?)";
+	private static final String LAST_ID = "SELECT LAST_INSERT_ID()";
+	private static final String SQL_READ="SELECT * FROM products_order WHERE ORDER_ID=?";
+	private static final String SQL_DELETE="DELETE FROM products_order WHERE ORDER_ID=?";
 	
 	private int orderId;
 	private Date creationDate;
@@ -81,6 +90,104 @@ public class DDBBProductsOrder {
 		setCustomerId(rs.getInt("CUSTOMER_ID"));
 		setSupplierId(rs.getInt("SUPPLIER_ID"));
 		
+	}
+	
+	public int insert(Connection connection) throws SQLException {
+		
+		int lastKey;		
+		final PreparedStatement ps = connection.prepareStatement(INSERT_ALL);
+		final Statement stmt = connection.createStatement();
+		ResultSet rs = null;
+		int p=1;
+		
+		try
+		{
+			// SQL: CREATION_DATE (DATE):
+			if (isCreationDateNull())
+			{
+				ps.setNull(p, java.sql.Types.DATE);
+			}
+			else
+			{
+				ps.setDate(p, new Date(getCreationDate().getTime()));
+			}
+			p++;
+			// SQL: SUPPLIER_ID (INT):
+			if (isCustomerIdNull())
+			{
+				ps.setNull(p, java.sql.Types.NUMERIC);
+			}
+			else
+			{
+				ps.setInt(p, getCustomerId());
+			}
+			p++;
+			// SQL: CUSTOMER_ID (INT):
+			if (isSupplierIdNull())
+			{
+				ps.setNull(p, java.sql.Types.NUMERIC);
+			}
+			else
+			{
+				ps.setInt(p, getSupplierId());
+			}
+			ps.executeUpdate();
+			
+			rs = stmt.executeQuery(LAST_ID);
+			lastKey = rs.getInt(0);
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			ps.close();
+			rs.close();
+			stmt.close();
+		}
+			
+		return lastKey;
+	}
+	
+	public static DDBBProductsOrder read(final Connection connection, int orderId)
+			throws SQLException {
+		
+		final PreparedStatement ps = connection.prepareStatement(SQL_READ);
+		ResultSet rs = null;
+		int p = 1;
+		try {
+			ps.setInt(p, orderId);
+			rs = ps.executeQuery();
+			DDBBProductsOrder ddbbProductsOrder;
+			if(rs.next()) {
+				ddbbProductsOrder = new DDBBProductsOrder();
+				ddbbProductsOrder.loadResult(rs);
+			} else {
+				ddbbProductsOrder = null;
+			}
+			return ddbbProductsOrder;
+		} finally {
+			if(rs != null) {
+				rs.close();
+			}
+			ps.close();
+		}
+	}
+	
+	public boolean delete(final Connection connection)
+			throws java.sql.SQLException {
+		
+		PreparedStatement ps=connection.prepareStatement(SQL_DELETE);
+		int p=1;
+		try	{
+			ps.setInt(p++, getOrderId());
+			//ps.setLong(p++, this.myOptimistLock);
+					
+			if (ps.executeUpdate() <= 0) {
+				throw new SQLException();
+			}
+		} finally {
+			ps.close();
+		}
+		return true;
 	}
 	
 	

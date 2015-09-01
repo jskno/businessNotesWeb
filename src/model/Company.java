@@ -61,8 +61,8 @@ public class Company {
 	
 	public final void setFromPersistence(final DDBBCompany ddbbCompany) {
 		
-		if (!ddbbCompany.isIdNull()) {
-			this.id = ddbbCompany.getId();
+		if (!ddbbCompany.isCompanyIdNull()) {
+			this.id = ddbbCompany.getCompanyId();
 		} else {
 			this.id = null;
 		}
@@ -94,7 +94,7 @@ public class Company {
 		if(getId() != null) {
 			ddbbCompany.setId(getId());
 		} else {
-			ddbbCompany.setIdNull();
+			ddbbCompany.setCompanyIdNull();
 		}
 		if(getTaxID() != null) {
 			ddbbCompany.setTaxID(getTaxID());

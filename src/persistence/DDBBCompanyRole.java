@@ -1,9 +1,18 @@
 package persistence;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 public class DDBBCompanyRole {
+	
+	private static final String INSERT_ALL = "insert into company_role (COMPANY_ID, " +
+		"ROLE_NAME, CONTACT_NAME, CONTACT_TELEPHONE) values (?,?,?,?)";
+	private static final String LAST_ID = "SELECT LAST_INSERT_ID()";
+	private static final String SQL_READ="SELECT * FROM company_role WHERE ROLE_ID=?";
+	private static final String SQL_DELETE="DELETE FROM company_role WHERE ROLE_ID=?";
 	
 	private int roleId;
 	private int companyId;
@@ -95,4 +104,110 @@ public class DDBBCompanyRole {
 		
 	}
 	
+	public int insert(Connection connection) throws SQLException {
+		
+		int lastKey;		
+		final PreparedStatement ps = connection.prepareStatement(INSERT_ALL);
+		final Statement stmt = connection.createStatement();
+		ResultSet rs = null;
+		int p=1;
+		
+		try
+		{
+			// SQL: COMPANY_ID (INT):
+			if (isCompanyIdNull())
+			{
+				ps.setNull(p, java.sql.Types.NUMERIC);
+			}
+			else
+			{
+				ps.setInt(p, getCompanyId());
+			}
+			p++;
+			// SQL: ROLE_NAME (INT):
+			if (isRoleNameNull())
+			{
+				ps.setNull(p, java.sql.Types.VARCHAR);
+			}
+			else
+			{
+				ps.setString(p, getRoleName());
+			}
+			p++;
+			// SQL: CONTACT_NAME (STRING):
+			if (isContactNameNull())
+			{
+				ps.setNull(p, java.sql.Types.VARCHAR);
+			}
+			else
+			{
+				ps.setString(p, getContactName());
+			}
+			// SQL: CONTACT_TELEPHONE (STRING):
+			if (isContactTelephoneNull())
+			{
+				ps.setNull(p, java.sql.Types.VARCHAR);
+			}
+			else
+			{
+				ps.setString(p, getContactTelephone());
+			}
+			ps.executeUpdate();
+			
+			rs = stmt.executeQuery(LAST_ID);
+			lastKey = rs.getInt(0);
+			
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		} finally {
+			ps.close();
+			rs.close();
+			stmt.close();
+		}
+			
+		return lastKey;
+	}
+	
+	public static DDBBCompanyRole read(final Connection connection, int roleId)
+			throws SQLException {
+		
+		final PreparedStatement ps = connection.prepareStatement(SQL_READ);
+		ResultSet rs = null;
+		int p = 1;
+		try {
+			ps.setInt(p, roleId);
+			rs = ps.executeQuery();
+			DDBBCompanyRole ddbbCompanyRole;
+			if(rs.next()) {
+				ddbbCompanyRole = new DDBBCompanyRole();
+				ddbbCompanyRole.loadResult(rs);
+			} else {
+				ddbbCompanyRole = null;
+			}
+			return ddbbCompanyRole;
+		} finally {
+			if(rs != null) {
+				rs.close();
+			}
+			ps.close();
+		}
+	}
+	
+	public boolean delete(final Connection connection)
+			throws java.sql.SQLException {
+		
+		PreparedStatement ps=connection.prepareStatement(SQL_DELETE);
+		int p=1;
+		try	{
+			ps.setInt(p++, getRoleId());
+			//ps.setLong(p++, this.myOptimistLock);
+					
+			if (ps.executeUpdate() <= 0) {
+				throw new SQLException();
+			}
+		} finally {
+			ps.close();
+		}
+		return true;
+	}
 }

@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 
 import javax.servlet.http.HttpSession;
 
@@ -34,19 +35,6 @@ public abstract class DaoImpl implements Dao {
 		this.session = session;
 	}
 	
-	public void insert(Object o){
-	}
-	
-	public Object search(Object o) {
-		return null;
-	}
-	
-	public void update(Object o) {
-	}
-	
-	public void delete(Object o) {
-	}
-	
 	public void closeStmtAndRs(PreparedStatement stmt,
 			ResultSet rs) {
 		
@@ -67,6 +55,19 @@ public abstract class DaoImpl implements Dao {
 		try {
 			if (ps != null) {
 				ps.close();
+			}
+		} catch (SQLException e) {
+			
+		}
+	}
+	
+	public void closeStmtAndRs(Statement stmt, ResultSet rs) {
+		try {
+			if (rs != null) {
+				rs.close();
+			}
+			if (stmt != null) {
+				stmt.close();
 			}
 		} catch (SQLException e) {
 			

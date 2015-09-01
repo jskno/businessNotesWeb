@@ -37,7 +37,7 @@ public class ThreadVO {
 	
 	public void setFromPersistenceObject(DDBBThread ddbbThread) {
 		
-		if(!ddbbThread.isThreadNull()) {
+		if(!ddbbThread.isThreadIdNull()) {
 			setThreadId(ddbbThread.getThreadId());
 		} else {
 			setThreadId(null);

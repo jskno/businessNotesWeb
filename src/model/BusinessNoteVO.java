@@ -72,5 +72,8 @@ public class BusinessNoteVO extends Note {
 		
 	}
 	
+	public void insert() {
+		
+	}
 
 }
