@@ -9,34 +9,39 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import model.Company;
+import model.CompanyRole;
 import model.Customer;
+import persistence.DDBBCompany;
+import persistence.DDBBCompanyRole;
 import persistence.DDBBCustomer;
 
 public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 	
-	
-	private static final String INSERT = "INSERT /*INSERT_ALL*/ INTO customer(ROLE_ID, CREDIT_RATING, CUSTOMER_DISCOUNT) VALUES(?,?,?)";
+	CompanyDAO companyDao;
+	CompanyRoleDao companyRoleDao;
 	
 	public CustomerDAOImpl(Connection connection, HttpSession session) {
 		super(connection, session);
+		companyDao = new CompanyDAOImpl(connection, session);
+		companyRoleDao = new CompanyRoleDaoImpl(connection, session);
 	}
 	
-	public void insert(Object o){
+	@Override
+	public int insert(Object o){
+		CompanyRole companyRole = (CompanyRole) o;
+		int roleId = companyRoleDao.insert(companyRole);
 		Customer customer = (Customer) o;
+		customer.setRoleId(roleId);
 		DDBBCustomer ddbbCustomer = customer.getPersistenceCustomer();
+		int newCustomerId = -1;
 		
-		PreparedStatement ps = null;
 		try {
-			ps = connection.prepareStatement(INSERT);
-			ps.setInt(1, ddbbCustomer.getRoleId());
-			ps.setInt(2, ddbbCustomer.getCreditRating());
-			ps.setDouble(3, ddbbCustomer.getCustomerDiscount());
-			ps.executeUpdate();
+			newCustomerId = ddbbCustomer.insert(connection);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
-		} finally {
-			closeStmt(ps);
 		}
+		return newCustomerId;
 	}
 	
 	public Object search(Object o) {
@@ -78,19 +83,23 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 		
 		List<Customer> customerList = new ArrayList<Customer>();
 		
-		String sql = "select * from customer";
+		String sql = "select * from customer cus "
+				+ "join company_role cr "
+					+ "on cus.role_id = cr.role_id "
+				+ "join company com "
+					+ "on cr.company_id = com.company_id "
+				+ "order by com.company_name";
+		
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		
-		DDBBCustomer ddbbCustomer = new DDBBCustomer();
-		Customer customer = new Customer();
+		Customer customer = null;
 		
 		try {
 			statement = connection.prepareStatement(sql);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				ddbbCustomer.loadResult(resultSet);
-				customer.setFromPersistenceObject(ddbbCustomer);
+				customer = getCustomerFromRs(resultSet);
 				customerList.add(customer);
 			}
 		} catch (SQLException ex) {
@@ -132,6 +141,55 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 		for(Customer eachCustomer : customersList) {
 			insert(eachCustomer);
 		}
+	}
+
+	@Override
+	public Customer getCustomerByTaxID(String taxID) {
+		
+		Customer customer = null;
+		
+		String sql = "select * from customer cus"
+			+ " left join company_role cr"
+					+ " on cus.role_id = cr.role_id"
+			+ " left join company com"
+					+ " on cr.company_id = com.company_id"
+			+ " where com.tax_ID =?";
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, taxID);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				customer = getCustomerFromRs(rs);
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			closeStmtAndRs(ps, rs);
+		}
+		return customer;
+	}
+	
+	private Customer getCustomerFromRs(ResultSet rs) throws SQLException {
+		
+		Customer customer;
+		Company company;
+		
+		DDBBCustomer ddbbCustomer = new DDBBCustomer();
+		DDBBCompanyRole ddbbCompanyRole = new DDBBCompanyRole();
+		DDBBCompany ddbbCompany = new DDBBCompany();
+		
+		ddbbCompany.loadResult(rs);
+		ddbbCustomer.loadResult(rs);
+		ddbbCompanyRole.loadResult(rs);
+		
+		company = new Company(ddbbCompany);
+		customer = new Customer(ddbbCompanyRole, ddbbCustomer);
+		customer.setCompany(company);
+		
+		return customer;
 	}
 		
 }

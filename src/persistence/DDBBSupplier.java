@@ -64,11 +64,12 @@ public class DDBBSupplier {
 		}
 	}
 	
-	public void insert(Connection connection) throws SQLException {
+	public int insert(Connection connection) throws SQLException {
 		
+		Integer lastKey = null;
 		final PreparedStatement ps = connection.prepareStatement(INSERT_ALL);
 		int p=1;
-		
+				
 		try
 		{
 			// SQL: ROLE_ID (INT):
@@ -91,12 +92,14 @@ public class DDBBSupplier {
 				ps.setInt(p, getDeliveryDays());
 			}
 			ps.executeUpdate();
+			lastKey = getRoleId();
 			
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
 			ps.close();
 		}
+		return lastKey;
 	}
 	
 	public static DDBBSupplier read(final Connection connection, int roleId)

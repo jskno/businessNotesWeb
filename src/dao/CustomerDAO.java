@@ -15,4 +15,6 @@ public interface CustomerDAO extends Dao {
 
 	void insertList(List<Customer> customersList);
 
+	Customer getCustomerByTaxID(String taxID);
+
 }

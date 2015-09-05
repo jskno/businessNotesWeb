@@ -104,8 +104,9 @@ public class DDBBBusinessNote {
 		}
 	}
 	
-	public void insert(Connection connection) throws SQLException {
+	public Integer insert(Connection connection) throws SQLException {
 		
+		Integer lastKey = null;
 		final PreparedStatement ps = connection.prepareStatement(SQL_INSERT_ALL);
 		int p=1;
 		
@@ -150,12 +151,14 @@ public class DDBBBusinessNote {
 				ps.setInt(p, getProductId());
 			}
 			ps.executeUpdate();
-						
+			
+			lastKey = getNoteId();
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
 			ps.close();
 		}
+		return lastKey;
 	}
 
 	public static DDBBBusinessNote read(final Connection connection, int noteId)

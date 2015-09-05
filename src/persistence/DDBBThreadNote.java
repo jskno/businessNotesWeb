@@ -63,8 +63,9 @@ public class DDBBThreadNote {
 		
 	}
 	
-	public void insert(Connection connection) throws SQLException {
+	public Integer insert(Connection connection) throws SQLException {
 		
+		Integer lastKey = null;
 		final PreparedStatement ps = connection.prepareStatement(INSERT_ALL);
 		int p=1;
 		
@@ -89,13 +90,15 @@ public class DDBBThreadNote {
 				ps.setInt(p, getNoteId());
 			}
 			ps.executeUpdate();
+			lastKey = getThreadId();
 			
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
 			ps.close();
 		}
-			
+		
+		return lastKey;
 	}
 	
 	public static DDBBThreadNote read(final Connection connection, int threadId, int noteId)

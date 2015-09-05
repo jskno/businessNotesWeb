@@ -1,13 +1,11 @@
 package service;
 
-import java.sql.SQLException;
-
+import model.Company;
+import model.Supplier;
 import dao.CompanyDAO;
 import dao.CompanyDAOImpl;
 import dao.SupplierDAO;
 import dao.SupplierDAOImpl;
-import model.Company;
-import model.Supplier;
 
 public class AddSupplierService extends ServiceImpl implements Service {
 
@@ -23,12 +21,8 @@ public class AddSupplierService extends ServiceImpl implements Service {
 		Supplier supplier = new Supplier();
 		CompanyDAO companyDao = null;
 		SupplierDAO supplierDao = null;
-		try {
-			companyDao = new CompanyDAOImpl(getConnection(), getSession());
-			supplierDao = new SupplierDAOImpl(getConnection(), getSession());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		companyDao = new CompanyDAOImpl(getConnection(), getSession());
+		supplierDao = new SupplierDAOImpl(getConnection(), getSession());
 		Company company = companyDao.getCompanyById(Integer.parseInt(request.getParameter("companyId")));
 		supplier.setCompany(company);
 		supplier.setContactName((String) request.getParameter("contactName"));

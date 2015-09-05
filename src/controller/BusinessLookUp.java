@@ -1,6 +1,7 @@
 package controller;
 
 import service.AddCompanyService;
+import service.AddCustomer2Service;
 import service.AddCustomerService;
 import service.AddNoteService;
 import service.AddProductService;
@@ -34,7 +35,8 @@ public class BusinessLookUp {
 	private final String NEW_PRODUCT = "newProduct";
 	private final String PRODUCTS_LIST = "productsList";
 	private final String NEW_COMPANY = "newCompany";
-	private final String CREATE_CUSTOMER = "createCustomer";
+	private final String ADD_CUSTOMER = "addCustomer";
+	private final String ADD_CUSTOMER2 = "addCustomer2";
 	private final String ADD_SUPPLIER = "addSupplier";
 	private final String ADD_PRODUCT = "addProduct";
 	private final String ADD_COMPANY = "addCompany";
@@ -80,8 +82,11 @@ public class BusinessLookUp {
 		case NEW_COMPANY:
 			serviceClass = new NewCompanyFormService();
 			break;
-		case CREATE_CUSTOMER:
+		case ADD_CUSTOMER:
 			serviceClass = new AddCustomerService();
+			break;
+		case ADD_CUSTOMER2:
+			serviceClass = new AddCustomer2Service();
 			break;
 		case ADD_SUPPLIER:
 			serviceClass = new AddSupplierService();

@@ -1,5 +1,6 @@
 package model;
 
+import persistence.DDBBCompanyRole;
 import persistence.DDBBCustomer;
 
 public class Customer extends CompanyRole {
@@ -8,6 +9,11 @@ public class Customer extends CompanyRole {
 	private Double customerDiscount;
 	
 	public Customer() {
+	}
+	
+	public Customer(DDBBCompanyRole ddbbCompanyRole, DDBBCustomer ddbbCustomer) {
+		this.setFromPersistenceObject(ddbbCompanyRole);
+		this.setFromPersistenceObject(ddbbCustomer);
 	}
 	
 	public Customer(Integer creditRating, Double customerDiscount) {
@@ -65,6 +71,25 @@ public class Customer extends CompanyRole {
 		} else {
 			setCustomerDiscount(null);
 		}
+	}
+
+	@Override
+	public String toString() {
+		return "Customer [creditRating=" + creditRating + ", customerDiscount="
+				+ customerDiscount + ", toString()=" + super.toString() + "]";
+	}
+	
+	@Override
+	public String toJson() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("<customer>");
+		sb.append("<creditRating>" + getCreditRating() + "</creditRating>");
+		sb.append("<customerDiscount>" + getCustomerDiscount() + "</customerDiscount>");
+		sb.append("</customer>");
+		sb.append("<customerAdded>1</customerAdded>");
+		sb.append(super.toJson());
+		return sb.toString();
+		
 	}
 	
 	

@@ -1,10 +1,8 @@
 package service;
 
-import java.sql.SQLException;
-
+import model.Company;
 import dao.CompanyDAO;
 import dao.CompanyDAOImpl;
-import model.Company;
 
 public class AddCompanyService extends ServiceImpl implements Service {
 
@@ -31,11 +29,7 @@ public class AddCompanyService extends ServiceImpl implements Service {
 		
 		Company company = new Company();
 		CompanyDAO companyDao = null;
-		try {
-			companyDao = new CompanyDAOImpl(getConnection(), getSession());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		companyDao = new CompanyDAOImpl(getConnection(), getSession());
 		company.setCompanyName((String) request.getParameter("companyName"));
 		company.setCompanyTelephone((String) request.getParameter("companyTelephone"));
 		company.setCompanyEmail((String) request.getParameter("companyEmail"));

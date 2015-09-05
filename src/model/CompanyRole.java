@@ -25,8 +25,8 @@ public abstract class CompanyRole {
 	public RoleName getRoleName() {
 		return roleName;
 	}
-	public void setRoleName(String roleName) {
-		this.roleName = RoleName.getRoleName(roleName);
+	public void setRoleName(RoleName roleName) {
+		this.roleName = roleName;
 	}
 	public String getContactName() {
 		return contactName;
@@ -42,7 +42,7 @@ public abstract class CompanyRole {
 	}
 	
 	public int getCompanyId() {
-		return this.company.getId();
+		return this.company.getCompanyId();
 	}
 	public void setCompanyId(int companyId) {
 		this.company.setId(companyId);
@@ -80,7 +80,7 @@ public abstract class CompanyRole {
 			ddbbCompanyRole.setRoleIdNull();
 		}
 		if(getCompany() != null) {
-			ddbbCompanyRole.setCompanyId(getCompany().getId());
+			ddbbCompanyRole.setCompanyId(getCompany().getCompanyId());
 		} else {
 			ddbbCompanyRole.setCompanyIdNull();
 		}
@@ -117,7 +117,7 @@ public abstract class CompanyRole {
 		setCompany(company);
 		
 		if(!ddbbCompanyRole.isRoleNameNull()) {
-			setRoleName(ddbbCompanyRole.getRoleName());
+			setRoleName(RoleName.getRoleName(ddbbCompanyRole.getRoleName()));
 		} else {
 			setRoleName(null);
 		}
@@ -131,5 +131,37 @@ public abstract class CompanyRole {
 		} else {
 			setContactTelephone(null);
 		}
+	}
+	
+	@Override
+	public String toString() {
+		return "CompanyRole [getRoleId()=" + getRoleId() + ", getRoleName()="
+				+ getRoleName() + ", getContactName()=" + getContactName()
+				+ ", getContactTelephone()=" + getContactTelephone()
+				+ ", getCompanyId()=" + getCompanyId() + ", getCompanyTaxID()="
+				+ getCompanyTaxID() + ", getCompanyName()=" + getCompanyName()
+				+ ", getCompanyTelephone()=" + getCompanyTelephone()
+				+ ", getCompanyEmail()=" + getCompanyEmail() + "]";
+	}
+	
+	public String toJson() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("<companyRole>");
+	    sb.append("<roleId>" + getRoleId() + "</roleId>");
+	    sb.append("<roleName>" + getRoleName() + "</roleName>");
+	    sb.append("<contactName>" + getContactName() + "</contactName>");
+	    sb.append("<contactTelephone>" + getContactTelephone() + "</contactTelephone>");
+	    sb.append(getCompany().toJson());
+//	    sb.append("<company>");
+//	    sb.append("<companyId>" + getCompanyId() + "</companyId>");
+//	    sb.append("<companyTaxID>" + getCompanyTaxID() + "</companyTaxID>");
+//	    sb.append("<companyName>" + getCompanyName() + "</companyName>");
+//	    sb.append("<companyTelephone>" + getCompanyTelephone() + "</companyTelephone>");
+//	    sb.append("<companyEmail>" + getCompanyEmail() + "</companyEmail>");
+//	    sb.append("</company>");
+	    sb.append("</companyRole>");
+	    sb.append("<companyRoleAdded>1</companyRoleAdded>");
+		return sb.toString();
+				
 	}
 }

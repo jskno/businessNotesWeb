@@ -9,6 +9,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import persistence.DDBBCompany;
 import model.Company;
 
 public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
@@ -17,31 +18,23 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 		super(connection, session);
 	}
 
-	private static final String INSERT = "insert into company (company_name, company_telephone, " +
-			"company_email) values (?,?,?)";
 	private static final String NO_CUSTOMER_COMPANIES = "select * from company where id not in (" +
 			"select distinct company_id from customer)";
 	private static final String NO_SUPPLIER_COMPANIES = "select * from company where id not in (" +
 			"select distinct company_id from supplier)";
 	
-	public void insert(Object o){
-		Company company = (Company) o;
-		String companyName = company.getCompanyName();
-		String companyTelephone = company.getCompanyTelephone();
-		String companyEmail = company.getCompanyEmail();
+	public int insert(Object o){
 		
-		PreparedStatement ps = null;
+		Company company = (Company) o;
+		DDBBCompany ddbbCompany = company.getPersistenceObject();
+		int newCompanyId = -1;
+		
 		try {
-			ps = connection.prepareStatement(INSERT);
-			ps.setString(1, companyName);
-			ps.setString(2, companyTelephone);
-			ps.setString(3, companyEmail);
-			ps.executeUpdate();
+			newCompanyId = ddbbCompany.insert(connection);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
-		} finally {
-			closeStmt(ps);
 		}
+		return newCompanyId;
 	}
 	
 	public Object search(Object o) {
@@ -62,19 +55,16 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 				
 		String sql = "select * from company order by company_name";
 		
-		Company company;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
+		
+		Company company = null;
 		
 		try {
 			statement = connection.prepareStatement(sql);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				company = new Company();
-				company.setId(resultSet.getInt("id"));
-				company.setCompanyName(resultSet.getString("company_name"));
-				company.setCompanyTelephone(resultSet.getString("company_telephone"));
-				company.setCompanyEmail(resultSet.getString("company_email"));
+				company = getCompanyFromRs(resultSet);
 				result.add(company);
 			}
 		} catch (SQLException ex) {
@@ -207,19 +197,19 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 
 	@Override
 	public Company getCompanyByTaxID(String taxID) {
-		String sql = "select * from company where taxID = " + taxID;
-		Company company = new Company();
+		String sql = "select * from company where tax_ID = ?";
+		Company company = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		
 		try {
 			statement = connection.prepareStatement(sql);
+			statement.setString(1, taxID);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				company.setId(resultSet.getInt("id"));
-				company.setCompanyName(resultSet.getString("company_name"));
-				company.setCompanyTelephone(resultSet.getString("company_telephone"));
-				company.setCompanyEmail(resultSet.getString("company_email"));
+				DDBBCompany ddbbCompany = new DDBBCompany();
+				ddbbCompany.loadResult(resultSet);
+				company = new Company(ddbbCompany);
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -229,6 +219,14 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 		return company;
 	}
 	
-	
+	private Company getCompanyFromRs(ResultSet resultSet) throws SQLException {
+		
+		Company company;
+		DDBBCompany ddbbCompany = new DDBBCompany();
+		ddbbCompany.loadResult(resultSet);
+		company = new Company(ddbbCompany);
+		
+		return company;
+	}
 
 }

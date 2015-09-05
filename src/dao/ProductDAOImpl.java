@@ -14,27 +14,22 @@ import model.ProductVO;
 
 public class ProductDAOImpl extends DaoImpl implements ProductDAO {
 	
-	private static final String INSERT = "insert into product (product_code, product_description) "
-			+ "values (?,?)";
-	
 	public ProductDAOImpl(Connection connection, HttpSession session) {
 		super(connection, session);
 	}
 
-	public void insert(Object o){
+	public int insert(Object o){
+		
+		int newProductId; 
 		ProductVO product = (ProductVO) o;
 		DDBBProduct ddbbProduct = product.getPersistenceObject();
-		PreparedStatement ps = null;
+		
 		try {
-			ps = connection.prepareStatement(INSERT);
-			ps.setString(1, ddbbProduct.getProductCode());
-			ps.setString(2, ddbbProduct.getProductDescription());
-			ps.executeUpdate();
+			newProductId = ddbbProduct.insert(connection);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
-		} finally {
-			closeStmt(ps);
 		}
+		return newProductId;
 	}
 	
 	public Object search(Object o) {
@@ -77,20 +72,17 @@ public class ProductDAOImpl extends DaoImpl implements ProductDAO {
 		
 		List<ProductVO> productsList = new ArrayList<ProductVO>();
 		
-		String sql = "select * from product";
+		String sql = "select * from product order by product_code";
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		
 		ProductVO product;
-		DDBBProduct ddbbProduct;
+		
 		try {
 			statement = connection.prepareStatement(sql);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				product = new ProductVO();
-				ddbbProduct = new DDBBProduct();
-				ddbbProduct.loadResult(resultSet);
-				product.setFromPersistenceObject(ddbbProduct);
+				product = getProductFromRs(resultSet);
 				productsList.add(product);
 			}
 		} catch (SQLException ex) {
@@ -107,6 +99,15 @@ public class ProductDAOImpl extends DaoImpl implements ProductDAO {
 		for(ProductVO eachProduct : productList) {
 			insert(eachProduct);
 		}
+	}
+	
+	private ProductVO getProductFromRs(ResultSet resultSet) throws SQLException {
+		
+		ProductVO product;
+		DDBBProduct ddbbProduct = new DDBBProduct();
+		ddbbProduct.loadResult(resultSet);
+		product = new ProductVO(ddbbProduct);
+		return product;
 	}
 
 }

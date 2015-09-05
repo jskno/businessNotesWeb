@@ -4,30 +4,30 @@ import persistence.DDBBCompany;
 
 public class Company {
 	
-	private Integer id;
+	private Integer companyId;
 	private String taxID;
 	private String companyName;
 	private String companyTelephone;
 	private String companyEmail;
 	
 	public Company () {
-		
 	}
+
 	public Company(String companyName, String companyTelephone,
 			String companyEmail) {
-		
 		this.companyName = companyName;
 		this.companyTelephone = companyTelephone;
 		this.companyEmail = companyEmail;
-		
-		
 	}
 	
-	public Integer getId() {
-		return id;
+	public Company(DDBBCompany ddbbCompany) {
+		this.setFromPersistence(ddbbCompany);
 	}
-	public void setId(Integer id) {
-		this.id = id;
+	public Integer getCompanyId() {
+		return companyId;
+	}
+	public void setId(Integer companyId) {
+		this.companyId = companyId;
 	}
 	public String getTaxID() {
 		return taxID;
@@ -62,9 +62,9 @@ public class Company {
 	public final void setFromPersistence(final DDBBCompany ddbbCompany) {
 		
 		if (!ddbbCompany.isCompanyIdNull()) {
-			this.id = ddbbCompany.getCompanyId();
+			this.companyId = ddbbCompany.getCompanyId();
 		} else {
-			this.id = null;
+			this.companyId = null;
 		}
 		if (!ddbbCompany.isTaxIDNull()) {
 			this.taxID = ddbbCompany.getTaxID();
@@ -91,8 +91,8 @@ public class Company {
 	public DDBBCompany getPersistenceObject() {
 		
 		final DDBBCompany ddbbCompany = new DDBBCompany();
-		if(getId() != null) {
-			ddbbCompany.setId(getId());
+		if(getCompanyId() != null) {
+			ddbbCompany.setId(getCompanyId());
 		} else {
 			ddbbCompany.setCompanyIdNull();
 		}
@@ -120,5 +120,18 @@ public class Company {
 		return ddbbCompany;
 	}
 	
+	public String toJson() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("<company>");
+		sb.append("<companyId>" + getCompanyId() + "</companyId>");
+		sb.append("<taxID>" + getTaxID() + "</taxID>");
+		sb.append("<companyName>" + getCompanyName() + "</companyName>");
+		sb.append("<companyTelephone>" + getCompanyTelephone() + "</companyTelephone>");
+		sb.append("<companyEmail>" + getCompanyEmail() + "</companyEmail>");
+		sb.append("</company>");
+		sb.append("<companyAdded>1</companyAdded>");
+		return sb.toString();
+		
+	}
 
 }

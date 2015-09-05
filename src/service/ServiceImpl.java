@@ -104,10 +104,14 @@ public abstract class ServiceImpl implements Service{
 	/////// COPIADO DEL DAO IMPLEMENTATION ///////////////////
 	/////// UTILIDADES DE BBDD ///////////////////////////////
 	
-	public Connection getConnection() throws SQLException {
+	public Connection getConnection() {
 		if(null == connection) {
-			connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/businessnotesapp",
-					"jskno","1510pkpk");
+			try {
+				connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/businessnotesapp",
+						"jskno","1510pkpk");
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return connection;
 	}

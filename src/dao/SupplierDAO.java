@@ -15,4 +15,6 @@ public interface SupplierDAO extends Dao {
 
 	void insertList(List<Supplier> suppliersList);
 
+	Supplier getSupplierByTaxID(String taxID);
+
 }

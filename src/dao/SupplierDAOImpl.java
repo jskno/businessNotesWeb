@@ -9,8 +9,12 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import persistence.DDBBCompany;
+import persistence.DDBBCompanyRole;
+import persistence.DDBBCustomer;
 import persistence.DDBBSupplier;
 import model.Company;
+import model.Customer;
 import model.Supplier;
 
 public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
@@ -24,21 +28,17 @@ public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
 		super(connection, session);
 	}
 	
-	public void insert(Object o){
+	public int insert(Object o){
 		Supplier supplier = (Supplier) o;
 		DDBBSupplier ddbbSupplier = supplier.getPersistenceSupplier();
+		int roleId = -1;
 		
-		PreparedStatement ps = null;
 		try {
-			ps = connection.prepareStatement(INSERT);
-			ps.setInt(1, ddbbSupplier.getRoleId());
-			ps.setInt(2, ddbbSupplier.getDeliveryDays());
-			ps.executeUpdate();
+			roleId = ddbbSupplier.insert(connection);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
-		} finally {
-			closeStmt(ps);
 		}
+		return roleId;
 		
 	}
 	
@@ -81,18 +81,23 @@ public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
 		
 		List<Supplier> result = new ArrayList<Supplier>();
 		
-		String sql = "select * from supplier";
+		String sql = "select * from supplier supp "
+				+ "join company_role cr "
+					+ "on supp.role_id = cr.role_id "
+				+ "join company com "
+					+ "on cr.company_id = com.company_id "
+				+ "order by com.company_name";
+		
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
+		
+		Supplier supplier = null;
 		
 		try {
 			statement = connection.prepareStatement(sql);
 			resultSet = statement.executeQuery();
-			Supplier supplier = new Supplier();
-			DDBBSupplier ddbbSupplier = new DDBBSupplier();
 			while (resultSet.next()) {
-				ddbbSupplier.loadResult(resultSet);
-				supplier.setFromPersistenceObject(ddbbSupplier);
+				supplier = getSupplierFromRs(resultSet);
 				result.add(supplier);
 			}
 		} catch (SQLException ex) {
@@ -135,6 +140,55 @@ public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
 		for(Supplier eachSupplier : suppliersList) {
 			insert(eachSupplier);
 		}
+	}
+	
+	@Override
+	public Supplier getSupplierByTaxID(String taxID) {
+		
+		Supplier supplier = null;
+		
+		String sql = "select * from supplier supp"
+			+ " left join company_role cr"
+					+ " on supp.role_id = cr.role_id"
+			+ " left join company com"
+					+ " on cr.company_id = com.company_id"
+			+ " where com.taxID =?";
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		
+		try {
+			ps = connection.prepareStatement(sql);
+			ps.setString(1, taxID);
+			rs = ps.executeQuery();
+			while (rs.next()) {
+				supplier = getSupplierFromRs(rs);
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			closeStmtAndRs(ps, rs);
+		}
+		return supplier;
+	}
+	
+	private Supplier getSupplierFromRs(ResultSet rs) throws SQLException {
+		
+		Supplier supplier;
+		Company company;
+		
+		DDBBSupplier ddbbSupplier = new DDBBSupplier();
+		DDBBCompanyRole ddbbCompanyRole = new DDBBCompanyRole();
+		DDBBCompany ddbbCompany = new DDBBCompany();
+		
+		ddbbCompany.loadResult(rs);
+		ddbbCompanyRole.loadResult(rs);
+		ddbbSupplier.loadResult(rs);
+				
+		company = new Company(ddbbCompany);
+		supplier = new Supplier(ddbbCompanyRole, ddbbSupplier);
+		supplier.setCompany(company);
+		
+		return supplier;
 	}
 
 }

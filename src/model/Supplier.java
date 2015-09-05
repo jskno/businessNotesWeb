@@ -1,5 +1,6 @@
 package model;
 
+import persistence.DDBBCompanyRole;
 import persistence.DDBBSupplier;
 
 public class Supplier extends CompanyRole {
@@ -13,6 +14,12 @@ public class Supplier extends CompanyRole {
 		this.deliveryDays = deliveryDays;
 	}
 	
+	public Supplier(DDBBCompanyRole ddbbCompanyRole, DDBBSupplier ddbbSupplier) {
+		
+		this.setFromPersistenceObject(ddbbCompanyRole);
+		this.setFromPersistenceObject(ddbbSupplier);
+	}
+
 	public Integer getDeliveryDays() {
 		return deliveryDays;
 	}

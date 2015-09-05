@@ -38,7 +38,7 @@
     				<% 
     					for(Company eachCompany : companiesList) {
     				%>
-    						<option value="<%= eachCompany.getId() %>">
+    						<option value="<%= eachCompany.getCompanyId() %>">
     							<%= eachCompany.getCompanyName()%>
     						</option>
     						

@@ -61,9 +61,9 @@ public class DDBBThread {
 		
 	}
 	
-	public int insert(Connection connection) throws SQLException {
+	public Integer insert(Connection connection) throws SQLException {
 		
-		int lastKey;		
+		Integer lastKey = null;		
 		final PreparedStatement ps = connection.prepareStatement(INSERT_ALL);
 		final Statement stmt = connection.createStatement();
 		ResultSet rs = null;
@@ -83,13 +83,15 @@ public class DDBBThread {
 			ps.executeUpdate();
 			
 			rs = stmt.executeQuery(LAST_ID);
-			lastKey = rs.getInt(0);
+			if(rs.next()) {
+				lastKey = rs.getInt(1);
+			}
 			
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
-			ps.close();
 			rs.close();
+			ps.close();
 			stmt.close();
 		}
 			

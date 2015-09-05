@@ -1,8 +1,11 @@
 package service;
 
-import java.sql.SQLException;
 import java.util.Date;
 
+import model.BusinessNoteVO;
+import model.Customer;
+import model.ProductVO;
+import model.Supplier;
 import dao.CustomerDAO;
 import dao.CustomerDAOImpl;
 import dao.NoteDAO;
@@ -11,10 +14,6 @@ import dao.ProductDAO;
 import dao.ProductDAOImpl;
 import dao.SupplierDAO;
 import dao.SupplierDAOImpl;
-import model.Customer;
-import model.Note;
-import model.ProductVO;
-import model.Supplier;
 
 public class AddNoteService extends ServiceImpl implements Service {
 
@@ -27,7 +26,7 @@ public class AddNoteService extends ServiceImpl implements Service {
 	
 	private void createNote() {
 		
-		Note note = new Note();
+		BusinessNoteVO note = new BusinessNoteVO();
 		Customer customer;
 		Supplier supplier;
 		ProductVO product;
@@ -37,14 +36,10 @@ public class AddNoteService extends ServiceImpl implements Service {
 		SupplierDAO supplierDao = null;
 		ProductDAO productDao = null;
 		
-		try {
-			noteDao = new NoteDAOImpl(getConnection(), getSession());
-			customerDao = new CustomerDAOImpl(getConnection(), getSession());
-			supplierDao = new SupplierDAOImpl(getConnection(), getSession());
-			productDao = new ProductDAOImpl(getConnection(), getSession());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		noteDao = new NoteDAOImpl(getConnection(), getSession());
+		customerDao = new CustomerDAOImpl(getConnection(), getSession());
+		supplierDao = new SupplierDAOImpl(getConnection(), getSession());
+		productDao = new ProductDAOImpl(getConnection(), getSession());
 		
 		customer = customerDao.getCustomerById(Integer.parseInt(request.getParameter("customerId")));
 		supplier = supplierDao.getSupplierById(Integer.parseInt(request.getParameter("supplierId")));
@@ -53,7 +48,7 @@ public class AddNoteService extends ServiceImpl implements Service {
 		note.setCustomer(customer);
 		note.setSupplier(supplier);
 		note.setProduct(product);
-		note.setNoteDate((new Date()));
+		note.setCreationDate((new Date()));
 		note.setNoteTitle((String) request.getParameter("noteTitle"));
 		note.setNoteText((String) request.getParameter("noteText"));
 		

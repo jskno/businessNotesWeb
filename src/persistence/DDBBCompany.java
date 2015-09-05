@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 public class DDBBCompany {
 	
-	private static final String INSERT_ALL = "insert into company (TAX_ID" +
+	private static final String INSERT_ALL = "insert into company (TAX_ID, " +
 		"COMPANY_NAME, COMPANY_TELEPHONE, COMPANY_EMAIL) values (?,?,?,?)";
 	private static final String LAST_ID = "SELECT LAST_INSERT_ID()";
 	private static final String SQL_READ="SELECT * FROM company WHERE COMPANY_ID=?";
@@ -107,7 +107,7 @@ public class DDBBCompany {
 	
 	public int insert(Connection connection) throws SQLException {
 		
-		int lastKey;		
+		Integer lastKey = null;		
 		final PreparedStatement ps = connection.prepareStatement(INSERT_ALL);
 		final Statement stmt = connection.createStatement();
 		ResultSet rs = null;
@@ -157,16 +157,17 @@ public class DDBBCompany {
 			ps.executeUpdate();
 			
 			rs = stmt.executeQuery(LAST_ID);
-			lastKey = rs.getInt(0);
+			if(rs.next()) {
+				lastKey = rs.getInt(1);
+			}
 			
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
-			ps.close();
 			rs.close();
+			ps.close();
 			stmt.close();
 		}
-			
 		return lastKey;
 	}
 	

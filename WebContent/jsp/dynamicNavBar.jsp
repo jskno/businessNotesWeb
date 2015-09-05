@@ -78,7 +78,7 @@
 	<!-- Modal content-->
 	<div class="modal-content">
 		<form id="exportTable" class="form-horizontal" role="form" action="notes" method="POST">
-		<input type="hidden" name="action" value="exportTable"/>
+		<input type="hidden" name="nextStep" value="exportTable"/>
 	
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -124,7 +124,7 @@
 	
 <div class="modal-content">
 		<form id="importTable" class="form-horizontal" role="form" action="notes" method="POST">
-		<input type="hidden" name="action" value="importTable"/>
+		<input type="hidden" name="nextStep" value="importTable"/>
 	
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>

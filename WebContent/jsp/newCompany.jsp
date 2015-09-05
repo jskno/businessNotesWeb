@@ -13,7 +13,7 @@
 	<div class="container-fluid">
 		<div class="row">
     		<div class="col-sm-12">
-    			<jsp:include page="navBar.jsp" flush="true" />
+    			<jsp:include page="dynamicNavBar.jsp" flush="true" />
     		</div>
     	</div>
 		
@@ -22,7 +22,7 @@
   			<p>Form to introduce a new company.</p>
   		</div>
   		<form class="form-horizontal" role="form" action="notes/addElement" method="POST">
-  		<input type="hidden" name="action" value="addCompany"/>
+  		<input type="hidden" name="nextStep" id="nextStep" value="addCompany"/>
   			<div class="form-group">
       			<label class="control-label col-sm-2" for="taxID">Tax ID:</label>
      			<div class="col-sm-10">          

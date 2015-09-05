@@ -1,9 +1,11 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.SQLException;
 
 import javax.servlet.http.HttpSession;
 
+import persistence.DDBBCompanyRole;
 import model.CompanyRole;
 
 public class CompanyRoleDaoImpl extends DaoImpl implements CompanyRoleDao {
@@ -13,11 +15,18 @@ public class CompanyRoleDaoImpl extends DaoImpl implements CompanyRoleDao {
 	}
 
 	@Override
-	public void insert(Object o) {
+	public int insert(Object o) {
 		
-		CompanyRole role = (CompanyRole) o;
+		CompanyRole companyRole = (CompanyRole) o;
+		DDBBCompanyRole ddbbCompanyRole = companyRole.getPersistenceObject();
+		int newCompanyRoleId = -1;
 		
-		
+		try {
+			newCompanyRoleId = ddbbCompanyRole.insert(connection);
+		} catch (SQLException e) {
+			throw new RuntimeException(e);
+		}
+		return newCompanyRoleId;		
 	}
 
 	@Override

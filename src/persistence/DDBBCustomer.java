@@ -92,14 +92,15 @@ public class DDBBCustomer {
 		}
 	}
 	
-	public void insert(Connection connection) throws SQLException {
+	public int insert(Connection connection) throws SQLException {
 		
+		Integer lastKey = null;
 		final PreparedStatement ps = connection.prepareStatement(INSERT_ALL);
 		int p=1;
 		
 		try
 		{
-			// SQL: NOTE_ID (INT):
+			// SQL: ROLE_ID (INT):
 			if (isRoleIdNull())
 			{
 				ps.setNull(p, java.sql.Types.NUMERIC);
@@ -109,7 +110,7 @@ public class DDBBCustomer {
 				ps.setInt(p, getRoleId());
 			}
 			p++;
-			// SQL: USER_ID (INT):
+			// SQL: CREDIT_RATING (INT):
 			if (isCreditRatingNull())
 			{
 				ps.setNull(p, java.sql.Types.NUMERIC);
@@ -119,7 +120,7 @@ public class DDBBCustomer {
 				ps.setInt(p, getCreditRating());
 			}
 			p++;
-			// SQL: CREATION_DATE (DOUBLE):
+			// SQL: CUSTOMER_DISCOUNT (DOUBLE):
 			if (isCustomerDiscountNull())
 			{
 				ps.setNull(p, java.sql.Types.DECIMAL);
@@ -130,12 +131,15 @@ public class DDBBCustomer {
 			}
 			
 			ps.executeUpdate();
+			lastKey = getRoleId(); 
 			
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		} finally {
 			ps.close();
 		}
+		 
+		return lastKey;
 			
 	}
 	

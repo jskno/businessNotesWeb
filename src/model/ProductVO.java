@@ -18,6 +18,10 @@ public class ProductVO {
 		this.productDescription = productDescription;
 	}
 	
+	public ProductVO(DDBBProduct ddbbProduct) {
+		this.setFromPersistenceObject(ddbbProduct);
+	}
+
 	public Integer getProductId() {
 		return productId;
 	}

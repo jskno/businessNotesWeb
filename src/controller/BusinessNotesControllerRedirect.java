@@ -17,8 +17,8 @@ import dao.MenuDAOImpl;
 
 public class BusinessNotesControllerRedirect extends HttpServlet {
 	
-	private static final String BASE = "notes?action=";
-	private String newAction;
+	private static final String BASE = "/notes?nextStep=";
+	private String newStep;
 	private Service service;
 	private BusinessLookUp lookupService = new BusinessLookUp();
 	
@@ -38,16 +38,16 @@ public class BusinessNotesControllerRedirect extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		String action = request.getParameter("action");
+		String nextStep = request.getParameter("nextStep");
 		String keyWord = request.getParameter("keyWord");
-		if (action == null) {
-			action = "homePage";
+		if (nextStep == null) {
+			nextStep = "homePage";
 		}
-		service = lookupService.getBusinessService(action);
+		service = lookupService.getBusinessService(nextStep);
 		service.execute(request, response);
 		
-		newAction = BASE + request.getAttribute("newAction");
-		response.sendRedirect(newAction);
+		newStep = BASE + request.getAttribute("nextStep");
+		response.sendRedirect(request.getContextPath() + newStep);
 		
 		// From here it's over.
 		

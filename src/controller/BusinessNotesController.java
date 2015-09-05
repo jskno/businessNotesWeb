@@ -65,13 +65,13 @@ public class BusinessNotesController extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
-		String action = request.getParameter("action");
+		String nextStep = request.getParameter("nextStep");
 		String keyWord = request.getParameter("keyWord");
 		RequestDispatcher requestDispatcher;
-		if (action == null) {
-			action = "homePage";
+		if (nextStep == null) {
+			nextStep = "homePage";
 		}
-		service = lookupService.getBusinessService(action);
+		service = lookupService.getBusinessService(nextStep);
 		service.execute(request, response);
 		
 		url = BASE + request.getAttribute("url");
@@ -81,7 +81,7 @@ public class BusinessNotesController extends HttpServlet {
 		
 		// From here it's over.
 		
-		switch(action) {
+		switch(nextStep) {
 //		case "homePage":
 //		case "newNote":
 //			

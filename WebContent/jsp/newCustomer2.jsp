@@ -10,14 +10,13 @@
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 <script src="bootstrap/jquery/jquery-2.1.3.min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
-<!-- <script src="js/webSocketScriptModified.js"></script>  -->
 <title>New Customer2</title>
 </head>
 <body>
 	<div class="container-fluid">
 		<div class="row">
     		<div class="col-sm-12">
-    			<jsp:include page="navBar.jsp" flush="true" />
+    			<jsp:include page="dynamicNavBar.jsp" flush="true" />
     		</div>
     	</div>
 		
@@ -26,13 +25,15 @@
   			<p>Form to introduce a new customer2.</p>
   		</div>
   		
-  		<form id="newCustomer2" class="form-horizontal" role="form" action="notes/addElement" method="POST">
-  		<input type="hidden" name="action" value="addCustomer2"/>
+  		<form name="newCustomer2" id="newCustomer2" class="form-horizontal" 
+  			role="form" action="notes/addElement" method="POST">
+  			<input type="hidden" name="nextStep" id="nextStep" value="addCustomer2"/>
+  			<input type="hidden" name="companyId" id="companyId" value=""/>
   			<div class="form-group">
       			<label class="control-label col-sm-2" for="taxID">Tax ID:</label>
      			<div class="col-sm-10">          
         		<input type="text" class="form-control" name="taxID" id="taxID" 
-        				onchange="checkTaxID()" placeholder="Enter the tax ID">
+        				placeholder="Enter the tax ID">
       			</div>
     		</div>
     		<div class="form-group">
@@ -40,6 +41,20 @@
      			<div class="col-sm-10">          
         		<input type="text" class="form-control" name="companyName" id="companyName" 
         				placeholder="Enter the company name">
+      			</div>
+    		</div>
+    		<div class="form-group">
+      			<label class="control-label col-sm-2" for="companyTelephone">Telephone Number:</label>
+     			<div class="col-sm-10">          
+        		<input type="text" class="form-control" name="companyTelephone" id="companyTelephone" 
+        				placeholder="Enter telephone">
+      			</div>
+    		</div>
+    		<div class="form-group">
+      			<label class="control-label col-sm-2" for="companyEmail">Email:</label>
+     			<div class="col-sm-10">          
+        		<input type="text" class="form-control" name="companyEmail" id="companyEmail" 
+        				placeholder="Enter email">
       			</div>
     		</div>
     		<div class="form-group">
@@ -56,35 +71,27 @@
         				placeholder="Enter the contact telephone">
       			</div>
     		</div>
+    		<div class="form-group">
+      			<label class="control-label col-sm-2" for="creditRating">Credit Rating:</label>
+     			<div class="col-sm-10">          
+        		<input type="text" class="form-control" name="creditRating" id="creditRating" 
+        				placeholder="Enter the credit rating">
+      			</div>
+    		</div>
+    		<div class="form-group">
+      			<label class="control-label col-sm-2" for="customerDiscount">Customer Discount:</label>
+     			<div class="col-sm-10">          
+        		<input type="text" class="form-control" name="customerDiscount" id="customerDiscount" 
+        				placeholder="Enter the customer discount">
+      			</div>
+    		</div>
     		<div class="form-group">        
       			<div class="col-sm-offset-2 col-sm-10">
-        			<button type="submit" class="btn btn-default">Submit</button>
-      			</div>
+        			<button type="submit" id="submitButton" class="btn btn-default">Submit</button>
+        		</div>
     		</div>
   		</form>
 	</div>
-
 </body>
-<script>
-function checkTaxID() {
-	var xmlhttp;
-	if (window.XMLHttpRequest)
-	  {// code for IE7+, Firefox, Chrome, Opera, Safari
-	  xmlhttp=new XMLHttpRequest();
-	  }
-	else
-	  {// code for IE6, IE5
-	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-	  }
-	xmlhttp.onreadystatechange=function()
-	  {
-	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
-	    {
-	    document.getElementById("companyName").innerHTML=xmlhttp.responseText;
-	    }
-	  }
-	xmlhttp.open("GET","notes/ajax",true);
-	xmlhttp.send();
-	}
-</script>
+<script src="js/checkTaxID.js"></script>
 </html>

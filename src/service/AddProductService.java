@@ -1,10 +1,8 @@
 package service;
 
-import java.sql.SQLException;
-
+import model.ProductVO;
 import dao.ProductDAO;
 import dao.ProductDAOImpl;
-import model.ProductVO;
 
 public class AddProductService extends ServiceImpl implements Service {
 
@@ -19,11 +17,7 @@ public class AddProductService extends ServiceImpl implements Service {
 
 		ProductVO product = new ProductVO();
 		ProductDAO productDao = null;
-		try {
-			productDao = new ProductDAOImpl(getConnection(), getSession());
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+		productDao = new ProductDAOImpl(getConnection(), getSession());
 		product.setProductCode((String) request.getParameter("productCode"));
 		product.setProductDescription((String) request.getParameter("productDescription"));
 		

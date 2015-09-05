@@ -1,4 +1,4 @@
-<%@page import="model.Product"%>
+<%@page import="model.ProductVO"%>
 <%@page import="model.Supplier"%>
 <%@page import="model.Customer"%>
 <%@page import="java.util.List"%>
@@ -12,8 +12,8 @@
 	List<Supplier> suppliersList =
 			(List<Supplier>) request.getAttribute("suppliersList");
 	@SuppressWarnings("unchecked")
-	List<Product> productsList =
-			(List<Product>) request.getAttribute("productsList");
+	List<ProductVO> productsList =
+			(List<ProductVO>) request.getAttribute("productsList");
 %>
 <!DOCTYPE html >
 <html lang="en">
@@ -37,7 +37,7 @@
   			<p>Form to introduce a new note.</p>
   		</div>
   		<form class="form-horizontal" role="form" action="notes/addElement" method="POST">
-  		<input type="hidden" name="action" value="addNote"/>
+  		<input type="hidden" name="nextStep" id="nextStep" value="addNote"/>
     		<div class="form-group">
       			<label class="control-label col-sm-2" for="noteTitle">Note title:</label>
       			<div class="col-sm-10">
@@ -58,8 +58,8 @@
     					<%
     					for(Customer eachCustomer : customersList) {
     					%>
-    					<option value="<%=eachCustomer.getId()%>">
-    					<%=eachCustomer.getCompany().getCompanyName()%>
+    					<option value="<%=eachCustomer.getRoleId()%>">
+    					<%=eachCustomer.getCompanyName()%>
     					</option>
     					<%
     					}
@@ -79,8 +79,8 @@
         				<%
     					for(Supplier eachSupplier : suppliersList) {
     					%>
-    					<option value="<%=eachSupplier.getId()%>">
-    					<%=eachSupplier.getCompany().getCompanyName()%>
+    					<option value="<%=eachSupplier.getRoleId()%>">
+    					<%=eachSupplier.getCompanyName()%>
     					</option>
     					<%
     					}
@@ -98,9 +98,9 @@
       			<div class="col-sm-8">
     				<select class="form-control" name="productId" id="productId">
         				<%
-    					for(Product eachProduct : productsList) {
+    					for(ProductVO eachProduct : productsList) {
     					%>
-    					<option value="<%=eachProduct.getId()%>">
+    					<option value="<%=eachProduct.getProductId()%>">
     					<%=eachProduct.getProductCode() + eachProduct.getProductDescription()%>
     					</option>
     					<%

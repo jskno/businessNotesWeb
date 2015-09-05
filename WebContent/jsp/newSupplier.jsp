@@ -20,7 +20,7 @@
 	<div class="container-fluid">
 		<div class="row">
     		<div class="col-sm-12">
-    			<jsp:include page="navBar.jsp" flush="true" />
+    			<jsp:include page="dynamicNavBar.jsp" flush="true" />
     		</div>
     	</div>
 		
@@ -29,7 +29,7 @@
   			<p>Form to introduce a new supplier.</p>
   		</div>
   		<form class="form-horizontal" role="form" action="notes/addElement" method="POST">
-  		<input type="hidden" name="action" value="addSupplier"/>
+  		<input type="hidden" name="nextStep" id="nextStep" value="addSupplier"/>
     		<div class="form-group">
       			<label class="control-label col-sm-2" for="companyId">Company Name:</label>
       			<div class="col-sm-8">
@@ -38,7 +38,7 @@
     				<% 
     					for(Company eachCompany : companiesList) {
     				%>
-    						<option value="<%= eachCompany.getId() %>">
+    						<option value="<%= eachCompany.getCompanyId()%>">
     							<%= eachCompany.getCompanyName()%>
     						</option>
     						
