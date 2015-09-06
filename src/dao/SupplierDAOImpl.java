@@ -9,36 +9,38 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import model.Company;
+import model.CompanyRole;
+import model.Supplier;
 import persistence.DDBBCompany;
 import persistence.DDBBCompanyRole;
-import persistence.DDBBCustomer;
 import persistence.DDBBSupplier;
-import model.Company;
-import model.Customer;
-import model.Supplier;
 
 public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
 	
 	private CompanyDAO companyDao;
-	
-	private static final String INSERT = "insert into supplier (ROLE_ID, DELIVERY_DAYS)"
-			+ " values (?,?)";
+	CompanyRoleDao companyRoleDao;
 	
 	public SupplierDAOImpl(Connection connection, HttpSession session) {
 		super(connection, session);
+		companyDao = new CompanyDAOImpl(connection, session);
+		companyRoleDao = new CompanyRoleDaoImpl(connection, session);
 	}
 	
 	public int insert(Object o){
+		CompanyRole companyRole = (CompanyRole) o;
+		int roleId = companyRoleDao.insert(companyRole);
 		Supplier supplier = (Supplier) o;
+		supplier.setRoleId(roleId);
 		DDBBSupplier ddbbSupplier = supplier.getPersistenceSupplier();
-		int roleId = -1;
+		int newSupplierId = -1;
 		
 		try {
-			roleId = ddbbSupplier.insert(connection);
+			newSupplierId = ddbbSupplier.insert(connection);
 		} catch (SQLException e) {
 			throw new RuntimeException(e);
 		}
-		return roleId;
+		return newSupplierId;
 		
 	}
 	
@@ -148,11 +150,11 @@ public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
 		Supplier supplier = null;
 		
 		String sql = "select * from supplier supp"
-			+ " left join company_role cr"
-					+ " on supp.role_id = cr.role_id"
+			+ " left join COMPANY_ROLE cr"
+					+ " on supp.ROLE_ID = cr.ROLE_ID"
 			+ " left join company com"
-					+ " on cr.company_id = com.company_id"
-			+ " where com.taxID =?";
+					+ " on cr.COMPANY_ID = com.COMPANY_ID"
+			+ " where com.TAX_ID =?";
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		

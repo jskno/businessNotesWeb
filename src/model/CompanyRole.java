@@ -45,7 +45,7 @@ public abstract class CompanyRole {
 		return this.company.getCompanyId();
 	}
 	public void setCompanyId(int companyId) {
-		this.company.setId(companyId);
+		this.company.setCompanyId(companyId);
 	}
 	public String getCompanyTaxID() {
 		return this.company.getTaxID();
@@ -112,7 +112,7 @@ public abstract class CompanyRole {
 			setRoleId(null);
 		}
 		if(!ddbbCompanyRole.isCompanyIdNull()) {
-			company.setId((ddbbCompanyRole.getCompanyId()));
+			company.setCompanyId((ddbbCompanyRole.getCompanyId()));
 		} 
 		setCompany(company);
 		
@@ -152,13 +152,6 @@ public abstract class CompanyRole {
 	    sb.append("<contactName>" + getContactName() + "</contactName>");
 	    sb.append("<contactTelephone>" + getContactTelephone() + "</contactTelephone>");
 	    sb.append(getCompany().toJson());
-//	    sb.append("<company>");
-//	    sb.append("<companyId>" + getCompanyId() + "</companyId>");
-//	    sb.append("<companyTaxID>" + getCompanyTaxID() + "</companyTaxID>");
-//	    sb.append("<companyName>" + getCompanyName() + "</companyName>");
-//	    sb.append("<companyTelephone>" + getCompanyTelephone() + "</companyTelephone>");
-//	    sb.append("<companyEmail>" + getCompanyEmail() + "</companyEmail>");
-//	    sb.append("</company>");
 	    sb.append("</companyRole>");
 	    sb.append("<companyRoleAdded>1</companyRoleAdded>");
 		return sb.toString();

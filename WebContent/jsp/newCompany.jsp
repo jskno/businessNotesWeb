@@ -21,8 +21,10 @@
 			<h3>New Company</h3>
   			<p>Form to introduce a new company.</p>
   		</div>
-  		<form class="form-horizontal" role="form" action="notes/addElement" method="POST">
-  		<input type="hidden" name="nextStep" id="nextStep" value="addCompany"/>
+  		<form name="newCompany" id="newCompany" class="form-horizontal" 
+  				role="form" action="notes/addElement" method="POST">
+  				<input type="hidden" name="nextStep" id="nextStep" value="addCompany"/>
+  				<input type="hidden" name="companyId" id="companyId" value=""/>
   			<div class="form-group">
       			<label class="control-label col-sm-2" for="taxID">Tax ID:</label>
      			<div class="col-sm-10">          
@@ -53,11 +55,12 @@
     		</div>
     		<div class="form-group">        
       			<div class="col-sm-offset-2 col-sm-10">
-        			<button type="submit" class="btn btn-default">Submit</button>
+        			<button type="submit" id="submitButton" class="btn btn-default">Submit</button>
       			</div>
     		</div>
   		</form>
 	</div>
 
 </body>
+<script src="js/checkTaxIDCompany.js"></script>
 </html>

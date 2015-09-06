@@ -13,8 +13,7 @@ public class NewSupplierFormService extends ServiceImpl {
 
 	@Override
 	protected void execute() {
-		showNewSupplierForm(request, response);
-		request.setAttribute("url", "newSupplier.jsp?");
+		request.setAttribute("url", "newSupplier.jsp");
 	}
 	
 	private void showNewSupplierForm(HttpServletRequest request,

@@ -93,5 +93,5 @@
   		</form>
 	</div>
 </body>
-<script src="js/checkTaxID.js"></script>
+<script src="js/checkTaxIDCustomer.js"></script>
 </html>

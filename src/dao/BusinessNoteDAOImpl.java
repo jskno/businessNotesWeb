@@ -48,7 +48,7 @@ public class BusinessNoteDAOImpl extends DaoImpl implements BusinessNoteDAO {
 			e.printStackTrace();
 		}
 		
-		return 1;
+		return noteId;
 	}
 	
 	@Override
@@ -72,8 +72,9 @@ public class BusinessNoteDAOImpl extends DaoImpl implements BusinessNoteDAO {
 		List<BusinessNoteVO> list = new ArrayList<BusinessNoteVO>();
 		
 		Date date = DateUtils.getDateMinusXDays(LAST_NOTES_DAYS);
-		String sql = "select * from note"
-				+ " where create_date <= '%"
+		String sql = "select * from note "
+				+ "join business_note busNote on note.note_id = busNote.note_id "
+				+ "where create_date <= '%"
 				+ date
 				+ "%'"
 				;

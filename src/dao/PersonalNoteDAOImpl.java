@@ -10,54 +10,40 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import persistence.DDBBBusinessNote;
 import persistence.DDBBNote;
+import persistence.DDBBPersonalNote;
 import utils.DateUtils;
+import model.BusinessNoteVO;
 import model.Customer;
 import model.Note;
+import model.PersonalNoteVO;
 import model.ProductVO;
 import model.Supplier;
 
-public class PersonalNoteDAOImpl extends DaoImpl implements NoteDAO {
+public class PersonalNoteDAOImpl extends DaoImpl implements PersonalNoteDAO {
 	
 	private static final int LAST_NOTES_DAYS = -30;
-	private static final String INSERT = "insert into note (customer_id, supplier_id, product_id, " +
-			" creation_date, note_title, note_text) values (?,?,?,?,?,?)";
-	private CustomerDAO customerDao;
-    private SupplierDAO supplierDao;
-    private ProductDAO productDao;
+	
+	private NoteDAO noteDao;
     
     public PersonalNoteDAOImpl(Connection connection, HttpSession session) {
     	super(connection, session);
-    	customerDao = new CustomerDAOImpl(connection, session);
-    	supplierDao = new SupplierDAOImpl(connection, session);
-    	productDao = new ProductDAOImpl(connection, session);
+    	noteDao = new NoteDAOImpl(connection, session);
     }
 	@Override
-	public void insert(Object o){
-		Note note = (Note) o;
-		DDBBNote ddbbNote = note.getPersistenceObject();
-		int customerId = ddbbNote.getNoteId()
-		int supplierId = note.getSupplier().getId();
-		int productId = note.getProduct().getId();
-		java.sql.Date creationDate = new java.sql.Date(note.getNoteDate().getTime());
-		String noteTitle = note.getNoteTitle();
-		String noteText = note.getNoteText();
+	public int insert(Object o){
 		
-		PreparedStatement ps = null;
+		int noteId = noteDao.insert(o);
+		PersonalNoteVO personalNote = (PersonalNoteVO) o;
+		personalNote.setNoteId(noteId);
+		DDBBPersonalNote ddbbNote = personalNote.getPersistencePersNote();
 		try {
-			ps = connection.prepareStatement(INSERT);
-			ps.setInt(1, customerId);
-			ps.setInt(2, supplierId);
-			ps.setInt(3, productId);
-			ps.setDate(4, creationDate);
-			ps.setString(5, noteTitle);
-			ps.setString(6, noteText);
-			ps.executeUpdate();
+			ddbbNote.insert(connection);
 		} catch (SQLException e) {
-			throw new RuntimeException(e);
-		} finally {
-			closeStmt(ps);
+			e.printStackTrace();
 		}
+		return noteId;
 	}
 	
 	@Override
@@ -76,15 +62,16 @@ public class PersonalNoteDAOImpl extends DaoImpl implements NoteDAO {
 	}
 
 	@Override
-	public List<Note> getLastNotes() {
+	public List<PersonalNoteVO> getLastPersonalNotes() {
 		
-		List<Note> result = new ArrayList<Note>();
+		List<PersonalNoteVO> list = new ArrayList<PersonalNoteVO>();
 		
 		Date date = DateUtils.getDateMinusXDays(LAST_NOTES_DAYS);
-		String sql = "select * from note"
-				//+ " where create_date <= '%"
-				//+ date
-				//+ "%'"
+		String sql = "select * from note "
+				+ "join personal_note perNote on note.note_id = perNote.note_id "
+				+ "where create_date <= '%"
+				+ date
+				+ "%'"
 				;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -92,24 +79,16 @@ public class PersonalNoteDAOImpl extends DaoImpl implements NoteDAO {
 		try {
 			statement = connection.prepareStatement(sql);
 			resultSet = statement.executeQuery();
+			PersonalNoteVO personalNote;
+			DDBBPersonalNote ddbbPersonalNote;
 			while (resultSet.next()) {
-				Note note = new Note();
-				int idCustomer = resultSet.getInt("customer_id");
-				Customer customer = customerDao.getCustomerById(
-						idCustomer);
-				Supplier supplier = supplierDao.getSupplierById(
-						resultSet.getInt("supplier_id"));
-				ProductVO product = productDao.getProductById(
-						resultSet.getInt("product_id"));
-								
-				note.setId(resultSet.getInt("id"));
-				note.setCustomer(customer);
-				note.setSupplier(supplier);
-				note.setProduct(product);
-				note.setNoteDate(resultSet.getDate("creation_date"));
-				note.setNoteTitle(resultSet.getString("note_title"));				
-				note.setNoteText(resultSet.getString("note_text"));
-				result.add(note);
+				personalNote = new PersonalNoteVO();
+				ddbbPersonalNote = new DDBBPersonalNote();
+				
+				ddbbPersonalNote.loadResult(resultSet);
+				personalNote.setFromPersistenceNote(ddbbPersonalNote);
+				
+				list.add(personalNote);
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -122,12 +101,12 @@ public class PersonalNoteDAOImpl extends DaoImpl implements NoteDAO {
 			closeStmtAndRs(statement, resultSet);
 		}
 			
-		return result;
+		return list;
 	}
 	@Override
-	public List<DDBBNote> getPersistenceCustomerList() {
+	public List<DDBBPersonalNote> getPersistenceCustomerList() {
 		
-		List<DDBBNote> result = new ArrayList<DDBBNote>();
+		List<DDBBPersonalNote> list = new ArrayList<DDBBPersonalNote>();
 		
 		String sql = "select * from note";
 		PreparedStatement statement = null;
@@ -137,16 +116,11 @@ public class PersonalNoteDAOImpl extends DaoImpl implements NoteDAO {
 			statement = connection.prepareStatement(sql);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				DDBBNote perNote = new DDBBNote();
+				DDBBPersonalNote perNote = new DDBBPersonalNote();
 				
-				perNote.setId(resultSet.getInt("id"));
-				perNote.setCustomerId(resultSet.getInt("customer_id"));
-				perNote.setSupplierId(resultSet.getInt("supplier_id"));
-				perNote.setProductId(resultSet.getInt("product_id"));
-				perNote.setNoteDate(resultSet.getDate("creation_date"));
-				perNote.setNoteTitle(resultSet.getString("note_title"));				
-				perNote.setNoteText(resultSet.getString("note_text"));
-				result.add(perNote);
+				perNote.setNoteId(resultSet.getInt("note_id"));
+				perNote.setRemainderDate(resultSet.getDate("remainder_date"));
+				list.add(perNote);
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -159,7 +133,7 @@ public class PersonalNoteDAOImpl extends DaoImpl implements NoteDAO {
 			closeStmtAndRs(statement, resultSet);
 		}
 			
-		return result;
+		return list;
 	}
 	@Override
 	public void insertList(List<Note> notesList) {

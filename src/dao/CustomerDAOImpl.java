@@ -193,7 +193,3 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 	}
 		
 }
-	
-	
-
-

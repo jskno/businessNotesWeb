@@ -26,7 +26,7 @@ public class Company {
 	public Integer getCompanyId() {
 		return companyId;
 	}
-	public void setId(Integer companyId) {
+	public void setCompanyId(Integer companyId) {
 		this.companyId = companyId;
 	}
 	public String getTaxID() {
@@ -92,7 +92,7 @@ public class Company {
 		
 		final DDBBCompany ddbbCompany = new DDBBCompany();
 		if(getCompanyId() != null) {
-			ddbbCompany.setId(getCompanyId());
+			ddbbCompany.setCompanyId(getCompanyId());
 		} else {
 			ddbbCompany.setCompanyIdNull();
 		}

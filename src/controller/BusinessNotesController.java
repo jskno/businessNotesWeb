@@ -289,28 +289,28 @@ public class BusinessNotesController extends HttpServlet {
 	private void createNote(HttpServletRequest request,
 			HttpServletResponse response) {
 		
-		Note note = new Note();
-		Customer customer;
-		Supplier supplier;
-		ProductVO product;
-		
-		NoteDAO noteDao = new NoteDAOImpl(null, null);
-		CustomerDAO customerDao = new CustomerDAOImpl(null, null);
-		SupplierDAO supplierDao = new SupplierDAOImpl(null, null);
-		ProductDAO productDao = new ProductDAOImpl(null, null);
-		
-		customer = customerDao.getCustomerById(Integer.parseInt(request.getParameter("customerId")));
-		supplier = supplierDao.getSupplierById(Integer.parseInt(request.getParameter("supplierId")));
-		product = productDao.getProductById(Integer.parseInt(request.getParameter("productId")));
-		
-		note.setCustomer(customer);
-		note.setSupplier(supplier);
-		note.setProduct(product);
-		note.setNoteDate((new Date()));
-		note.setNoteTitle((String) request.getParameter("noteTitle"));
-		note.setNoteText((String) request.getParameter("noteText"));
-		
-		noteDao.insert(note);
+//		Note note = new Note();
+//		Customer customer;
+//		Supplier supplier;
+//		ProductVO product;
+//		
+//		NoteDAO noteDao = new NoteDAOImpl(null, null);
+//		CustomerDAO customerDao = new CustomerDAOImpl(null, null);
+//		SupplierDAO supplierDao = new SupplierDAOImpl(null, null);
+//		ProductDAO productDao = new ProductDAOImpl(null, null);
+//		
+//		customer = customerDao.getCustomerById(Integer.parseInt(request.getParameter("customerId")));
+//		supplier = supplierDao.getSupplierById(Integer.parseInt(request.getParameter("supplierId")));
+//		product = productDao.getProductById(Integer.parseInt(request.getParameter("productId")));
+//		
+//		note.setCustomer(customer);
+//		note.setSupplier(supplier);
+//		note.setProduct(product);
+//		note.setNoteDate((new Date()));
+//		note.setNoteTitle((String) request.getParameter("noteTitle"));
+//		note.setNoteText((String) request.getParameter("noteText"));
+//		
+//		noteDao.insert(note);
 		
 		
 		

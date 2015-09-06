@@ -11,18 +11,19 @@ import javax.servlet.http.HttpServletResponse;
 
 import model.Company;
 import model.Customer;
+import model.Supplier;
 import dao.CompanyDAO;
 import dao.CompanyDAOImpl;
 import dao.CustomerDAO;
 import dao.CustomerDAOImpl;
+import dao.SupplierDAO;
+import dao.SupplierDAOImpl;
 import service.Service;
 import utils.DBUtil;
 
 public class BusinessNotesAjaxServlet extends HttpServlet {
 	
 	private ServletContext context;
-	private static final String BASE = "/jsp/";
-	private String url;
 	String sb;
 	
 	public void init(ServletConfig config) throws ServletException {
@@ -43,7 +44,7 @@ public class BusinessNotesAjaxServlet extends HttpServlet {
         }
         
         boolean namesAdded = false;
-        if (action.equals("checkCompany")) {
+        if (action.equals("checkCompanyCustomer")) {
         	
         	// check if user sent empty string
             if (!taxID.equals("")) {
@@ -76,15 +77,67 @@ public class BusinessNotesAjaxServlet extends HttpServlet {
                 //nothing to show
                 response.setStatus(HttpServletResponse.SC_NO_CONTENT);
             }
-        }
+            
+        } else if(action.equals("checkCompany")) {
+        	
+        	// check if user sent empty string
+            if (!taxID.equals("")) {
+            	
+            	CompanyDAO companyDao = new CompanyDAOImpl(DBUtil.getConnection(),
+        			request.getSession());
+            	Company company = companyDao.getCompanyByTaxID(taxID);
+            	
+            	if(company != null) {
+            		sb = company.toJson();
+            		namesAdded = true;
+            	} else {
+            		sb = "<companyAdded>0</companyAdded>";
+            		namesAdded = true;
+            	}
+           }
 
-        if (action.equals("lookup")) {
+            if (namesAdded) {
+                response.setContentType("text/xml");
+                response.setHeader("Cache-Control", "no-cache");
+                response.getWriter().write("<data>" + sb + "</data>");
+            } else {
+                //nothing to show
+                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            }
+        	
+        } else if(action.equals("checkCompanySupplier")) {
+        	
+        	// check if user sent empty string
+            if (!taxID.equals("")) {
+            	
+            	SupplierDAO supplierDao = new SupplierDAOImpl(DBUtil.getConnection(),
+        			request.getSession());
+            	Supplier supplier = supplierDao.getSupplierByTaxID(taxID);
+            	
+            	if(supplier != null) {
+            		sb = supplier.toJson();
+            		namesAdded = true;
+            	} else {
+            		CompanyDAO companyDao = new CompanyDAOImpl(DBUtil.getConnection(),
+                			request.getSession());
+            		Company company = companyDao.getCompanyByTaxID(taxID);
+            		if(company != null) {
+            			sb = company.toJson() + "<supplierAdded>0</supplierAdded>";
+            			namesAdded = true;
+            		} else {
+            			
+            		}
+            	}
+           }
 
-            // put the target composer in the request scope to display 
-//            if ((targetId != null) && composers.containsKey(targetId.trim())) {
-//                request.setAttribute("composer", composers.get(targetId));
-//                context.getRequestDispatcher("/composer.jsp").forward(request, response);
-//            }
+            if (namesAdded) {
+                response.setContentType("text/xml");
+                response.setHeader("Cache-Control", "no-cache");
+                response.getWriter().write("<data>" + sb + "</data>");
+            } else {
+                //nothing to show
+                response.setStatus(HttpServletResponse.SC_NO_CONTENT);
+            }
         }
     }
 	

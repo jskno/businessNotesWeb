@@ -50,7 +50,18 @@ public class Supplier extends CompanyRole {
 			setDeliveryDays(ddbbSupplier.getDeliveryDays());
 		} else {
 			setDeliveryDays(null);
-		}
+		}	
+	}
+	
+	@Override
+	public String toJson() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("<supplier>");
+		sb.append("<deliveryDays>" + getDeliveryDays() + "</deliveryDays>");
+		sb.append("</supplier>");
+		sb.append("<supplierAdded>1</supplierAdded>");
+		sb.append(super.toJson());
+		return sb.toString();
 		
 	}
 	

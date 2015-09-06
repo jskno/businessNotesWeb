@@ -7,7 +7,7 @@ var responseXML;
 var string = "come on";
 
 var companyAdded;
-var customerAdded;
+var supplierAdded;
 
 var companyId;
 var companyName;
@@ -17,44 +17,22 @@ var companyEmail;
 var roleId;
 var contactName;
 var contactTelephone;
-var creditRating;
-var customerDiscount;
-var customerAdded;
-var customerAdded2;
+var deliveryDays;
+var supplierAdded;
 
-var addCustomerUrl = "notes/addElement";
-var closeCustomerUrl = "notes";
-var addCustomerNextStep = "addCustomer2";
-var closeCustomerNextStep = "newCustomer2";
+var addSupplierUrl = "notes/addElement";
+var closeSupplierUrl = "notes";
+var addSupplierNextStep = "addSupplier";
+var closeSupplierNextStep = "newSupplier";
 
 
 $('#taxID').change(function() {
 	clearForm();
 	taxID = $(this).val(); // get the current value of the input field.
     xmlhttp = initRequest();
-    //xmlhttp.onreadystatechange= 
     sendMessageToServer();
     
 });
-
-function reqListener () {
-	  console.log(this.responseText);
-}
-
-function transferComplete(evt) {
-//  alert("The transfer is complete.");
-}
-
-function transferFailed(evt) {
-  alert("An error occurred while transferring the file.");
-}
-
-function transferCanceled(evt) {
-  alert("The transfer has been canceled by the user.");
-}
-
-function updateProgress(evt) {
-}
 
 function initRequest() {
 	
@@ -63,37 +41,21 @@ function initRequest() {
 	} else {// code for IE6, IE5
 		xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
 	}
-	xmlhttp.addEventListener("load", reqListener);
-	xmlhttp.addEventListener("progress", updateProgress, false);
-	xmlhttp.addEventListener("load", transferComplete, false);
-	xmlhttp.addEventListener("error", transferFailed, false);
-	xmlhttp.addEventListener("abort", transferCanceled, false);
 	return xmlhttp;
 }
 
 function sendMessageToServer() {
-	var url = "notes/ajax?action=checkCompany&taxID=" + taxID;
+	var url = "notes/ajax?action=checkCompanySupplier&taxID=" + taxID;
 	xmlhttp.open("GET",url,true);
 	xmlhttp.onreadystatechange = callback;
-	xmlhttp.send();	
-	
+	xmlhttp.send();		
 }
 
 function callback() {
 	if (xmlhttp.readyState==4 && xmlhttp.status==200) {
 		responseXML = xmlhttp.responseXML
 		process(responseXML);
-   	} else if(xmlhttp.readyState==3) {
-   		customerAdded2 = "LOADING !!!!";
-   	} else if(xmlhttp.readyState==2) {
-   		customerAdded2 = "HEADERS_RECEIVED !!!!";
-   	} else if(xmlhttp.readyState==1) {
-   		customerAdded2 = "OPENED !!!!";
-   	} else if(xmlhttp.readyState==0) {
-   		customerAdded2 = "UNSENT !!!!";
-   	}
-	fillInFields();
-   	
+	}
 }
 
 function process(responseXML) {
@@ -102,18 +64,18 @@ function process(responseXML) {
         return false;
     } else {
     	
-        customerAdded = responseXML.getElementsByTagName("customerAdded")[0].childNodes[0].nodeValue;
+        supplierAdded = responseXML.getElementsByTagName("supplierAdded")[0].childNodes[0].nodeValue;
         companyAdded = responseXML.getElementsByTagName("companyAdded")[0].childNodes[0].nodeValue;
-
+        
         if (companyAdded == 1) {
         	populateCompanyForm();
         	disableCompanyForm(true);
-
-        	if (customerAdded == 1) {
-        		populateCustomerForm();
-            	disableCustomerForm(true);
-            	setSubmitForm("Close", closeCustomerUrl, closeCustomerNextStep);
-            	alert("The customer already exists.");
+        	
+        	if (supplierAdded == 1) {
+        		populateSupplierForm();
+            	disableSupplierForm(true);
+            	setSubmitForm("Close", closeSupplierUrl, closeSupplierNextStep);
+            	alert("The supplier already exists.");
         	}
         } else {
         	
@@ -133,16 +95,13 @@ function populateCompanyForm() {
 	
 }
 
-function populateCustomerForm() {
+function populateSupplierForm() {
 	contactName = responseXML.getElementsByTagName("contactName")[0].childNodes[0].nodeValue;
 	contactTelephone = responseXML.getElementsByTagName("contactTelephone")[0].childNodes[0].nodeValue;
-	creditRating = responseXML.getElementsByTagName("creditRating")[0].childNodes[0].nodeValue;
-	customerDiscount = responseXML.getElementsByTagName("customerDiscount")[0].childNodes[0].nodeValue;
+	deliveryDays = responseXML.getElementsByTagName("deliveryDays")[0].childNodes[0].nodeValue;
 	document.getElementById("contactName").value = contactName;
 	document.getElementById("contactTelephone").value = contactTelephone;
-	document.getElementById("creditRating").value = creditRating;
-	document.getElementById("customerDiscount").value = customerDiscount;        		
-	
+	document.getElementById("deliveryDays").value = deliveryDays;	
 }
 
 function disableCompanyForm(value) {
@@ -151,11 +110,10 @@ function disableCompanyForm(value) {
 	document.getElementById('companyEmail').disabled = value;
 }
 
-function disableCustomerForm(value) {
+function disableSupplierForm(value) {
 	document.getElementById('contactName').disabled = value;
 	document.getElementById('contactTelephone').disabled = value;
-	document.getElementById('creditRating').disabled = value;
-	document.getElementById('customerDiscount').disabled = value;
+	document.getElementById('deliveryDays').disabled = value;
 }
 
 function setSubmitForm(textButton, url, step) {
@@ -164,27 +122,19 @@ function setSubmitForm(textButton, url, step) {
 	submitButton.innerHTML = textButton;
 	
 	// Modify the url that calls the appropiate Servlet
-//	var actionForm = document.getElementById("newCustomer2").action; // Using the id
-//	actionForm = url;
-	$("#newCustomer2").attr("action", url);
+	$("#newSupplier").attr("action", url);
 	
 	// Modify the nextStep parameter that indicates which way to follow in the Servlet.
-//	var nextStepValue = document.newCustomer2.nextStep // Using the name
-//	nextStepValue = step;
-//	$("#form_id").attr("nextStep"); //will retrieve it // Using jquery
-//	$("#newCustomer2").attr("nextStep", nextStep); //will set it
-//	var nextStepValue = document.getElementById("newCustomer2").nextStep; // Using the id
-//	nextStepValue = step;
-//	$('#nextStep').val(step);
 	document.getElementById("nextStep").value = step;
 }
 
 function clearForm() {
 	disableCompanyForm(false);
-	disableCustomerForm(false);
+	disableSupplierForm(false);
 	clearFields();
-	setSubmitForm("Submit", addCustomerUrl, addCustomerNextStep);
-	
+	setSubmitForm("Submit", addSupplierUrl, addSupplierNextStep);
+}
+
 function clearFields() {
 	document.getElementById("companyId").value = "";
 	document.getElementById("companyName").value = "";
@@ -192,11 +142,5 @@ function clearFields() {
 	document.getElementById("companyEmail").value = "";
 	document.getElementById("contactName").value = "";
 	document.getElementById("contactTelephone").value = "";
-	document.getElementById("creditRating").value = "";
-	document.getElementById("customerDiscount").value = "";
-}
-
-}
-function fillInFields() {
-//	document.getElementById("companyNameLabel").innerHTML = customerAdded2;	
+	document.getElementById("deliveryDays").value = "";
 }

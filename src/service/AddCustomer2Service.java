@@ -28,7 +28,7 @@ public class AddCustomer2Service extends ServiceImpl implements Service {
 		
 		Customer customer = new Customer();
 		Company company = new Company();
-		company.setId(companyId);
+		company.setCompanyId(companyId);
 		customer.setCompany(company);
 		customer.setRoleName(RoleName.CUSTOMER);
 		customer.setContactName((String) request.getParameter("contactName"));

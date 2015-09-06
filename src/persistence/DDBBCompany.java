@@ -26,7 +26,7 @@ public class DDBBCompany {
 	public int getCompanyId() {
 		return companyId;
 	}
-	public void setId(int companyId) {
+	public void setCompanyId(int companyId) {
 		this.companyId = companyId;
 	}
 	public String getTaxID() {
@@ -93,7 +93,7 @@ public class DDBBCompany {
 		
 	public void loadResult(ResultSet rs) throws SQLException {
 		
-		setId(rs.getInt("COMPANY_ID"));
+		setCompanyId(rs.getInt("COMPANY_ID"));
 		if(rs.wasNull()) {
 			setCompanyIdNull();
 		}

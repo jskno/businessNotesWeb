@@ -27,7 +27,7 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 		
 		Company company = (Company) o;
 		DDBBCompany ddbbCompany = company.getPersistenceObject();
-		int newCompanyId = -1;
+		Integer newCompanyId = -1;
 		
 		try {
 			newCompanyId = ddbbCompany.insert(connection);
@@ -87,7 +87,7 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				company = new Company();
-				company.setId(resultSet.getInt("id"));
+				company.setCompanyId(resultSet.getInt("id"));
 				company.setCompanyName(resultSet.getString("company_name"));
 				company.setCompanyTelephone(resultSet.getString("company_telephone"));
 				company.setCompanyEmail(resultSet.getString("company_email"));
@@ -114,7 +114,7 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				company = new Company();
-				company.setId(resultSet.getInt("id"));
+				company.setCompanyId(resultSet.getInt("id"));
 				company.setCompanyName(resultSet.getString("company_name"));
 				company.setCompanyTelephone(resultSet.getString("company_telephone"));
 				company.setCompanyEmail(resultSet.getString("company_email"));
@@ -145,7 +145,7 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
 				Company company = new Company();
-				company.setId(resultSet.getInt("id"));
+				company.setCompanyId(resultSet.getInt("id"));
 				company.setCompanyName(resultSet.getString("company_name"));
 				company.setCompanyTelephone(resultSet.getString("company_telephone"));
 				company.setCompanyEmail(resultSet.getString("company_email"));
@@ -173,7 +173,7 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 			statement = connection.prepareStatement(sql);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				company.setId(resultSet.getInt("id"));
+				company.setCompanyId(resultSet.getInt("id"));
 				company.setCompanyName(resultSet.getString("company_name"));
 				company.setCompanyTelephone(resultSet.getString("company_telephone"));
 				company.setCompanyEmail(resultSet.getString("company_email"));
