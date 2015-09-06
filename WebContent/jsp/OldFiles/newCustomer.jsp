@@ -1,11 +1,11 @@
-<%@page import="model.Company"%>
+<%@page import="model.CompanyVO"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%
     @SuppressWarnings("unchecked")
-    List<Company> companiesList =
-            (List<Company>)request.getAttribute("companiesList");
+    List<CompanyVO> companiesList =
+            (List<CompanyVO>)request.getAttribute("companiesList");
 %>
 <!DOCTYPE html >
 <html lang="en">
@@ -31,15 +31,15 @@
   		<form class="form-horizontal" role="form" action="notes/addElement" method="POST">
   		<input type="hidden" name="action" value="addCustomer"/>
   		   		<div class="form-group">
-      			<label class="control-label col-sm-2" for="companyId">Company Name:</label>
+      			<label class="control-label col-sm-2" for="CompanyVOId">CompanyVO Name:</label>
       			<div class="col-sm-8">
-    				<select class="form-control" data-header="Select a Company" name="companyId" 
-    						id="companyId">
+    				<select class="form-control" data-header="Select a CompanyVO" name="CompanyVOId" 
+    						id="CompanyVOId">
     				<% 
-    					for(Company eachCompany : companiesList) {
+    					for(CompanyVO eachCompanyVO : companiesList) {
     				%>
-    						<option value="<%= eachCompany.getCompanyId() %>">
-    							<%= eachCompany.getCompanyName()%>
+    						<option value="<%= eachCompanyVO.getCompanyId() %>">
+    							<%= eachCompanyVO.getCompanyName()%>
     						</option>
     						
     				<%	
@@ -50,7 +50,7 @@
       			<div class="col-sm-2">
       				<!-- Trigger the modal with a button -->
       				<button type="button" class="btn btn-info btn-md" data-toggle="modal" 
-      						data-target="#newCompanyModal">New Company</button>
+      						data-target="#newCompanyVOModal">New CompanyVO</button>
       			</div>
     		</div>
     		<div class="form-group">
@@ -78,38 +78,38 @@
 </body>
 
 <!-- Modal -->
-<div id="newCompanyModal" class="modal fade" role="dialog">
+<div id="newCompanyVOModal" class="modal fade" role="dialog">
 	<div class="modal-dialog">
 
 	<!-- Modal content-->
 	<div class="modal-content">
-		<form id="newCompanyModalForm" class="form-horizontal" role="form" action="notes/addElement" method="POST">
-		<input type="hidden" name="action" value="addCompany"/>
+		<form id="newCompanyVOModalForm" class="form-horizontal" role="form" action="notes/addElement" method="POST">
+		<input type="hidden" name="action" value="addCompanyVO"/>
 		<input type="hidden" name="originScreen" value="newCustomerForm"/>	
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">New Company</h4>
+				<h4 class="modal-title">New CompanyVO</h4>
 			</div>
 	
 			<div class="modal-body">
 	    		<div class="form-group">
-	      			<label class="control-label col-sm-2" for="companyName">Company Name:</label>
+	      			<label class="control-label col-sm-2" for="CompanyVOName">CompanyVO Name:</label>
 	      			<div class="col-sm-10">
-		        		<input type="text" class="form-control" name="companyName" id="companyName" 
+		        		<input type="text" class="form-control" name="CompanyVOName" id="CompanyVOName" 
 		        				placeholder="Enter name">
 	    			</div>
 	    		</div>
 	    		<div class="form-group">
-	      			<label class="control-label col-sm-2" for="companyTelephone">Telephone Number:</label>
+	      			<label class="control-label col-sm-2" for="CompanyVOTelephone">Telephone Number:</label>
 	     			<div class="col-sm-10">          
-		        		<input type="text" class="form-control" name="companyTelephone" id="companyTelephone" 
+		        		<input type="text" class="form-control" name="CompanyVOTelephone" id="CompanyVOTelephone" 
 		        				placeholder="Enter telephone">
 	      			</div>
 	    		</div>
 	    		<div class="form-group">
-	      			<label class="control-label col-sm-2" for="companyEmail">Email:</label>
+	      			<label class="control-label col-sm-2" for="CompanyVOEmail">Email:</label>
 	     			<div class="col-sm-10">          
-		        		<input type="text" class="form-control" name="companyEmail" id="companyEmail" 
+		        		<input type="text" class="form-control" name="CompanyVOEmail" id="CompanyVOEmail" 
 		        				placeholder="Enter email">
 	      			</div>
 	    		</div>
@@ -125,7 +125,7 @@
 				
 <script>
 $(document).ready(function() {
-    $('#newCompanyModalForm').formValidation({
+    $('#newCompanyVOModalForm').formValidation({
         framework: 'bootstrap',
         excluded: [':disabled'],
         icon: {
@@ -134,24 +134,24 @@ $(document).ready(function() {
             validating: 'glyphicon glyphicon-refresh'
         },
         fields: {
-        	companyName: {
+        	CompanyVOName: {
                 validators: {
                     notEmpty: {
-                        message: 'The company name is required'
+                        message: 'The Company name is required'
                     }
                 }
             },
-            companyTelephone: {
+            CompanyVOTelephone: {
                 validators: {
                     notEmpty: {
-                        message: 'The company telephone is required'
+                        message: 'The Company telephone is required'
                     }
                 }
             },
-            companyEmail: {
+            CompanyVOEmail: {
                 validators: {
                     notEmpty: {
-                        message: 'The company email is required'
+                        message: 'The Company email is required'
                     }
                 }
             },

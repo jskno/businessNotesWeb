@@ -1,4 +1,4 @@
-<%@page import="model.Note"%>
+<%@page import="model.NoteVO"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
@@ -20,11 +20,11 @@
 		</thead>
 		<tbody>
 		<%
-	        List<Note> notesList = (List<Note>)request.getAttribute("notesList");
-    	    Iterator<Note> iterator = notesList.iterator();
+	        List<NoteVO> notesList = (List<NoteVO>)request.getAttribute("notesList");
+    	    Iterator<NoteVO> iterator = notesList.iterator();
 	        while (iterator.hasNext()) {
-	        	Note note = (Note)iterator.next();
-        		int noteTitle = note.getId();
+	        	NoteVO note = (NoteVO)iterator.next();
+        		int noteTitle = note.getNoteId();
           		String noteText = note.getNoteText();
          %>
 			<tr>

@@ -1,12 +1,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@page import="model.Company"%>
+<%@page import="model.CompanyVO"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%
     @SuppressWarnings("unchecked")
-    List<Company> companiesList =
-            (List<Company>)request.getAttribute("companiesList");
+    List<CompanyVO> companiesList =
+            (List<CompanyVO>)request.getAttribute("companiesList");
 %>
 <!DOCTYPE html >
 <html lang="en">

@@ -3,7 +3,7 @@
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
-<%@page import="model.Company"%>
+<%@page import="model.CompanyVO"%>
 <!DOCTYPE html >
 <%
 String imageURL=application.getInitParameter("imageURL"); 

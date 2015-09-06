@@ -1,9 +1,9 @@
-<%@page import="model.Note"%>
+<%@page import="model.NoteVO"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.util.Iterator"%>
-<%@page import="model.Company"%>
+<%@page import="model.CompanyVO"%>
 
 <!DOCTYPE html >
 <html>
@@ -21,10 +21,10 @@
 		</thead>
 		<tbody>
 		<%
-	        List<Company> companyList = (List<Company>)request.getAttribute("companiesList");
-    	    Iterator<Company> iterator = companyList.iterator();
+	        List<CompanyVO> companyList = (List<CompanyVO>)request.getAttribute("companiesList");
+    	    Iterator<CompanyVO> iterator = companyList.iterator();
 	        while (iterator.hasNext()) {
-    	    	Company company = (Company)iterator.next();
+    	    	CompanyVO company = (CompanyVO)iterator.next();
         		String companyName = company.getCompanyName();
           		String companyEmail = company.getCompanyEmail();
          %>
