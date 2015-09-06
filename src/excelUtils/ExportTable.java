@@ -6,7 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 
-import model.Company;
+import model.CompanyVO;
 import model.ProductVO;
 
 import org.apache.poi.ss.usermodel.Cell;
@@ -57,7 +57,7 @@ public class ExportTable
       XSSFRow headerRow = spreadsheet.createRow(0);
       //This data needs to be written.
       CompanyDAO companyDao = new CompanyDAOImpl(null, null);
-      List<Company> companiesList = companyDao.getCompaniesList();
+      List<CompanyVO> companiesList = companyDao.getCompaniesList();
       //Iterate over data and write to sheet
       Object eachCompany;
       for (int i = 0; i < companiesList.size(); i++) {
@@ -144,7 +144,7 @@ public class ExportTable
 	   XSSFRow row;
 	   row = spreadsheet.createRow(1);
 	   int cellid = 0;
-		for (Field field : Company.class.getClass().getDeclaredFields())
+		for (Field field : CompanyVO.class.getClass().getDeclaredFields())
 	    {
 	       Cell cell = row.createCell(cellid++);
 	       cell.setCellValue(field.getName());

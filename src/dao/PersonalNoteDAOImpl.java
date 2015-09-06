@@ -15,11 +15,11 @@ import persistence.DDBBNote;
 import persistence.DDBBPersonalNote;
 import utils.DateUtils;
 import model.BusinessNoteVO;
-import model.Customer;
-import model.Note;
+import model.CustomerVO;
+import model.NoteVO;
 import model.PersonalNoteVO;
 import model.ProductVO;
-import model.Supplier;
+import model.SupplierVO;
 
 public class PersonalNoteDAOImpl extends DaoImpl implements PersonalNoteDAO {
 	
@@ -136,9 +136,9 @@ public class PersonalNoteDAOImpl extends DaoImpl implements PersonalNoteDAO {
 		return list;
 	}
 	@Override
-	public void insertList(List<Note> notesList) {
+	public void insertList(List<NoteVO> notesList) {
 
-		for(Note eachNote : notesList) {
+		for(NoteVO eachNote : notesList) {
 			insert(eachNote);
 		}
 	}

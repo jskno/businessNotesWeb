@@ -7,13 +7,13 @@ import java.util.Set;
 import persistence.DDBBMenu;
 import persistence.DDBBSubMenu;
 
-public class Menu {
+public class MenuVO {
 	
 	private Integer idMenu;
 	private String name;
 	private Integer order;
 	private Boolean indActive;
-	private List<SubMenu> subMenus;
+	private List<SubMenuVO> subMenus;
 			
 	public int getIdMenu() {
 		return idMenu;
@@ -39,10 +39,10 @@ public class Menu {
 	public void setIndActive(boolean indActive) {
 		this.indActive = indActive;
 	}
-	public List<SubMenu> getSubMenus() {
+	public List<SubMenuVO> getSubMenus() {
 		return subMenus;
 	}
-	public void setSubMenus(List<SubMenu> subMenus) {
+	public void setSubMenus(List<SubMenuVO> subMenus) {
 		this.subMenus = subMenus;
 	}
 	
@@ -74,7 +74,7 @@ public class Menu {
 		} else {
 			this.order = null;
 		}
-		this.subMenus = new ArrayList<SubMenu>();
+		this.subMenus = new ArrayList<SubMenuVO>();
 	}
 
 }

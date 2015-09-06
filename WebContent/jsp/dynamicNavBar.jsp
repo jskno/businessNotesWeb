@@ -1,7 +1,7 @@
-<%@page import="model.SubMenu"%>
+<%@page import="model.MenuVO"%>
+<%@page import="model.SubMenuVO"%>
 <%@page import="java.io.UncheckedIOException"%>
 <%@page import="java.util.TreeMap"%>
-<%@page import="model.Menu"%>
 <%@page import="java.util.Map"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html >
@@ -38,7 +38,7 @@
                     <li><a href="#" class="active">Current Page</a><span class="sr-only">current</span></li>
                     <%
                 @SuppressWarnings("unchecked")
-				Map<Integer, Menu> theMenu = (TreeMap<Integer, Menu>) application.getAttribute(
+				Map<Integer, MenuVO> theMenu = (TreeMap<Integer, MenuVO>) application.getAttribute(
 						"theMenu");
 				for(Integer eachMenu : theMenu.keySet()) {
 					%>
@@ -46,7 +46,7 @@
                         <a class="dropdown-toggle" role="button" data-toggle="dropdown"><%=theMenu.get(eachMenu).getName()%><span class="caret" /></a>
                         <ul class="dropdown-menu">
                         <%
-                        	for(SubMenu eachSubMenu : theMenu.get(eachMenu).getSubMenus()) {
+                        	for(SubMenuVO eachSubMenu : theMenu.get(eachMenu).getSubMenus()) {
                         		if("jsp".equals(eachSubMenu.getKind())) {
                         %>	
                        				<li><a href=<%=eachSubMenu.getLink()%>><%=eachSubMenu.getName()%></a></li>

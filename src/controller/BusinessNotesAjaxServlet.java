@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Company;
-import model.Customer;
-import model.Supplier;
+import model.CompanyVO;
+import model.CustomerVO;
+import model.SupplierVO;
 import dao.CompanyDAO;
 import dao.CompanyDAOImpl;
 import dao.CustomerDAO;
@@ -51,7 +51,7 @@ public class BusinessNotesAjaxServlet extends HttpServlet {
             	
             	CustomerDAO customerDao = new CustomerDAOImpl(DBUtil.getConnection(),
         			request.getSession());
-            	Customer customer = customerDao.getCustomerByTaxID(taxID);
+            	CustomerVO customer = customerDao.getCustomerByTaxID(taxID);
             	
             	if(customer != null) {
             		sb = customer.toJson();
@@ -59,7 +59,7 @@ public class BusinessNotesAjaxServlet extends HttpServlet {
             	} else {
             		CompanyDAO companyDao = new CompanyDAOImpl(DBUtil.getConnection(),
                 			request.getSession());
-            		Company company = companyDao.getCompanyByTaxID(taxID);
+            		CompanyVO company = companyDao.getCompanyByTaxID(taxID);
             		if(company != null) {
             			sb = company.toJson() + "<customerAdded>0</customerAdded>";
             			namesAdded = true;
@@ -85,7 +85,7 @@ public class BusinessNotesAjaxServlet extends HttpServlet {
             	
             	CompanyDAO companyDao = new CompanyDAOImpl(DBUtil.getConnection(),
         			request.getSession());
-            	Company company = companyDao.getCompanyByTaxID(taxID);
+            	CompanyVO company = companyDao.getCompanyByTaxID(taxID);
             	
             	if(company != null) {
             		sb = company.toJson();
@@ -112,7 +112,7 @@ public class BusinessNotesAjaxServlet extends HttpServlet {
             	
             	SupplierDAO supplierDao = new SupplierDAOImpl(DBUtil.getConnection(),
         			request.getSession());
-            	Supplier supplier = supplierDao.getSupplierByTaxID(taxID);
+            	SupplierVO supplier = supplierDao.getSupplierByTaxID(taxID);
             	
             	if(supplier != null) {
             		sb = supplier.toJson();
@@ -120,7 +120,7 @@ public class BusinessNotesAjaxServlet extends HttpServlet {
             	} else {
             		CompanyDAO companyDao = new CompanyDAOImpl(DBUtil.getConnection(),
                 			request.getSession());
-            		Company company = companyDao.getCompanyByTaxID(taxID);
+            		CompanyVO company = companyDao.getCompanyByTaxID(taxID);
             		if(company != null) {
             			sb = company.toJson() + "<supplierAdded>0</supplierAdded>";
             			namesAdded = true;

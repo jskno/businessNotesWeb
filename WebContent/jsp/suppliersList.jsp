@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@page import="model.Supplier"%>
+<%@page import="model.SupplierVO"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Iterator"%>
 <!DOCTYPE html >
@@ -15,7 +15,7 @@
 	<div class="container-fluid">
 		<div class="row">
     		<div class="col-sm-12">
-    			<jsp:include page="navBar.jsp" flush="true" />
+    			<jsp:include page="dynamicNavBar.jsp" flush="true" />
     		</div>
     	</div>
 		
@@ -26,26 +26,36 @@
   		<table class="table table-condensed">
     		<thead>
      			<tr>
+     				<th>Tax ID</th>
 					<th>Company Name</th>
         			<th>Contact Name</th>
        				<th>Contact Telephone</th>
+       				<th>Delivery days</th>
+       				<th></th>
+       				<th></th>
      			</tr>
    			</thead>
     		<tbody>
     		<%
     			@SuppressWarnings("unchecked")
-    			List<Supplier> suppliersList = (List<Supplier>)request.getAttribute("suppliersList");
-    	    	Iterator<Supplier> iterator = suppliersList.iterator();
+    			List<SupplierVO> suppliersList = (List<SupplierVO>)request.getAttribute("suppliersList");
+    	    	Iterator<SupplierVO> iterator = suppliersList.iterator();
 	        	while (iterator.hasNext()) {
-    	    	Supplier supplier = (Supplier) iterator.next();
-        		String companyName = supplier.getCompany().getCompanyName();
+    	    	SupplierVO supplier = (SupplierVO) iterator.next();
+    	    	String taxID = supplier.getCompanyTaxID();
+        		String companyName = supplier.getCompanyName();
           		String contactName = supplier.getContactName();
           		String contactTelephone = supplier.getContactTelephone();
+          		Integer deliveryDays = supplier.getDeliveryDays();
          	%>
 				<tr>
+					<td><%=taxID%></td>
 					<td><%=companyName%></td>
 					<td><%=contactName%></td>
 					<td><%=contactTelephone%></td>
+					<td><%=deliveryDays%></td>
+					<td><a href="#">View</a></td>
+					<td><a href="#">Delete</a></td>
 				</tr>
 		 	<%
          		 }

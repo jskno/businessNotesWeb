@@ -2,16 +2,16 @@ package dao;
 
 import java.util.List;
 
-import model.Company;
+import model.CompanyVO;
 
 public interface CompanyDAO extends Dao {
 	
-	public List<Company> getCompaniesList();
-	public List<Company> searchCompaniesByName(String name);
-	public Company getCompanyById(int companyId);
-	public List<Company> getNoCustomerCompanies();
-	public List<Company> getNoSupplierCompanies();
-	public void insertList(List<Company> companiesList);
-	public Company getCompanyByTaxID(String taxID);
+	public List<CompanyVO> getCompaniesList();
+	public List<CompanyVO> searchCompaniesByName(String name);
+	public CompanyVO getCompanyById(int companyId);
+	public List<CompanyVO> getNoCustomerCompanies();
+	public List<CompanyVO> getNoSupplierCompanies();
+	public void insertList(List<CompanyVO> companiesList);
+	public CompanyVO getCompanyByTaxID(String taxID);
 	
 }

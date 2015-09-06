@@ -3,20 +3,20 @@ package model;
 import persistence.DDBBCompanyRole;
 import persistence.DDBBCustomer;
 
-public class Customer extends CompanyRole {
+public class CustomerVO extends CompanyRoleVO {
 	
 	private Integer creditRating;
 	private Double customerDiscount;
 	
-	public Customer() {
+	public CustomerVO() {
 	}
 	
-	public Customer(DDBBCompanyRole ddbbCompanyRole, DDBBCustomer ddbbCustomer) {
+	public CustomerVO(DDBBCompanyRole ddbbCompanyRole, DDBBCustomer ddbbCustomer) {
 		this.setFromPersistenceObject(ddbbCompanyRole);
 		this.setFromPersistenceObject(ddbbCustomer);
 	}
 	
-	public Customer(Integer creditRating, Double customerDiscount) {
+	public CustomerVO(Integer creditRating, Double customerDiscount) {
 		
 		this.creditRating = creditRating;
 		this.customerDiscount = customerDiscount;

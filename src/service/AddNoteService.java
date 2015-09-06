@@ -3,9 +3,9 @@ package service;
 import java.util.Date;
 
 import model.BusinessNoteVO;
-import model.Customer;
+import model.CustomerVO;
 import model.ProductVO;
-import model.Supplier;
+import model.SupplierVO;
 import dao.CustomerDAO;
 import dao.CustomerDAOImpl;
 import dao.NoteDAO;
@@ -27,8 +27,8 @@ public class AddNoteService extends ServiceImpl implements Service {
 	private void createNote() {
 		
 		BusinessNoteVO note = new BusinessNoteVO();
-		Customer customer;
-		Supplier supplier;
+		CustomerVO customer;
+		SupplierVO supplier;
 		ProductVO product;
 		
 		NoteDAO noteDao = null;

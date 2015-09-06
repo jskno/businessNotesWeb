@@ -12,9 +12,9 @@ import javax.servlet.http.HttpSession;
 
 import persistence.DDBBMenu;
 import persistence.DDBBSubMenu;
-import model.Menu;
+import model.MenuVO;
 import model.ProductVO;
-import model.SubMenu;
+import model.SubMenuVO;
 
 public class MenuDAOImpl extends DaoImpl implements MenuDAO {
 	
@@ -27,9 +27,9 @@ public class MenuDAOImpl extends DaoImpl implements MenuDAO {
 	}
 
 	@Override
-	public Map<Integer, Menu> getMenu() {
+	public Map<Integer, MenuVO> getMenu() {
 
-		Map<Integer, Menu> theMenu = new TreeMap<Integer, Menu>();
+		Map<Integer, MenuVO> theMenu = new TreeMap<Integer, MenuVO>();
 		
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
@@ -40,19 +40,19 @@ public class MenuDAOImpl extends DaoImpl implements MenuDAO {
 		//Product product = new Product();
 		try {
 			DDBBMenu ddbbMenu = null;
-			Menu menu = null;
+			MenuVO menu = null;
 			statement = connection.prepareStatement(SQL_MENU);
 			resultSet = statement.executeQuery();
 			
 			while (resultSet.next()) {
 				ddbbMenu = new DDBBMenu();
-				menu = new Menu();
+				menu = new MenuVO();
 				
 				ddbbMenu.loadResult(resultSet);
 				menu.setFromPersistence(ddbbMenu);
 				try {
 					DDBBSubMenu ddbbSubMenu = null;
-					SubMenu subMenu = null;
+					SubMenuVO subMenu = null;
 					
 					stmt = connection.prepareStatement(SQL_SUBMENU);
 					stmt.setInt(1, ddbbMenu.getIdMenu());
@@ -60,7 +60,7 @@ public class MenuDAOImpl extends DaoImpl implements MenuDAO {
 					
 					while(rs.next()) {
 						ddbbSubMenu = new DDBBSubMenu();
-						subMenu = new SubMenu();
+						subMenu = new SubMenuVO();
 						
 						ddbbSubMenu.loadResult(rs);
 						subMenu.setFromPersistence(ddbbSubMenu);

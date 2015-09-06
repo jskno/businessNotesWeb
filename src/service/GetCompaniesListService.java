@@ -2,7 +2,7 @@ package service;
 
 import java.util.List;
 
-import model.Company;
+import model.CompanyVO;
 import dao.CompanyDAO;
 import dao.CompanyDAOImpl;
 
@@ -19,7 +19,7 @@ public class GetCompaniesListService extends ServiceImpl implements Service {
 		
 		try {
 			CompanyDAO companyDao = new CompanyDAOImpl(null, null);
-			List<Company> companiesList = companyDao.getCompaniesList();
+			List<CompanyVO> companiesList = companyDao.getCompaniesList();
 			request.setAttribute("companiesList", companiesList);
 		} catch (Exception e) {
 			System.out.println(e);

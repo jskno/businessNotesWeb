@@ -4,7 +4,7 @@ import java.util.Date;
 
 import persistence.DDBBPersonalNote;
 
-public class PersonalNoteVO extends Note {
+public class PersonalNoteVO extends NoteVO {
 	
 	private Date remainderDate;
 	

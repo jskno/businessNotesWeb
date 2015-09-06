@@ -1,7 +1,7 @@
 package service;
 
-import model.Company;
-import model.Customer;
+import model.CompanyVO;
+import model.CustomerVO;
 import dao.CompanyDAO;
 import dao.CompanyDAOImpl;
 import dao.CustomerDAO;
@@ -18,11 +18,11 @@ public class AddCustomerService extends ServiceImpl implements Service {
 	
 	private void createCustomer() {
 		
-		Customer customer = new Customer();
+		CustomerVO customer = new CustomerVO();
 		CompanyDAO companyDao = null;
 		companyDao = new CompanyDAOImpl(getConnection(), getSession());
 		CustomerDAO customerDao = new CustomerDAOImpl(null, null);
-		Company company = companyDao.getCompanyById(Integer.parseInt(request.getParameter("companyId")));
+		CompanyVO company = companyDao.getCompanyById(Integer.parseInt(request.getParameter("companyId")));
 		customer.setCompany(company);
 		customer.setContactName((String) request.getParameter("contactName"));
 		customer.setContactTelephone((String) request.getParameter("contactTelephone"));

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@page import="model.Customer"%>
+<%@page import="model.CustomerVO"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Iterator"%>
 <!DOCTYPE html >
@@ -15,7 +15,7 @@
 	<div class="container-fluid">
 		<div class="row">
     		<div class="col-sm-12">
-    			<jsp:include page="navBar.jsp" flush="true" />
+    			<jsp:include page="dynamicNavBar.jsp" flush="true" />
     		</div>
     	</div>
 		
@@ -26,26 +26,39 @@
   		<table class="table table-condensed">
     		<thead>
      			<tr>
+     				<th>Tax ID</th>
 					<th>Company Name</th>
         			<th>Contact Name</th>
        				<th>Contact Telephone</th>
+       				<th>Credit Rating</th>
+       				<th>Customer Discount days</th>
+       				<th></th>
+       				<th></th>
      			</tr>
    			</thead>
     		<tbody>
     		<%
     			@SuppressWarnings("unchecked")
-	        	List<Customer> customersList = (List<Customer>)request.getAttribute("customersList");
-    	    	Iterator<Customer> iterator = customersList.iterator();
+	        	List<CustomerVO> customersList = (List<CustomerVO>)request.getAttribute("customersList");
+    	    	Iterator<CustomerVO> iterator = customersList.iterator();
 	        	while (iterator.hasNext()) {
-	        	Customer customer = (Customer) iterator.next();
-        		String companyName = customer.getCompany().getCompanyName();
+	        	CustomerVO customer = (CustomerVO) iterator.next();
+	        	String taxID = customer.getCompanyTaxID();
+        		String companyName = customer.getCompanyName();
           		String contactName = customer.getContactName();
           		String contactTelephone = customer.getContactTelephone();
+          		Integer creditRating = customer.getCreditRating();
+          		Double customerDiscount = customer.getCustomerDiscount();
          	%>
 				<tr>
+					<td><%=taxID%></td>
 					<td><%=companyName%></td>
 					<td><%=contactName%></td>
 					<td><%=contactTelephone%></td>
+					<td><%=creditRating%></td>
+					<td><%=customerDiscount%></td>
+					<td><a href="#">View</a></td>
+					<td><a href="#">Delete</a></td>
 				</tr>
 		 	<%
          		 }

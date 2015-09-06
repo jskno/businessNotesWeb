@@ -5,7 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import model.Company;
+import model.CompanyVO;
 import dao.CompanyDAO;
 import dao.CompanyDAOImpl;
 
@@ -28,7 +28,7 @@ public class NewSupplierFormService extends ServiceImpl {
 		
 		try {
 			CompanyDAO companyDao = new CompanyDAOImpl(null, null);
-			List<Company> companiesList = companyDao.getNoSupplierCompanies();
+			List<CompanyVO> companiesList = companyDao.getNoSupplierCompanies();
 			request.setAttribute("companiesList", companiesList);
 		} catch (Exception e) {
 			System.out.println(e);

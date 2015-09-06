@@ -6,7 +6,7 @@ import java.sql.SQLException;
 import javax.servlet.http.HttpSession;
 
 import persistence.DDBBCompanyRole;
-import model.CompanyRole;
+import model.CompanyRoleVO;
 
 public class CompanyRoleDaoImpl extends DaoImpl implements CompanyRoleDao {
 	
@@ -17,7 +17,7 @@ public class CompanyRoleDaoImpl extends DaoImpl implements CompanyRoleDao {
 	@Override
 	public int insert(Object o) {
 		
-		CompanyRole companyRole = (CompanyRole) o;
+		CompanyRoleVO companyRole = (CompanyRoleVO) o;
 		DDBBCompanyRole ddbbCompanyRole = companyRole.getPersistenceObject();
 		int newCompanyRoleId = -1;
 		

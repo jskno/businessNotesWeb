@@ -2,22 +2,22 @@ package model;
 
 import persistence.DDBBBusinessNote;
 
-public class BusinessNoteVO extends Note {
+public class BusinessNoteVO extends NoteVO {
 	
-	private Customer customer;
-	private Supplier supplier;
+	private CustomerVO customer;
+	private SupplierVO supplier;
 	private ProductVO product;
 	
-	public Customer getCustomer() {
+	public CustomerVO getCustomer() {
 		return customer;
 	}
-	public void setCustomer(Customer customer) {
+	public void setCustomer(CustomerVO customer) {
 		this.customer = customer;
 	}
-	public Supplier getSupplier() {
+	public SupplierVO getSupplier() {
 		return supplier;
 	}
-	public void setSupplier(Supplier supplier) {
+	public void setSupplier(SupplierVO supplier) {
 		this.supplier = supplier;
 	}
 	public ProductVO getProduct() {
@@ -48,18 +48,18 @@ public class BusinessNoteVO extends Note {
 	}
 	
 	public void setFromPersistenceBusNote(DDBBBusinessNote ddbbBusinessNote) {
-		Customer customer = null;
-		Supplier supplier = null;
+		CustomerVO customer = null;
+		SupplierVO supplier = null;
 		ProductVO product = null;
 		
 		if(!ddbbBusinessNote.isCustomerIdNull()) {
-			customer = new Customer();
+			customer = new CustomerVO();
 			customer.setRoleId(ddbbBusinessNote.getCustomerId());
 		}
 		setCustomer(customer);
 		
 		if(!ddbbBusinessNote.isSupplierIdNull()) {
-			supplier = new Supplier();
+			supplier = new SupplierVO();
 			supplier.setRoleId(ddbbBusinessNote.getSupplierId());
 		} 
 		setSupplier(supplier);

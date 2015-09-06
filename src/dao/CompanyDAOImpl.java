@@ -10,7 +10,7 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import persistence.DDBBCompany;
-import model.Company;
+import model.CompanyVO;
 
 public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 	
@@ -25,7 +25,7 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 	
 	public int insert(Object o){
 		
-		Company company = (Company) o;
+		CompanyVO company = (CompanyVO) o;
 		DDBBCompany ddbbCompany = company.getPersistenceObject();
 		Integer newCompanyId = -1;
 		
@@ -49,16 +49,16 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 		
 	}
 	
-	public List<Company> getCompaniesList() {
+	public List<CompanyVO> getCompaniesList() {
 		
-		List<Company> result = new ArrayList<Company>();
+		List<CompanyVO> result = new ArrayList<CompanyVO>();
 				
 		String sql = "select * from company order by company_name";
 		
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		
-		Company company = null;
+		CompanyVO company = null;
 		
 		try {
 			statement = connection.prepareStatement(sql);
@@ -76,17 +76,17 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 	}
 	
 	@Override
-	public List<Company> getNoCustomerCompanies() {
+	public List<CompanyVO> getNoCustomerCompanies() {
 		
-		List<Company> result = new ArrayList<Company>();
-		Company company;
+		List<CompanyVO> result = new ArrayList<CompanyVO>();
+		CompanyVO company;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		try {
 			statement = connection.prepareStatement(NO_CUSTOMER_COMPANIES);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				company = new Company();
+				company = new CompanyVO();
 				company.setCompanyId(resultSet.getInt("id"));
 				company.setCompanyName(resultSet.getString("company_name"));
 				company.setCompanyTelephone(resultSet.getString("company_telephone"));
@@ -102,10 +102,10 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 	}
 	
 	@Override
-	public List<Company> getNoSupplierCompanies() {
+	public List<CompanyVO> getNoSupplierCompanies() {
 		
-		List<Company> result = new ArrayList<Company>();
-		Company company;
+		List<CompanyVO> result = new ArrayList<CompanyVO>();
+		CompanyVO company;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		
@@ -113,7 +113,7 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 			statement = connection.prepareStatement(NO_SUPPLIER_COMPANIES);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				company = new Company();
+				company = new CompanyVO();
 				company.setCompanyId(resultSet.getInt("id"));
 				company.setCompanyName(resultSet.getString("company_name"));
 				company.setCompanyTelephone(resultSet.getString("company_telephone"));
@@ -128,8 +128,8 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 		return result;
 	}
 	
-	public List<Company> searchCompaniesByName(String name) {
-		List<Company> result = new ArrayList<Company>();
+	public List<CompanyVO> searchCompaniesByName(String name) {
+		List<CompanyVO> result = new ArrayList<CompanyVO>();
 		
 		String sql = "select * from company"
 				+ " where company_name Like '%"
@@ -144,7 +144,7 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 			statement = connection.prepareStatement(sql);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				Company company = new Company();
+				CompanyVO company = new CompanyVO();
 				company.setCompanyId(resultSet.getInt("id"));
 				company.setCompanyName(resultSet.getString("company_name"));
 				company.setCompanyTelephone(resultSet.getString("company_telephone"));
@@ -162,10 +162,10 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 	}
 
 	@Override
-	public Company getCompanyById(int companyId) {
+	public CompanyVO getCompanyById(int companyId) {
 		
 		String sql = "select * from company where id = " + companyId;
-		Company company = new Company();
+		CompanyVO company = new CompanyVO();
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		
@@ -187,18 +187,18 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 	}
 
 	@Override
-	public void insertList(List<Company> companiesList) {
+	public void insertList(List<CompanyVO> companiesList) {
 		
-		for(Company eachCompany : companiesList) {
+		for(CompanyVO eachCompany : companiesList) {
 			insert(eachCompany);
 		}
 		
 	}
 
 	@Override
-	public Company getCompanyByTaxID(String taxID) {
+	public CompanyVO getCompanyByTaxID(String taxID) {
 		String sql = "select * from company where tax_ID = ?";
-		Company company = null;
+		CompanyVO company = null;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		
@@ -209,7 +209,7 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 			while (resultSet.next()) {
 				DDBBCompany ddbbCompany = new DDBBCompany();
 				ddbbCompany.loadResult(resultSet);
-				company = new Company(ddbbCompany);
+				company = new CompanyVO(ddbbCompany);
 			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
@@ -219,12 +219,12 @@ public class CompanyDAOImpl extends DaoImpl implements CompanyDAO {
 		return company;
 	}
 	
-	private Company getCompanyFromRs(ResultSet resultSet) throws SQLException {
+	private CompanyVO getCompanyFromRs(ResultSet resultSet) throws SQLException {
 		
-		Company company;
+		CompanyVO company;
 		DDBBCompany ddbbCompany = new DDBBCompany();
 		ddbbCompany.loadResult(resultSet);
-		company = new Company(ddbbCompany);
+		company = new CompanyVO(ddbbCompany);
 		
 		return company;
 	}

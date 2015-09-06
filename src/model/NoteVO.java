@@ -4,7 +4,7 @@ import java.util.Date;
 
 import persistence.DDBBNote;
 
-public abstract class Note {
+public abstract class NoteVO {
 	
 	private UserVO user;
 	private Integer noteId;
@@ -12,10 +12,10 @@ public abstract class Note {
 	private String noteText;
 	private String noteTitle;
 	
-	public Note() {
+	public NoteVO() {
 	}
 	
-	public Note(String noteTitle, String noteText, Date creationDate) {
+	public NoteVO(String noteTitle, String noteText, Date creationDate) {
 		this.noteTitle = noteTitle;
 		this.noteText = noteText;
 		this.creationDate = creationDate;

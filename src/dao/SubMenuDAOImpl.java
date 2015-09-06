@@ -6,7 +6,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import model.Menu;
+import model.MenuVO;
 
 public class SubMenuDAOImpl extends DaoImpl implements MenuDAO {
 
@@ -16,7 +16,7 @@ public class SubMenuDAOImpl extends DaoImpl implements MenuDAO {
 	}
 
 	@Override
-	public Map<Integer, Menu> getMenu() {
+	public Map<Integer, MenuVO> getMenu() {
 		// TODO Auto-generated method stub
 		return null;
 	}

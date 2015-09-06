@@ -13,10 +13,10 @@ import javax.servlet.http.HttpSession;
 
 import persistence.DDBBNote;
 import utils.DateUtils;
-import model.Customer;
-import model.Note;
+import model.CustomerVO;
+import model.NoteVO;
 import model.ProductVO;
-import model.Supplier;
+import model.SupplierVO;
 
 public class NoteDAOImpl extends DaoImpl implements NoteDAO {
 	
@@ -31,7 +31,7 @@ public class NoteDAOImpl extends DaoImpl implements NoteDAO {
     
 	@Override
 	public int insert(Object o){
-		Note note = (Note) o;
+		NoteVO note = (NoteVO) o;
 		DDBBNote ddbbNote = note.getPersistenceObject();
 		int newNoteId = -1;
 		try {
@@ -58,9 +58,9 @@ public class NoteDAOImpl extends DaoImpl implements NoteDAO {
 	}
 
 	@Override
-	public List<Note> getLastNotes() {
+	public List<NoteVO> getLastNotes() {
 		
-		List<Note> result = new ArrayList<Note>();
+		List<NoteVO> result = new ArrayList<NoteVO>();
 //		
 //		Date date = new Date(DateUtils.getDateMinusXDays(LAST_NOTES_DAYS).getTime());
 //		String sql = "select * from note" + " where CREATION_DATE <= '%"
@@ -143,9 +143,9 @@ public class NoteDAOImpl extends DaoImpl implements NoteDAO {
 		return result;
 	}
 	@Override
-	public void insertList(List<Note> notesList) {
+	public void insertList(List<NoteVO> notesList) {
 
-		for(Note eachNote : notesList) {
+		for(NoteVO eachNote : notesList) {
 			insert(eachNote);
 		}
 	}

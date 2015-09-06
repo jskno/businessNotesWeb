@@ -10,8 +10,8 @@ public class ProductsOrderVO {
 	
 	private Integer orderId;
 	private Date creationDate;
-	private Supplier supplier;
-	private Customer customer;
+	private SupplierVO supplier;
+	private CustomerVO customer;
 	private List<OrderItemVO> orderItems;
 	
 	public Integer getOrderId() {
@@ -26,16 +26,16 @@ public class ProductsOrderVO {
 	public void setCreationDate(Date creationDate) {
 		this.creationDate = creationDate;
 	}
-	public Supplier getSupplier() {
+	public SupplierVO getSupplier() {
 		return supplier;
 	}
-	public void setSupplier(Supplier supplier) {
+	public void setSupplier(SupplierVO supplier) {
 		this.supplier = supplier;
 	}
-	public Customer getCustomer() {
+	public CustomerVO getCustomer() {
 		return customer;
 	}
-	public void setCustomer(Customer customer) {
+	public void setCustomer(CustomerVO customer) {
 		this.customer = customer;
 	}
 	public List<OrderItemVO> getOrderItems() {
@@ -73,8 +73,8 @@ public class ProductsOrderVO {
 	
 	public void setFromPersistenceObject(DDBBProductsOrder ddbbProductsOrder) {
 		
-		Customer customer = new Customer();
-		Supplier supplier = new Supplier();
+		CustomerVO customer = new CustomerVO();
+		SupplierVO supplier = new SupplierVO();
 		List<OrderItemVO> orderItems = new ArrayList<OrderItemVO>();
 		
 		if(!ddbbProductsOrder.isOrderIdNull()) {

@@ -2,7 +2,7 @@ package service;
 
 import java.util.List;
 
-import model.Customer;
+import model.CustomerVO;
 import dao.CustomerDAO;
 import dao.CustomerDAOImpl;
 
@@ -18,7 +18,7 @@ public class GetCustomerListService extends ServiceImpl {
 		
 		try {
 			CustomerDAO customerDao = new CustomerDAOImpl(getConnection(), getSession());
-			List<Customer> customersList = customerDao.getCustomersList();
+			List<CustomerVO> customersList = customerDao.getCustomersList();
 			request.setAttribute("customersList", customersList);
 		} catch (Exception e) {
 			System.out.println(e);

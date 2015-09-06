@@ -3,18 +3,18 @@ package dao;
 import java.util.List;
 
 import persistence.DDBBSupplier;
-import model.Supplier;
+import model.SupplierVO;
 
 public interface SupplierDAO extends Dao {
 
-	Supplier getSupplierById(int supplierId);
+	SupplierVO getSupplierById(int supplierId);
 
-	List<Supplier> getSuppliersList();
+	List<SupplierVO> getSuppliersList();
 
 	List<DDBBSupplier> getPersistenceCustomerList();
 
-	void insertList(List<Supplier> suppliersList);
+	void insertList(List<SupplierVO> suppliersList);
 
-	Supplier getSupplierByTaxID(String taxID);
+	SupplierVO getSupplierByTaxID(String taxID);
 
 }

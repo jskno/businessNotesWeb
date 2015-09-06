@@ -9,9 +9,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import model.Company;
-import model.CompanyRole;
-import model.Customer;
+import model.CompanyVO;
+import model.CompanyRoleVO;
+import model.CustomerVO;
 import persistence.DDBBCompany;
 import persistence.DDBBCompanyRole;
 import persistence.DDBBCustomer;
@@ -29,9 +29,9 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 	
 	@Override
 	public int insert(Object o){
-		CompanyRole companyRole = (CompanyRole) o;
+		CompanyRoleVO companyRole = (CompanyRoleVO) o;
 		int roleId = companyRoleDao.insert(companyRole);
-		Customer customer = (Customer) o;
+		CustomerVO customer = (CustomerVO) o;
 		customer.setRoleId(roleId);
 		DDBBCustomer ddbbCustomer = customer.getPersistenceCustomer();
 		int newCustomerId = -1;
@@ -57,11 +57,11 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 	}
 
 	@Override
-	public Customer getCustomerById(int roleId) {
+	public CustomerVO getCustomerById(int roleId) {
 		
 		String sql = "select * from customer where role_id = " + roleId;
 		DDBBCustomer ddbbCustomer = new DDBBCustomer();
-		Customer customer = new Customer();
+		CustomerVO customer = new CustomerVO();
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		
@@ -79,9 +79,9 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 	}
 
 	@Override
-	public List<Customer> getCustomersList() {
+	public List<CustomerVO> getCustomersList() {
 		
-		List<Customer> customerList = new ArrayList<Customer>();
+		List<CustomerVO> customerList = new ArrayList<CustomerVO>();
 		
 		String sql = "select * from customer cus "
 				+ "join company_role cr "
@@ -93,7 +93,7 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		
-		Customer customer = null;
+		CustomerVO customer = null;
 		
 		try {
 			statement = connection.prepareStatement(sql);
@@ -136,17 +136,17 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 	}
 
 	@Override
-	public void insertList(List<Customer> customersList) {
+	public void insertList(List<CustomerVO> customersList) {
 
-		for(Customer eachCustomer : customersList) {
+		for(CustomerVO eachCustomer : customersList) {
 			insert(eachCustomer);
 		}
 	}
 
 	@Override
-	public Customer getCustomerByTaxID(String taxID) {
+	public CustomerVO getCustomerByTaxID(String taxID) {
 		
-		Customer customer = null;
+		CustomerVO customer = null;
 		
 		String sql = "select * from customer cus"
 			+ " left join company_role cr"
@@ -172,10 +172,10 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 		return customer;
 	}
 	
-	private Customer getCustomerFromRs(ResultSet rs) throws SQLException {
+	private CustomerVO getCustomerFromRs(ResultSet rs) throws SQLException {
 		
-		Customer customer;
-		Company company;
+		CustomerVO customer;
+		CompanyVO company;
 		
 		DDBBCustomer ddbbCustomer = new DDBBCustomer();
 		DDBBCompanyRole ddbbCompanyRole = new DDBBCompanyRole();
@@ -185,8 +185,8 @@ public class CustomerDAOImpl extends DaoImpl implements CustomerDAO {
 		ddbbCustomer.loadResult(rs);
 		ddbbCompanyRole.loadResult(rs);
 		
-		company = new Company(ddbbCompany);
-		customer = new Customer(ddbbCompanyRole, ddbbCustomer);
+		company = new CompanyVO(ddbbCompany);
+		customer = new CustomerVO(ddbbCompanyRole, ddbbCustomer);
 		customer.setCompany(company);
 		
 		return customer;

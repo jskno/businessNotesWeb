@@ -2,10 +2,10 @@ package model;
 
 import persistence.DDBBCompanyRole;
 
-public abstract class CompanyRole {
+public abstract class CompanyRoleVO {
 	
 	private Integer roleId;
-	private Company company;
+	private CompanyVO company;
 	private RoleName roleName;
 	private String contactName;
 	private String contactTelephone;
@@ -16,10 +16,10 @@ public abstract class CompanyRole {
 	public void setRoleId(Integer roleId) {
 		this.roleId = roleId;
 	}
-	public Company getCompany() {
+	public CompanyVO getCompany() {
 		return company;
 	}
-	public void setCompany(Company company) {
+	public void setCompany(CompanyVO company) {
 		this.company = company;
 	}
 	public RoleName getRoleName() {
@@ -105,7 +105,7 @@ public abstract class CompanyRole {
 	
 	public void setFromPersistenceObject(final DDBBCompanyRole ddbbCompanyRole) {
 		
-		Company company = new Company();
+		CompanyVO company = new CompanyVO();
 		if(!ddbbCompanyRole.isRoleIdNull()) {
 			setRoleId(ddbbCompanyRole.getRoleId());
 		} else {

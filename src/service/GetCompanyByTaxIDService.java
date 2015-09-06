@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import model.Company;
+import model.CompanyVO;
 import serviceWS.ServiceWS;
 import serviceWS.ServiceWSImpl;
 import utils.DBUtil;
@@ -13,7 +13,7 @@ import dao.CompanyDAOImpl;
 
 public class GetCompanyByTaxIDService extends ServiceWSImpl implements ServiceWS{
 	
-	private Company company;
+	private CompanyVO company;
 	private static ObjectMapper mapper = new ObjectMapper();
 
 	@Override
@@ -24,7 +24,7 @@ public class GetCompanyByTaxIDService extends ServiceWSImpl implements ServiceWS
 		this.sendJsonMessage(company);
 	}
 	
-	private void sendJsonMessage(Company company2) {
+	private void sendJsonMessage(CompanyVO company2) {
 
 		try {
 			GetCompanyByTaxIDService.mapper.writeValueAsString(company);
@@ -33,9 +33,9 @@ public class GetCompanyByTaxIDService extends ServiceWSImpl implements ServiceWS
 		}
 	}
 
-	private Company getCompany(String taxID) {
+	private CompanyVO getCompany(String taxID) {
 		
-		Company company = null;
+		CompanyVO company = null;
 		try {
 			CompanyDAO companyDao = new CompanyDAOImpl(DBUtil.getConnection(), null);
 			company = companyDao.getCompanyByTaxID(taxID);

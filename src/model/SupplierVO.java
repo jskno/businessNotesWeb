@@ -3,18 +3,18 @@ package model;
 import persistence.DDBBCompanyRole;
 import persistence.DDBBSupplier;
 
-public class Supplier extends CompanyRole {
+public class SupplierVO extends CompanyRoleVO {
 	
 	private Integer deliveryDays;
 	
-	public Supplier() {
+	public SupplierVO() {
 	}
 	
-	public Supplier(Integer deliveryDays) {
+	public SupplierVO(Integer deliveryDays) {
 		this.deliveryDays = deliveryDays;
 	}
 	
-	public Supplier(DDBBCompanyRole ddbbCompanyRole, DDBBSupplier ddbbSupplier) {
+	public SupplierVO(DDBBCompanyRole ddbbCompanyRole, DDBBSupplier ddbbSupplier) {
 		
 		this.setFromPersistenceObject(ddbbCompanyRole);
 		this.setFromPersistenceObject(ddbbSupplier);

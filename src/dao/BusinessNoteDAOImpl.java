@@ -11,10 +11,10 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import model.BusinessNoteVO;
-import model.Customer;
-import model.Note;
+import model.CustomerVO;
+import model.NoteVO;
 import model.ProductVO;
-import model.Supplier;
+import model.SupplierVO;
 import persistence.DDBBBusinessNote;
 import utils.DateUtils;
 
@@ -93,9 +93,9 @@ public class BusinessNoteDAOImpl extends DaoImpl implements BusinessNoteDAO {
 				ddbbBusinessNote.loadResult(resultSet);
 				businessNote.setFromPersistenceBusNote(ddbbBusinessNote);
 				
-				Customer customer = customerDao.getCustomerById(
+				CustomerVO customer = customerDao.getCustomerById(
 						ddbbBusinessNote.getCustomerId());
-				Supplier supplier = supplierDao.getSupplierById(
+				SupplierVO supplier = supplierDao.getSupplierById(
 						ddbbBusinessNote.getSupplierId());
 				ProductVO product = productDao.getProductById(
 						ddbbBusinessNote.getProductId());
@@ -151,7 +151,7 @@ public class BusinessNoteDAOImpl extends DaoImpl implements BusinessNoteDAO {
 	@Override
 	public void insertList(List<BusinessNoteVO> notesList) {
 
-		for(Note eachNote : notesList) {
+		for(NoteVO eachNote : notesList) {
 			insert(eachNote);
 		}
 	}

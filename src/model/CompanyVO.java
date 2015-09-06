@@ -1,26 +1,32 @@
 package model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import persistence.DDBBCompany;
 
-public class Company {
+public class CompanyVO {
 	
 	private Integer companyId;
 	private String taxID;
 	private String companyName;
 	private String companyTelephone;
 	private String companyEmail;
+	private List<CompanyRoleVO> companyRoles;
 	
-	public Company () {
+	public CompanyVO () {
+		companyRoles = new ArrayList<CompanyRoleVO>();
 	}
 
-	public Company(String companyName, String companyTelephone,
+	public CompanyVO(String companyName, String companyTelephone,
 			String companyEmail) {
 		this.companyName = companyName;
 		this.companyTelephone = companyTelephone;
 		this.companyEmail = companyEmail;
+		companyRoles = new ArrayList<CompanyRoleVO>();
 	}
 	
-	public Company(DDBBCompany ddbbCompany) {
+	public CompanyVO(DDBBCompany ddbbCompany) {
 		this.setFromPersistence(ddbbCompany);
 	}
 	public Integer getCompanyId() {
@@ -53,6 +59,13 @@ public class Company {
 	public void setCompanyEmail(String companyEmail) {
 		this.companyEmail = companyEmail;
 	}
+	public List<CompanyRoleVO> getCompanyRoles() {
+		return companyRoles;
+	}
+	public void setCompanyRoles(List<CompanyRoleVO> companyRoles) {
+		this.companyRoles = companyRoles;
+	}
+
 	@Override
 	public String toString() {
 		return "Company [companyName=" + companyName + ", companyTelephone="
@@ -86,6 +99,8 @@ public class Company {
 		} else {
 			this.companyEmail = null;
 		}
+		List<CompanyRoleVO> companyRoles = new ArrayList<CompanyRoleVO>();
+		setCompanyRoles(companyRoles);
 	}
 	
 	public DDBBCompany getPersistenceObject() {

@@ -2,9 +2,9 @@ package service;
 
 import java.util.List;
 
-import model.Customer;
+import model.CustomerVO;
 import model.ProductVO;
-import model.Supplier;
+import model.SupplierVO;
 import dao.CustomerDAO;
 import dao.CustomerDAOImpl;
 import dao.ProductDAO;
@@ -27,7 +27,7 @@ public class NewNoteFormService extends ServiceImpl {
 		
 		try {
 			CustomerDAO customerDao = new CustomerDAOImpl(getConnection(), getSession());
-			List<Customer> customersList = customerDao.getCustomersList();
+			List<CustomerVO> customersList = customerDao.getCustomersList();
 			request.setAttribute("customersList", customersList);
 		} catch (Exception e) {
 			System.out.println(e);
@@ -51,7 +51,7 @@ public class NewNoteFormService extends ServiceImpl {
 		
 		try {
 			SupplierDAO supplierDao = new SupplierDAOImpl(getConnection(), getSession());
-			List<Supplier> suppliersList = supplierDao.getSuppliersList();
+			List<SupplierVO> suppliersList = supplierDao.getSuppliersList();
 			request.setAttribute("suppliersList", suppliersList);
 		} catch (Exception e) {
 			System.out.println(e);

@@ -1,7 +1,7 @@
 package service;
 
-import model.Company;
-import model.Customer;
+import model.CompanyVO;
+import model.CustomerVO;
 import model.RoleName;
 import dao.CompanyDAO;
 import dao.CompanyDAOImpl;
@@ -26,8 +26,8 @@ public class AddCustomer2Service extends ServiceImpl implements Service {
 	
 	private void createCustomer(Integer companyId) {
 		
-		Customer customer = new Customer();
-		Company company = new Company();
+		CustomerVO customer = new CustomerVO();
+		CompanyVO company = new CompanyVO();
 		company.setCompanyId(companyId);
 		customer.setCompany(company);
 		customer.setRoleName(RoleName.CUSTOMER);
@@ -44,7 +44,7 @@ public class AddCustomer2Service extends ServiceImpl implements Service {
 	
 	private void createCustomerAndCompany() {
 		
-		Company company = new Company();
+		CompanyVO company = new CompanyVO();
 		company.setTaxID(request.getParameter("taxID"));
 		company.setCompanyName(request.getParameter("companyName"));
 		company.setCompanyTelephone(request.getParameter("companyTelephone"));

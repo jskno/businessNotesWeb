@@ -1,8 +1,8 @@
 package service;
 
-import model.Company;
+import model.CompanyVO;
 import model.RoleName;
-import model.Supplier;
+import model.SupplierVO;
 import dao.CompanyDAO;
 import dao.CompanyDAOImpl;
 import dao.SupplierDAO;
@@ -27,7 +27,7 @@ public class AddSupplierService extends ServiceImpl implements Service {
 	
 	private void createSupplierAndCompany() {
 		
-		Company company = new Company();
+		CompanyVO company = new CompanyVO();
 		company.setTaxID(request.getParameter("taxID"));
 		company.setCompanyName(request.getParameter("companyName"));
 		company.setCompanyTelephone(request.getParameter("companyTelephone"));
@@ -41,8 +41,8 @@ public class AddSupplierService extends ServiceImpl implements Service {
 
 	private void createSupplier(Integer companyId) {
 		
-		Supplier supplier = new Supplier();
-		Company company = new Company();
+		SupplierVO supplier = new SupplierVO();
+		CompanyVO company = new CompanyVO();
 		company.setCompanyId(companyId);
 		supplier.setCompany(company);
 		supplier.setRoleName(RoleName.SUPPLIER);

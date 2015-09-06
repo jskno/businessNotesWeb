@@ -9,9 +9,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
-import model.Company;
-import model.CompanyRole;
-import model.Supplier;
+import model.CompanyVO;
+import model.CompanyRoleVO;
+import model.SupplierVO;
 import persistence.DDBBCompany;
 import persistence.DDBBCompanyRole;
 import persistence.DDBBSupplier;
@@ -28,9 +28,9 @@ public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
 	}
 	
 	public int insert(Object o){
-		CompanyRole companyRole = (CompanyRole) o;
+		CompanyRoleVO companyRole = (CompanyRoleVO) o;
 		int roleId = companyRoleDao.insert(companyRole);
-		Supplier supplier = (Supplier) o;
+		SupplierVO supplier = (SupplierVO) o;
 		supplier.setRoleId(roleId);
 		DDBBSupplier ddbbSupplier = supplier.getPersistenceSupplier();
 		int newSupplierId = -1;
@@ -57,13 +57,13 @@ public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
 	}
 
 	@Override
-	public Supplier getSupplierById(int roleId) {
+	public SupplierVO getSupplierById(int roleId) {
 		
 		String sql = "select * from supplier where id = " + roleId;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		
-		Supplier supplier = new Supplier();
+		SupplierVO supplier = new SupplierVO();
 		DDBBSupplier ddbbSupplier = new DDBBSupplier();
 		try {
 			statement = connection.prepareStatement(sql);
@@ -79,9 +79,9 @@ public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
 	}
 
 	@Override
-	public List<Supplier> getSuppliersList() {
+	public List<SupplierVO> getSuppliersList() {
 		
-		List<Supplier> result = new ArrayList<Supplier>();
+		List<SupplierVO> result = new ArrayList<SupplierVO>();
 		
 		String sql = "select * from supplier supp "
 				+ "join company_role cr "
@@ -93,7 +93,7 @@ public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		
-		Supplier supplier = null;
+		SupplierVO supplier = null;
 		
 		try {
 			statement = connection.prepareStatement(sql);
@@ -137,17 +137,17 @@ public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
 	}
 
 	@Override
-	public void insertList(List<Supplier> suppliersList) {
+	public void insertList(List<SupplierVO> suppliersList) {
 
-		for(Supplier eachSupplier : suppliersList) {
+		for(SupplierVO eachSupplier : suppliersList) {
 			insert(eachSupplier);
 		}
 	}
 	
 	@Override
-	public Supplier getSupplierByTaxID(String taxID) {
+	public SupplierVO getSupplierByTaxID(String taxID) {
 		
-		Supplier supplier = null;
+		SupplierVO supplier = null;
 		
 		String sql = "select * from supplier supp"
 			+ " left join COMPANY_ROLE cr"
@@ -173,10 +173,10 @@ public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
 		return supplier;
 	}
 	
-	private Supplier getSupplierFromRs(ResultSet rs) throws SQLException {
+	private SupplierVO getSupplierFromRs(ResultSet rs) throws SQLException {
 		
-		Supplier supplier;
-		Company company;
+		SupplierVO supplier;
+		CompanyVO company;
 		
 		DDBBSupplier ddbbSupplier = new DDBBSupplier();
 		DDBBCompanyRole ddbbCompanyRole = new DDBBCompanyRole();
@@ -186,8 +186,8 @@ public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
 		ddbbCompanyRole.loadResult(rs);
 		ddbbSupplier.loadResult(rs);
 				
-		company = new Company(ddbbCompany);
-		supplier = new Supplier(ddbbCompanyRole, ddbbSupplier);
+		company = new CompanyVO(ddbbCompany);
+		supplier = new SupplierVO(ddbbCompanyRole, ddbbSupplier);
 		supplier.setCompany(company);
 		
 		return supplier;

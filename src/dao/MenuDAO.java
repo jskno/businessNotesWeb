@@ -3,11 +3,11 @@ package dao;
 import java.util.List;
 import java.util.Map;
 
-import model.Menu;
-import model.SubMenu;
+import model.MenuVO;
+import model.SubMenuVO;
 
 public interface MenuDAO extends Dao{
 
-	Map<Integer, Menu> getMenu();
+	Map<Integer, MenuVO> getMenu();
 
 }

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@page import="model.Product"%>
+<%@page import="model.ProductVO"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Iterator"%>
 <!DOCTYPE html >
@@ -15,7 +15,7 @@
 	<div class="container-fluid">
 		<div class="row">
     		<div class="col-sm-12">
-    			<jsp:include page="navBar.jsp" flush="true" />
+    			<jsp:include page="dynamicNavBar.jsp" flush="true" />
     		</div>
     	</div>
 		
@@ -28,21 +28,25 @@
      			<tr>
 					<th>Product Code</th>
         			<th>Product Description</th>
+       				<th></th>
+       				<th></th>
        			</tr>
    			</thead>
     		<tbody>
     		<%
     			@SuppressWarnings("unchecked")
-    			List<Product> productsList = (List<Product>)request.getAttribute("productsList");
-    	    	Iterator<Product> iterator = productsList.iterator();
+    			List<ProductVO> productsList = (List<ProductVO>)request.getAttribute("productsList");
+    	    	Iterator<ProductVO> iterator = productsList.iterator();
 	        	while (iterator.hasNext()) {
-	        	Product product = (Product) iterator.next();
+	        	ProductVO product = (ProductVO) iterator.next();
         		String productCode = product.getProductCode();
           		String productDescription = product.getProductDescription();
          	%>
 				<tr>
 					<td><%=productCode%></td>
 					<td><%=productDescription%></td>
+					<td><a href="#">View</a></td>
+					<td><a href="#">Delete</a></td>
 				</tr>
 		 	<%
          		 }

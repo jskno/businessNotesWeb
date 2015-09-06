@@ -1,5 +1,6 @@
+<%@page import="model.CompanyVO"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
-<%@page import="model.Company"%>
+<%@page import="model.CompanyVO"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.Iterator"%>
 <!DOCTYPE html >
@@ -15,7 +16,7 @@
 	<div class="container-fluid">
 		<div class="row">
     		<div class="col-sm-12">
-    			<jsp:include page="navBar.jsp" flush="true" />
+    			<jsp:include page="dynamicNavBar.jsp" flush="true" />
     		</div>
     	</div>
 		
@@ -26,26 +27,33 @@
   		<table class="table table-condensed">
     		<thead>
      			<tr>
+     				<th>Tax ID</th>
 					<th>Company Name</th>
         			<th>Company Telephone</th>
        				<th>Company Email</th>
+       				<th></th>
+       				<th></th>
      			</tr>
    			</thead>
     		<tbody>
     		<%
     			@SuppressWarnings("unchecked")
-    			List<Company> companiesList = (List<Company>)request.getAttribute("companiesList");
-    	    	Iterator<Company> iterator = companiesList.iterator();
+    			List<CompanyVO> companiesList = (List<CompanyVO>)request.getAttribute("companiesList");
+    	    	Iterator<CompanyVO> iterator = companiesList.iterator();
 	        	while (iterator.hasNext()) {
-	        	Company company = (Company) iterator.next();
+	        	CompanyVO company = (CompanyVO) iterator.next();
+	        	String taxID = company.getTaxID();
         		String companyName = company.getCompanyName();
           		String companyTelephone = company.getCompanyTelephone();
           		String companyEmail = company.getCompanyEmail();
          	%>
 				<tr>
+					<td><%=taxID%></td>
 					<td><%=companyName%></td>
 					<td><%=companyTelephone%></td>
 					<td><%=companyEmail%></td>
+					<td><a href="#">View</a></td>
+					<td><a href="#">Delete</a></td>
 				</tr>
 		 	<%
          		 }

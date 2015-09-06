@@ -1,6 +1,6 @@
 package service;
 
-import model.Company;
+import model.CompanyVO;
 import dao.CompanyDAO;
 import dao.CompanyDAOImpl;
 
@@ -15,7 +15,7 @@ public class AddCompanyService extends ServiceImpl implements Service {
 	
 	private void createCompany() {
 		
-		Company company = new Company();
+		CompanyVO company = new CompanyVO();
 		CompanyDAO companyDao;
 		companyDao = new CompanyDAOImpl(getConnection(), getSession());
 		company.setTaxID((String) request.getParameter("taxID"));

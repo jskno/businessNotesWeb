@@ -15,11 +15,11 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
-import model.Company;
-import model.Customer;
-import model.Note;
+import model.CompanyVO;
+import model.CustomerVO;
+import model.NoteVO;
 import model.ProductVO;
-import model.Supplier;
+import model.SupplierVO;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -77,8 +77,8 @@ public class ImportTable {
 		String companyName;
 		String companyTelephone;
 		String companyEmail;
-		Company company = null;
-		List<Company> companiesList = new ArrayList<Company>();
+		CompanyVO company = null;
+		List<CompanyVO> companiesList = new ArrayList<CompanyVO>();
 		CompanyDAO companyDao = new CompanyDAOImpl(null, null);
 
 		while (rowIterator.hasNext()) {
@@ -91,7 +91,7 @@ public class ImportTable {
 			companyTelephone = secondCell.getStringCellValue();
 			companyEmail = thirdCell.getStringCellValue();
 
-			company = new Company(companyName, companyTelephone, companyEmail);
+			company = new CompanyVO(companyName, companyTelephone, companyEmail);
 
 		}
 		companiesList.add(company);
@@ -140,9 +140,9 @@ public class ImportTable {
 		String companyId;
 		String contactName;
 		String contactTelephone;
-		Customer customer = null;
-		Company company = null;
-		List<Customer> customersList = new ArrayList<Customer>();
+		CustomerVO customer = null;
+		CompanyVO company = null;
+		List<CustomerVO> customersList = new ArrayList<CustomerVO>();
 		CustomerDAO customerDao = new CustomerDAOImpl(null, null);
 		CompanyDAO companyDao = new CompanyDAOImpl(null, null);
 
@@ -157,7 +157,7 @@ public class ImportTable {
 			contactTelephone = thirdCell.getStringCellValue();
 
 			company = companyDao.getCompanyById(Integer.valueOf(companyId));
-			customer = new Customer(company, contactName, contactTelephone);
+			customer = new CustomerVO(company, contactName, contactTelephone);
 
 		}
 		customersList.add(customer);
@@ -179,9 +179,9 @@ public class ImportTable {
 			String companyId;
 			String contactName;
 			String contactTelephone;
-			Supplier supplier = null;
-			Company company = null;
-			List<Supplier> suppliersList = new ArrayList<Supplier>();
+			SupplierVO supplier = null;
+			CompanyVO company = null;
+			List<SupplierVO> suppliersList = new ArrayList<SupplierVO>();
 			SupplierDAO supplierDao = new SupplierDAOImpl(null, null);
 			CompanyDAO companyDao = new CompanyDAOImpl(null, null);
 
@@ -196,7 +196,7 @@ public class ImportTable {
 				contactTelephone = thirdCell.getStringCellValue();
 
 				company = companyDao.getCompanyById(Integer.valueOf(companyId));
-				supplier = new Supplier(company, contactName, contactTelephone);
+				supplier = new SupplierVO(company, contactName, contactTelephone);
 
 			}
 			suppliersList.add(supplier);
@@ -233,11 +233,11 @@ public class ImportTable {
 			String noteText;
 			Date creationDate;
 
-			Note note = null;
-			Customer customer = null;
-			Supplier supplier = null;
+			NoteVO note = null;
+			CustomerVO customer = null;
+			SupplierVO supplier = null;
 			ProductVO product = null;
-			List<Note> notesList = new ArrayList<Note>();
+			List<NoteVO> notesList = new ArrayList<NoteVO>();
 			NoteDAO noteDao = new NoteDAOImpl(null, null);
 			CustomerDAO customerDao = new CustomerDAOImpl(null, null);
 			SupplierDAO supplierDao = new SupplierDAOImpl(null, null);
@@ -263,7 +263,7 @@ public class ImportTable {
 				supplier = supplierDao.getSupplierById(supplierId);
 				product = productDao.getProductById(productId);
 
-				note = new Note(customer, supplier, product, noteTitle,
+				note = new NoteVO(customer, supplier, product, noteTitle,
 						noteText, creationDate);
 
 				notesList.add(note);

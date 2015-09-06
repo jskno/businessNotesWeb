@@ -2,7 +2,7 @@ package service;
 
 import java.util.List;
 
-import model.Supplier;
+import model.SupplierVO;
 import dao.SupplierDAO;
 import dao.SupplierDAOImpl;
 
@@ -19,7 +19,7 @@ public class GetSuppliersListService extends ServiceImpl {
 		
 		try {
 			SupplierDAO supplierDao = new SupplierDAOImpl(getConnection(), getSession());
-			List<Supplier> suppliersList = supplierDao.getSuppliersList();
+			List<SupplierVO> suppliersList = supplierDao.getSuppliersList();
 			request.setAttribute("suppliersList", suppliersList);
 		} catch (Exception e) {
 			System.out.println(e);

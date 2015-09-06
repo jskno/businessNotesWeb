@@ -3,18 +3,18 @@ package dao;
 import java.util.List;
 
 import persistence.DDBBCustomer;
-import model.Customer;
+import model.CustomerVO;
 
 public interface CustomerDAO extends Dao {
 
-	Customer getCustomerById(int customerId);
+	CustomerVO getCustomerById(int customerId);
 
-	List<Customer> getCustomersList();
+	List<CustomerVO> getCustomersList();
 
 	List<DDBBCustomer> getPersistenceCustomerList();
 
-	void insertList(List<Customer> customersList);
+	void insertList(List<CustomerVO> customersList);
 
-	Customer getCustomerByTaxID(String taxID);
+	CustomerVO getCustomerByTaxID(String taxID);
 
 }

@@ -1,16 +1,16 @@
 <%@page import="model.ProductVO"%>
-<%@page import="model.Supplier"%>
-<%@page import="model.Customer"%>
+<%@page import="model.SupplierVO"%>
+<%@page import="model.CustomerVO"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%
     @SuppressWarnings("unchecked")
-    List<Customer> customersList =
-            (List<Customer>)request.getAttribute("customersList");
+    List<CustomerVO> customersList =
+            (List<CustomerVO>)request.getAttribute("customersList");
 	@SuppressWarnings("unchecked")
-	List<Supplier> suppliersList =
-			(List<Supplier>) request.getAttribute("suppliersList");
+	List<SupplierVO> suppliersList =
+			(List<SupplierVO>) request.getAttribute("suppliersList");
 	@SuppressWarnings("unchecked")
 	List<ProductVO> productsList =
 			(List<ProductVO>) request.getAttribute("productsList");
@@ -56,7 +56,7 @@
       			<div class="col-sm-8">
     				<select class="form-control col-sm-8" name="customerId" id="customerId">
     					<%
-    					for(Customer eachCustomer : customersList) {
+    					for(CustomerVO eachCustomer : customersList) {
     					%>
     					<option value="<%=eachCustomer.getRoleId()%>">
     					<%=eachCustomer.getCompanyName()%>
@@ -77,7 +77,7 @@
       			<div class="col-sm-8">
     				<select class="form-control col-sm-8" name="supplierId" id="supplierId">
         				<%
-    					for(Supplier eachSupplier : suppliersList) {
+    					for(SupplierVO eachSupplier : suppliersList) {
     					%>
     					<option value="<%=eachSupplier.getRoleId()%>">
     					<%=eachSupplier.getCompanyName()%>
