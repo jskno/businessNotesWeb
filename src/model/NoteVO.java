@@ -15,7 +15,8 @@ public abstract class NoteVO {
 	public NoteVO() {
 	}
 	
-	public NoteVO(String noteTitle, String noteText, Date creationDate) {
+	public NoteVO(UserVO user, String noteTitle, String noteText, Date creationDate) {
+		this.user = user;
 		this.noteTitle = noteTitle;
 		this.noteText = noteText;
 		this.creationDate = creationDate;

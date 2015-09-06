@@ -18,8 +18,9 @@ public class CompanyVO {
 		companyRoles = new ArrayList<CompanyRoleVO>();
 	}
 
-	public CompanyVO(String companyName, String companyTelephone,
+	public CompanyVO(String taxID, String companyName, String companyTelephone,
 			String companyEmail) {
+		this.taxID = taxID;
 		this.companyName = companyName;
 		this.companyTelephone = companyTelephone;
 		this.companyEmail = companyEmail;

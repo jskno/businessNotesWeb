@@ -10,6 +10,16 @@ public abstract class CompanyRoleVO {
 	private String contactName;
 	private String contactTelephone;
 	
+	protected CompanyRoleVO() {
+	}
+	
+	protected CompanyRoleVO(CompanyVO company, String roleName,
+			String contactName, String contactTelephone) {
+		this.company = company;
+		this.roleName = RoleName.getRoleName(roleName);
+		this.contactName = contactName;
+		this.contactTelephone = contactTelephone;
+	}
 	public Integer getRoleId() {
 		return roleId;
 	}

@@ -7,15 +7,17 @@ public class ProductVO {
 	private Integer productId;
 	private String productCode;
 	private String productDescription;
+	private Integer stock;
 	
 	public ProductVO() {
 		
 	}
 	
-	public ProductVO(String productCode, String productDescription) {
+	public ProductVO(String productCode, String productDescription, Integer stock) {
 		
 		this.productCode = productCode;
 		this.productDescription = productDescription;
+		this.stock = stock;
 	}
 	
 	public ProductVO(DDBBProduct ddbbProduct) {
@@ -41,6 +43,15 @@ public class ProductVO {
 		this.productDescription = productDescription;
 	}
 	
+	
+	public Integer getStock() {
+		return stock;
+	}
+
+	public void setStock(Integer stock) {
+		this.stock = stock;
+	}
+
 	public DDBBProduct getPersistenceObject() {
 		DDBBProduct ddbbProduct = new DDBBProduct();
 		if(getProductId() != null) {
@@ -57,6 +68,11 @@ public class ProductVO {
 			ddbbProduct.setProductDescription(getProductDescription());
 		} else {
 			ddbbProduct.setProductDescriptionNull();
+		}
+		if(getStock() != null) {
+			ddbbProduct.setStock(getStock());
+		} else {
+			ddbbProduct.setStockNull();
 		}
 		return ddbbProduct;
 	}
@@ -78,13 +94,19 @@ public class ProductVO {
 		} else {
 			setProductDescription(null);
 		}
+		if(ddbbProduct.isStockNull()) {
+			setStock(ddbbProduct.getStock());
+		} else {
+			setStock(null);
+		}
 	}
 	
 	
 	@Override
 	public String toString() {
-		return "Product [productCode=" + productCode + ", productDescription="
-				+ productDescription + "]";
+		return "ProductVO [productId=" + productId + ", productCode="
+				+ productCode + ", productDescription=" + productDescription
+				+ ", stock=" + stock + "]";
 	}
 
 }

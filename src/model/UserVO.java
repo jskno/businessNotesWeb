@@ -117,4 +117,37 @@ public class UserVO {
 			setProfile(null);
 		}
 	}
+	public void setFromPersistenceObject(DDBBUser ddbbUser) {
+		if(!ddbbUser.isUserIdNull()) {
+			setUserId(ddbbUser.getUserId());
+		} else {
+			setUserId(null);
+		}
+		if(!ddbbUser.isFirstNameNull()) {
+			setFirstName(ddbbUser.getFirstName());
+		} else {
+			setFirstName(null);
+		}
+		if(!ddbbUser.isLastNameNull()) {
+			setLastName(ddbbUser.getLastName());
+		} else {
+			setLastName(null);
+		}
+		if(!ddbbUser.isUserNameNull()) {
+			setUserName(ddbbUser.getUserName());
+		} else {
+			setUserName(null);
+		}
+		if(!ddbbUser.isPasswordNull()) {
+			setPassword(ddbbUser.getPassword());
+		} else {
+			setPassword(null);
+		}
+		if(!ddbbUser.isProfileNull()) {
+			setProfile(ddbbUser.getProfile());
+		} else {
+			setPassword(null);
+		}
+			
+	}
 }

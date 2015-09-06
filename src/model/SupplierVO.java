@@ -10,7 +10,9 @@ public class SupplierVO extends CompanyRoleVO {
 	public SupplierVO() {
 	}
 	
-	public SupplierVO(Integer deliveryDays) {
+	public SupplierVO(CompanyVO company, String roleName, String contactName,
+				String contactTelephone, Integer deliveryDays) {
+		super(company, roleName, contactName, contactTelephone);
 		this.deliveryDays = deliveryDays;
 	}
 	

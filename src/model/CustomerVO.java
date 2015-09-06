@@ -9,6 +9,7 @@ public class CustomerVO extends CompanyRoleVO {
 	private Double customerDiscount;
 	
 	public CustomerVO() {
+		super();
 	}
 	
 	public CustomerVO(DDBBCompanyRole ddbbCompanyRole, DDBBCustomer ddbbCustomer) {
@@ -16,8 +17,9 @@ public class CustomerVO extends CompanyRoleVO {
 		this.setFromPersistenceObject(ddbbCustomer);
 	}
 	
-	public CustomerVO(Integer creditRating, Double customerDiscount) {
-		
+	public CustomerVO(CompanyVO company, String roleName, String contactName, 
+			String contactTelephone, Integer creditRating, Double customerDiscount) {
+		super(company, roleName, contactName, contactTelephone);
 		this.creditRating = creditRating;
 		this.customerDiscount = customerDiscount;
 	}

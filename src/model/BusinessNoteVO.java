@@ -1,5 +1,7 @@
 package model;
 
+import java.util.Date;
+
 import persistence.DDBBBusinessNote;
 
 public class BusinessNoteVO extends NoteVO {
@@ -7,6 +9,18 @@ public class BusinessNoteVO extends NoteVO {
 	private CustomerVO customer;
 	private SupplierVO supplier;
 	private ProductVO product;
+	
+	public BusinessNoteVO() {
+	}
+	
+	public BusinessNoteVO(CustomerVO customer, SupplierVO supplier,
+			ProductVO product, String noteTitle, String noteText,
+			Date creationDate, UserVO user) {
+		super(user, noteTitle, noteText, creationDate);
+		this.customer = customer;
+		this.supplier = supplier;
+		this.product = product;
+	}
 	
 	public CustomerVO getCustomer() {
 		return customer;

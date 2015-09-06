@@ -15,11 +15,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Locale;
 
+import model.BusinessNoteVO;
+import model.CompanyRoleVO;
 import model.CompanyVO;
 import model.CustomerVO;
 import model.NoteVO;
 import model.ProductVO;
 import model.SupplierVO;
+import model.UserVO;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -27,8 +30,13 @@ import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
+import utils.DBUtil;
+import dao.BusinessNoteDAO;
+import dao.BusinessNoteDAOImpl;
 import dao.CompanyDAO;
 import dao.CompanyDAOImpl;
+import dao.CompanyRoleDao;
+import dao.CompanyRoleDaoImpl;
 import dao.CustomerDAO;
 import dao.CustomerDAOImpl;
 import dao.NoteDAO;
@@ -37,6 +45,8 @@ import dao.ProductDAO;
 import dao.ProductDAOImpl;
 import dao.SupplierDAO;
 import dao.SupplierDAOImpl;
+import dao.UserDAO;
+import dao.UserDAOImpl;
 
 public class ImportTable {
 
@@ -74,24 +84,27 @@ public class ImportTable {
 		XSSFSheet spreadsheet = workbook.getSheetAt(0);
 		Iterator<Row> rowIterator = spreadsheet.iterator();
 
+		String taxID;
 		String companyName;
 		String companyTelephone;
 		String companyEmail;
 		CompanyVO company = null;
 		List<CompanyVO> companiesList = new ArrayList<CompanyVO>();
-		CompanyDAO companyDao = new CompanyDAOImpl(null, null);
+		CompanyDAO companyDao = new CompanyDAOImpl(DBUtil.getConnection(), null);
 
 		while (rowIterator.hasNext()) {
 			row = (XSSFRow) rowIterator.next();
 			Cell firstCell = row.createCell(0);
 			Cell secondCell = row.createCell(1);
 			Cell thirdCell = row.createCell(2);
+			Cell fourthCell = row.createCell(3);
 
-			companyName = firstCell.getStringCellValue();
-			companyTelephone = secondCell.getStringCellValue();
-			companyEmail = thirdCell.getStringCellValue();
+			taxID = firstCell.getStringCellValue();
+			companyName = secondCell.getStringCellValue();
+			companyTelephone = thirdCell.getStringCellValue();
+			companyEmail = fourthCell.getStringCellValue();
 
-			company = new CompanyVO(companyName, companyTelephone, companyEmail);
+			company = new CompanyVO(taxID, companyName, companyTelephone, companyEmail);
 
 		}
 		companiesList.add(company);
@@ -109,19 +122,22 @@ public class ImportTable {
 
 		String productCode;
 		String productDescription;
+		Integer stock;
 		ProductVO product = null;
 		List<ProductVO> productList = new ArrayList<ProductVO>();
-		ProductDAO productDao = new ProductDAOImpl(null, null);
+		ProductDAO productDao = new ProductDAOImpl(DBUtil.getConnection(), null);
 
 		while (rowIterator.hasNext()) {
 			row = (XSSFRow) rowIterator.next();
 			Cell firstCell = row.createCell(0);
 			Cell secondCell = row.createCell(1);
+			Cell thirdCell = row.createCell(2);
 
 			productCode = firstCell.getStringCellValue();
 			productDescription = secondCell.getStringCellValue();
+			stock = (int) thirdCell.getNumericCellValue();
 
-			product = new ProductVO(productCode, productDescription);
+			product = new ProductVO(productCode, productDescription, stock);
 
 		}
 		productList.add(product);
@@ -137,27 +153,37 @@ public class ImportTable {
 		XSSFSheet spreadsheet = workbook.getSheetAt(0);
 		Iterator<Row> rowIterator = spreadsheet.iterator();
 
-		String companyId;
+		Integer companyId;
+		String roleName;
 		String contactName;
 		String contactTelephone;
+		Integer creditRating;
+		Double customerDiscount;
 		CustomerVO customer = null;
 		CompanyVO company = null;
 		List<CustomerVO> customersList = new ArrayList<CustomerVO>();
-		CustomerDAO customerDao = new CustomerDAOImpl(null, null);
-		CompanyDAO companyDao = new CompanyDAOImpl(null, null);
+		CustomerDAO customerDao = new CustomerDAOImpl(DBUtil.getConnection(), null);
+		CompanyDAO companyDao = new CompanyDAOImpl(DBUtil.getConnection(), null);
 
 		while (rowIterator.hasNext()) {
 			row = (XSSFRow) rowIterator.next();
 			Cell firstCell = row.createCell(0);
 			Cell secondCell = row.createCell(1);
 			Cell thirdCell = row.createCell(2);
+			Cell fourthCell = row.createCell(3);
+			Cell fifthCell = row.createCell(4);
+			Cell sixthCell = row.createCell(5);
+			
+			companyId = (int) firstCell.getNumericCellValue();
+			roleName = secondCell.getStringCellValue();
+			contactName = thirdCell.getStringCellValue();
+			contactTelephone = fourthCell.getStringCellValue();
+			creditRating = (int) fifthCell.getNumericCellValue();
+			customerDiscount = sixthCell.getNumericCellValue();
 
-			companyId = firstCell.getStringCellValue();
-			contactName = secondCell.getStringCellValue();
-			contactTelephone = thirdCell.getStringCellValue();
-
-			company = companyDao.getCompanyById(Integer.valueOf(companyId));
-			customer = new CustomerVO(company, contactName, contactTelephone);
+			company = companyDao.getCompanyById(companyId);
+			customer = new CustomerVO(company, roleName, contactName, contactTelephone,
+					creditRating, customerDiscount);
 
 		}
 		customersList.add(customer);
@@ -175,28 +201,35 @@ public class ImportTable {
 			workbook = new XSSFWorkbook(fis);
 			XSSFSheet spreadsheet = workbook.getSheetAt(0);
 			Iterator<Row> rowIterator = spreadsheet.iterator();
-
-			String companyId;
+			
+			Integer companyId;
+			String roleName;
 			String contactName;
 			String contactTelephone;
+			Integer deliveryDays;
 			SupplierVO supplier = null;
 			CompanyVO company = null;
 			List<SupplierVO> suppliersList = new ArrayList<SupplierVO>();
-			SupplierDAO supplierDao = new SupplierDAOImpl(null, null);
-			CompanyDAO companyDao = new CompanyDAOImpl(null, null);
+			SupplierDAO supplierDao = new SupplierDAOImpl(DBUtil.getConnection(), null);
+			CompanyDAO companyDao = new CompanyDAOImpl(DBUtil.getConnection(), null);
 
 			while (rowIterator.hasNext()) {
 				row = (XSSFRow) rowIterator.next();
 				Cell firstCell = row.createCell(0);
 				Cell secondCell = row.createCell(1);
 				Cell thirdCell = row.createCell(2);
+				Cell fourthCell = row.createCell(3);
+				Cell fifthCell = row.createCell(4);
 
-				companyId = firstCell.getStringCellValue();
-				contactName = secondCell.getStringCellValue();
-				contactTelephone = thirdCell.getStringCellValue();
+				companyId = (int) firstCell.getNumericCellValue();
+				roleName = secondCell.getStringCellValue();
+				contactName = thirdCell.getStringCellValue();
+				contactTelephone = fourthCell.getStringCellValue();
+				deliveryDays = (int) fifthCell.getNumericCellValue();
 
-				company = companyDao.getCompanyById(Integer.valueOf(companyId));
-				supplier = new SupplierVO(company, contactName, contactTelephone);
+				company = companyDao.getCompanyById(companyId);
+				supplier = new SupplierVO(company, roleName,contactName, 
+						contactTelephone, deliveryDays);
 
 			}
 			suppliersList.add(supplier);
@@ -226,22 +259,25 @@ public class ImportTable {
 			Iterator<Row> rowIterator = spreadsheet.iterator();
 			rowIterator.next();
 
-			int customerId;
-			int supplierId;
-			int productId;
+			Integer customerId;
+			Integer supplierId;
+			Integer productId;
 			String noteTitle;
 			String noteText;
 			Date creationDate;
+			Integer userId;
 
-			NoteVO note = null;
+			BusinessNoteVO note = null;
 			CustomerVO customer = null;
 			SupplierVO supplier = null;
 			ProductVO product = null;
-			List<NoteVO> notesList = new ArrayList<NoteVO>();
-			NoteDAO noteDao = new NoteDAOImpl(null, null);
-			CustomerDAO customerDao = new CustomerDAOImpl(null, null);
-			SupplierDAO supplierDao = new SupplierDAOImpl(null, null);
-			ProductDAO productDao = new ProductDAOImpl(null, null);
+			UserVO user = null;
+			List<BusinessNoteVO> notesList = new ArrayList<BusinessNoteVO>();
+			BusinessNoteDAO noteDao = new BusinessNoteDAOImpl(DBUtil.getConnection(), null);
+			CustomerDAO customerDao = new CustomerDAOImpl(DBUtil.getConnection(), null);
+			SupplierDAO supplierDao = new SupplierDAOImpl(DBUtil.getConnection(), null);
+			ProductDAO productDao = new ProductDAOImpl(DBUtil.getConnection(), null);
+			UserDAO userDao = new UserDAOImpl(DBUtil.getConnection(), null);
 
 			while (rowIterator.hasNext()) {
 				row = (XSSFRow) rowIterator.next();
@@ -251,6 +287,7 @@ public class ImportTable {
 				Cell fourthCell = row.getCell(3);
 				Cell fifthCell = row.getCell(4);
 				Cell sixthCell = row.getCell(5);
+				Cell seventhCell = row.getCell(6);
 
 				customerId = Integer.valueOf(firstCell.getStringCellValue());
 				supplierId = Integer.valueOf(secondCell.getStringCellValue());
@@ -258,29 +295,28 @@ public class ImportTable {
 				noteTitle = fourthCell.getStringCellValue();
 				noteText = fifthCell.getStringCellValue();
 				creationDate = getDateFromString(sixthCell.getStringCellValue());
+				userId = Integer.valueOf(seventhCell.getStringCellValue());
 
 				customer = customerDao.getCustomerById(customerId);
 				supplier = supplierDao.getSupplierById(supplierId);
 				product = productDao.getProductById(productId);
+				user = userDao.getUserById(userId);
 
-				note = new NoteVO(customer, supplier, product, noteTitle,
-						noteText, creationDate);
+				note = new BusinessNoteVO(customer, supplier, product, noteTitle,
+						noteText, creationDate, user);
 
 				notesList.add(note);
 			}
 			noteDao.insertList(notesList);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			try {
 				fis.close();
 				workbook.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
