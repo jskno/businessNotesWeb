@@ -16,7 +16,7 @@ import persistence.DDBBCompany;
 import persistence.DDBBCompanyRole;
 import persistence.DDBBSupplier;
 
-public class SupplierDAOImpl extends DaoImpl implements SupplierDAO {
+public class SupplierDAOImpl extends DAOImpl implements SupplierDAO {
 	
 	private CompanyDAO companyDao;
 	CompanyRoleDao companyRoleDao;

@@ -18,7 +18,7 @@ import model.SupplierVO;
 import persistence.DDBBBusinessNote;
 import utils.DateUtils;
 
-public class BusinessNoteDAOImpl extends DaoImpl implements BusinessNoteDAO {
+public class BusinessNoteDAOImpl extends DAOImpl implements BusinessNoteDAO {
 	
 	private static final int LAST_NOTES_DAYS = -30;
 	

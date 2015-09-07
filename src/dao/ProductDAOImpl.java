@@ -12,7 +12,7 @@ import javax.servlet.http.HttpSession;
 import persistence.DDBBProduct;
 import model.ProductVO;
 
-public class ProductDAOImpl extends DaoImpl implements ProductDAO {
+public class ProductDAOImpl extends DAOImpl implements ProductDAO {
 	
 	public ProductDAOImpl(Connection connection, HttpSession session) {
 		super(connection, session);

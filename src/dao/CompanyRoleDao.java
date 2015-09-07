@@ -1,5 +1,5 @@
 package dao;
 
-public interface CompanyRoleDao extends Dao  {
+public interface CompanyRoleDao extends DAO  {
 
 }

@@ -18,7 +18,7 @@ import model.NoteVO;
 import model.ProductVO;
 import model.SupplierVO;
 
-public class NoteDAOImpl extends DaoImpl implements NoteDAO {
+public class NoteDAOImpl extends DAOImpl implements NoteDAO {
 	
 	private static final int LAST_NOTES_DAYS = -30;
 	private static final String INSERT = "insert into note (USER_ID, CREATION_DATE, " +

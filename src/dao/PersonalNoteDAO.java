@@ -7,7 +7,7 @@ import persistence.DDBBPersonalNote;
 import model.NoteVO;
 import model.PersonalNoteVO;
 
-public interface PersonalNoteDAO extends Dao {
+public interface PersonalNoteDAO extends DAO {
 
 	public List<PersonalNoteVO> getLastPersonalNotes();
 	List<DDBBPersonalNote> getPersistenceCustomerList();

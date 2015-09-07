@@ -1,7 +1,6 @@
 package dao;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,12 +8,12 @@ import java.sql.Statement;
 
 import javax.servlet.http.HttpSession;
 
-public abstract class DaoImpl implements Dao {
+public abstract class DAOImpl implements DAO {
 	
 	protected Connection connection;
 	protected HttpSession session;
 	
-	protected DaoImpl(Connection connection, HttpSession session) {
+	protected DAOImpl(Connection connection, HttpSession session) {
 		this.connection = connection;
 		this.session = session;
 	}
@@ -35,6 +34,7 @@ public abstract class DaoImpl implements Dao {
 		this.session = session;
 	}
 	
+	@Override
 	public void closeStmtAndRs(PreparedStatement stmt,
 			ResultSet rs) {
 		
@@ -50,6 +50,7 @@ public abstract class DaoImpl implements Dao {
 		}
 	}
 	
+	@Override
 	public void closeStmt(PreparedStatement ps) {
 		
 		try {
@@ -61,6 +62,7 @@ public abstract class DaoImpl implements Dao {
 		}
 	}
 	
+	@Override
 	public void closeStmtAndRs(Statement stmt, ResultSet rs) {
 		try {
 			if (rs != null) {

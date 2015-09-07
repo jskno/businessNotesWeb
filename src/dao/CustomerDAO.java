@@ -5,7 +5,7 @@ import java.util.List;
 import persistence.DDBBCustomer;
 import model.CustomerVO;
 
-public interface CustomerDAO extends Dao {
+public interface CustomerDAO extends DAO {
 
 	CustomerVO getCustomerById(int customerId);
 

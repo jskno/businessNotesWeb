@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 import persistence.DDBBCompanyRole;
 import model.CompanyRoleVO;
 
-public class CompanyRoleDaoImpl extends DaoImpl implements CompanyRoleDao {
+public class CompanyRoleDaoImpl extends DAOImpl implements CompanyRoleDao {
 	
 	public CompanyRoleDaoImpl(Connection connection, HttpSession sessionn) {
 		super(connection, sessionn);

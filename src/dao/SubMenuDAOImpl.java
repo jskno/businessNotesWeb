@@ -8,7 +8,7 @@ import javax.servlet.http.HttpSession;
 
 import model.MenuVO;
 
-public class SubMenuDAOImpl extends DaoImpl implements MenuDAO {
+public class SubMenuDAOImpl extends DAOImpl implements MenuDAO {
 
 	public SubMenuDAOImpl(Connection connection, HttpSession session) {
 		super(connection, session);

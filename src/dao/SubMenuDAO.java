@@ -6,7 +6,7 @@ import java.util.Map;
 import model.MenuVO;
 import model.SubMenuVO;
 
-public interface SubMenuDAO extends Dao{
+public interface SubMenuDAO extends DAO{
 
 
 }

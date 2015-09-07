@@ -5,7 +5,7 @@ import java.util.List;
 import persistence.DDBBSupplier;
 import model.SupplierVO;
 
-public interface SupplierDAO extends Dao {
+public interface SupplierDAO extends DAO {
 
 	SupplierVO getSupplierById(int supplierId);
 

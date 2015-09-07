@@ -16,7 +16,7 @@ import model.MenuVO;
 import model.ProductVO;
 import model.SubMenuVO;
 
-public class MenuDAOImpl extends DaoImpl implements MenuDAO {
+public class MenuDAOImpl extends DAOImpl implements MenuDAO {
 	
 	private static final String SQL_MENU = "SELECT * FROM MENU ORDER BY ID_MENU";
 	private static final String SQL_SUBMENU = "SELECT * FROM SUBMENU "

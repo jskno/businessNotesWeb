@@ -115,6 +115,7 @@ public abstract class ServiceImpl implements Service{
 		}
 		return connection;
 	}
+	
 	protected void closeConnection(Connection connection) {
 		if(connection == null) {
 			return;

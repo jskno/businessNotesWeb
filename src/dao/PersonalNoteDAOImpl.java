@@ -21,7 +21,7 @@ import model.PersonalNoteVO;
 import model.ProductVO;
 import model.SupplierVO;
 
-public class PersonalNoteDAOImpl extends DaoImpl implements PersonalNoteDAO {
+public class PersonalNoteDAOImpl extends DAOImpl implements PersonalNoteDAO {
 	
 	private static final int LAST_NOTES_DAYS = -30;
 	

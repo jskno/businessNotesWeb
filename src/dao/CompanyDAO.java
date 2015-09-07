@@ -4,7 +4,7 @@ import java.util.List;
 
 import model.CompanyVO;
 
-public interface CompanyDAO extends Dao {
+public interface CompanyDAO extends DAO {
 	
 	public List<CompanyVO> getCompaniesList();
 	public List<CompanyVO> searchCompaniesByName(String name);

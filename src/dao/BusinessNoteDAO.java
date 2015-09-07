@@ -5,7 +5,7 @@ import java.util.List;
 import model.BusinessNoteVO;
 import persistence.DDBBBusinessNote;
 
-public interface BusinessNoteDAO extends Dao {
+public interface BusinessNoteDAO extends DAO {
 
 	List<BusinessNoteVO> getLastBusinessNotes();
 	List<DDBBBusinessNote> getPersistenceBusinessNotesList();

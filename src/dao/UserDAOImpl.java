@@ -15,7 +15,7 @@ import model.MenuVO;
 import model.ProductVO;
 import model.UserVO;
 
-public class UserDAOImpl extends DaoImpl implements UserDAO {
+public class UserDAOImpl extends DAOImpl implements UserDAO {
 
 	public UserDAOImpl(Connection connection, HttpSession session) {
 		super(connection, session);
