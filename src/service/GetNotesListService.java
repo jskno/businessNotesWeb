@@ -6,7 +6,7 @@ import model.NoteVO;
 import dao.NoteDAO;
 import dao.NoteDAOImpl;
 
-public class GetNotesListService extends ServiceImpl {
+public class GetNotesListService extends ServiceImpl implements Service {
 
 	@Override
 	protected void execute() {

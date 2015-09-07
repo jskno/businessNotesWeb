@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import persistence.DDBBCompany;
@@ -228,5 +230,4 @@ public class CompanyDAOImpl extends DAOImpl implements CompanyDAO {
 		
 		return company;
 	}
-
 }
