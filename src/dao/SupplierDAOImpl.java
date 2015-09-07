@@ -18,12 +18,10 @@ import persistence.DDBBSupplier;
 
 public class SupplierDAOImpl extends DAOImpl implements SupplierDAO {
 	
-	private CompanyDAO companyDao;
-	CompanyRoleDao companyRoleDao;
+	private CompanyRoleDao companyRoleDao;
 	
 	public SupplierDAOImpl(Connection connection, HttpSession session) {
 		super(connection, session);
-		companyDao = new CompanyDAOImpl(connection, session);
 		companyRoleDao = new CompanyRoleDaoImpl(connection, session);
 	}
 	
@@ -111,7 +109,7 @@ public class SupplierDAOImpl extends DAOImpl implements SupplierDAO {
 	}
 
 	@Override
-	public List<DDBBSupplier> getPersistenceCustomerList() {
+	public List<DDBBSupplier> getPersistenceSuppliersList() {
 		
 		List<DDBBSupplier> result = new ArrayList<DDBBSupplier>();
 		

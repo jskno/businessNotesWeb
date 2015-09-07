@@ -17,19 +17,15 @@ public abstract class DAOImpl implements DAO {
 		this.connection = connection;
 		this.session = session;
 	}
-	
 	public Connection getConnection() {
 		return connection;
 	}
-
 	public void setConnection(Connection connection) {
 		this.connection = connection;
 	}
-
 	public HttpSession getSession() {
 		return session;
 	}
-
 	public void setSession(HttpSession session) {
 		this.session = session;
 	}
@@ -72,7 +68,7 @@ public abstract class DAOImpl implements DAO {
 				stmt.close();
 			}
 		} catch (SQLException e) {
-			
+			System.err.println(e.getStackTrace());
 		}
 	}
 }

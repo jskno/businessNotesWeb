@@ -14,5 +14,4 @@ public interface DAO {
 	void closeStmt(PreparedStatement ps);
 	void closeStmtAndRs(Statement stmt, ResultSet rs);
 	void closeStmtAndRs(PreparedStatement stmt, ResultSet rs);
-		
 }

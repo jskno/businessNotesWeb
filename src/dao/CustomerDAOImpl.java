@@ -18,12 +18,10 @@ import persistence.DDBBCustomer;
 
 public class CustomerDAOImpl extends DAOImpl implements CustomerDAO {
 	
-	CompanyDAO companyDao;
 	CompanyRoleDao companyRoleDao;
 	
 	public CustomerDAOImpl(Connection connection, HttpSession session) {
 		super(connection, session);
-		companyDao = new CompanyDAOImpl(connection, session);
 		companyRoleDao = new CompanyRoleDaoImpl(connection, session);
 	}
 	
@@ -111,7 +109,7 @@ public class CustomerDAOImpl extends DAOImpl implements CustomerDAO {
 	}
 
 	@Override
-	public List<DDBBCustomer> getPersistenceCustomerList() {
+	public List<DDBBCustomer> getPersistenceCustomersList() {
 		
 		List<DDBBCustomer> list = new ArrayList<DDBBCustomer>();
 		

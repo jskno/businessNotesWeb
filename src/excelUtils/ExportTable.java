@@ -41,7 +41,6 @@ public class ExportTable
 		try {
 			exportNoteTable("NoteTable");
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -163,7 +162,7 @@ public class ExportTable
       XSSFRow headerRow = spreadsheet.createRow(0);
       //This data needs to be written.
       CustomerDAO customerDao = new CustomerDAOImpl(null, null);
-      List<DDBBCustomer> persistenceCustomersList = customerDao.getPersistenceCustomerList();
+      List<DDBBCustomer> persistenceCustomersList = customerDao.getPersistenceCustomersList();
       //Iterate over data and write to sheet
       Object eachCustomer;
       for (int i = 0; i < persistenceCustomersList.size(); i++)
@@ -202,7 +201,7 @@ public class ExportTable
       XSSFRow headerRow = spreadsheet.createRow(0);
       //This data needs to be written.
       SupplierDAO supplierDao = new SupplierDAOImpl(null, null);
-      List<DDBBSupplier> persistenceSuppliersList = supplierDao.getPersistenceCustomerList();
+      List<DDBBSupplier> persistenceSuppliersList = supplierDao.getPersistenceSuppliersList();
       //Iterate over data and write to sheet
       Object eachCustomer;
       for (int i = 0; i < persistenceSuppliersList.size(); i++)
