@@ -38,6 +38,11 @@ public class BusinessNotesControllerRedirect extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
+		if(request.getSession().getAttribute("username") == null) {
+			response.sendRedirect("notes/login");
+			return;
+		}
+		
 		String nextStep = request.getParameter("nextStep");
 		String keyWord = request.getParameter("keyWord");
 		if (nextStep == null) {

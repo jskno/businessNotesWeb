@@ -66,6 +66,9 @@
 					%>
               
                 </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="/BusinessNotesWeb/notes/login?logout">Logout</a></li>
+                </ul>
             </div>
         </div>
    </nav>

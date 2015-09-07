@@ -10,17 +10,17 @@ import java.util.TreeMap;
 
 import javax.servlet.http.HttpSession;
 
+import model.MenuVO;
+import model.SubMenuVO;
 import persistence.DDBBMenu;
 import persistence.DDBBSubMenu;
-import model.MenuVO;
-import model.ProductVO;
-import model.SubMenuVO;
 
 public class MenuDAOImpl extends DAOImpl implements MenuDAO {
 	
-	private static final String SQL_MENU = "SELECT * FROM MENU ORDER BY ID_MENU";
+	private static final String SQL_MENU = "SELECT * FROM MENU "
+			+ "WHERE IND_ACTIVE = 1 ORDER BY ID_MENU";
 	private static final String SQL_SUBMENU = "SELECT * FROM SUBMENU "
-			+ "WHERE ID_MENU = ? ORDER BY ID_SUBMENU";
+			+ "WHERE ID_MENU = ? AND IND_ACTIVE = 1 ORDER BY ID_SUBMENU";
 
 	public MenuDAOImpl(Connection connection, HttpSession session) {
 		super(connection, session);

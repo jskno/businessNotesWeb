@@ -65,6 +65,11 @@ public class BusinessNotesController extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		
+		if(request.getSession().getAttribute("username") == null) {
+			response.sendRedirect("notes/login");
+			return;
+		}
+		
 		String nextStep = request.getParameter("nextStep");
 		RequestDispatcher requestDispatcher;
 		if (nextStep == null) {
@@ -79,40 +84,4 @@ public class BusinessNotesController extends HttpServlet {
 		requestDispatcher.forward(request, response);
 		
 	}
-
-	
-
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public String executeLogin() {
-		String executelogin = "failed";
-		return null;
-	}
-
 }

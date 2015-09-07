@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
   <display-name>BusinessNotesWeb</display-name>
+  
 	<servlet>
 		<servlet-name>businessNotesController</servlet-name>
 		<servlet-class>controller.BusinessNotesController</servlet-class>
@@ -14,6 +15,7 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	
 	<servlet>
 		<servlet-name>businessNotesControllerRedirect</servlet-name>
 		<servlet-class>controller.BusinessNotesControllerRedirect</servlet-class>
@@ -27,6 +29,7 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	
 	<servlet>
 		<servlet-name>businessNotesAjaxServlet</servlet-name>
 		<servlet-class>controller.BusinessNotesAjaxServlet</servlet-class>
@@ -40,6 +43,21 @@
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
+	
+	<servlet>
+		<servlet-name>loginServlet</servlet-name>
+		<servlet-class>controller.LoginServlet</servlet-class>
+		<init-param>
+			<param-name>base</param-name>
+			<param-value>/BusinessNotesWeb/notes/login</param-value>
+		</init-param>
+		<init-param>
+			<param-name>imageURL</param-name>
+			<param-value>/BusinessNotesWeb/images</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	
 	<context-param>
 		<param-name>param1</param-name>
 		<param-value>/BusinessNotesWeb/notes</param-value>
@@ -48,18 +66,47 @@
 		<param-name>imageURL</param-name>
 		<param-value>/BusinessNotesWeb/images</param-value>
 	</context-param>
+	
 	<servlet-mapping>
 		<servlet-name>businessNotesController</servlet-name>
 		<url-pattern>/notes</url-pattern>
 	</servlet-mapping>
+	
 	<servlet-mapping>
 		<servlet-name>businessNotesControllerRedirect</servlet-name>
 		<url-pattern>/notes/addElement</url-pattern>
 	</servlet-mapping>
+	
 	<servlet-mapping>
 		<servlet-name>businessNotesAjaxServlet</servlet-name>
 		<url-pattern>/notes/ajax</url-pattern>
 	</servlet-mapping>
+	
+	<servlet-mapping>
+		<servlet-name>loginServlet</servlet-name>
+		<url-pattern>/notes/login</url-pattern>
+	</servlet-mapping>
+	
+	<jsp-config>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <url-pattern>*.jspf</url-pattern>
+            <page-encoding>ISO-8859-1</page-encoding> <!-- UTF-8 -->
+            <scripting-invalid>false</scripting-invalid>
+            <include-prelude>/jsp/base.jspf</include-prelude>
+            <trim-directive-whitespaces>true</trim-directive-whitespaces>
+            <default-content-type>text/html</default-content-type>
+        </jsp-property-group>
+    </jsp-config>
+    
+	<session-config>
+        <session-timeout>30</session-timeout>
+        <cookie-config>
+            <http-only>true</http-only>
+        </cookie-config>
+        <tracking-mode>COOKIE</tracking-mode>
+    </session-config>
+    
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
     <welcome-file>index.htm</welcome-file>
@@ -68,4 +115,5 @@
     <welcome-file>default.htm</welcome-file>
     <welcome-file>default.jsp</welcome-file>
   </welcome-file-list>
+  
 </web-app>

@@ -34,6 +34,11 @@ public class BusinessNotesAjaxServlet extends HttpServlet {
     public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
 
+		if(request.getSession().getAttribute("username") == null) {
+			response.sendRedirect("notes/login");
+			return;
+		}
+		
         String action = request.getParameter("action");
         String taxID = request.getParameter("taxID");
         
