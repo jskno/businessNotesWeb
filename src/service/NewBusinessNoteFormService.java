@@ -19,7 +19,7 @@ public class NewBusinessNoteFormService extends ServiceImpl {
 		getCustomersList();
 		getSuppliersList();
 		getProductsList();
-		request.setAttribute("url", "newNoteForm.jsp?");
+		request.setAttribute("url", "newBusinessNoteForm.jsp?");
 		
 	}
 	

@@ -38,7 +38,7 @@ public class BusinessNotesControllerRedirect extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		
 		if(request.getSession().getAttribute("username") == null) {
-			response.sendRedirect("notes/login");
+			response.sendRedirect(request.getContextPath() + "/notes/login");
 			return;
 		}
 		

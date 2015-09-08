@@ -87,8 +87,8 @@ public class CustomerVO extends CompanyRoleVO {
 		sb.append("<customer>");
 		sb.append("<creditRating>" + getCreditRating() + "</creditRating>");
 		sb.append("<customerDiscount>" + getCustomerDiscount() + "</customerDiscount>");
-		sb.append("</customer>");
 		sb.append("<customerAdded>1</customerAdded>");
+		sb.append("</customer>");
 		sb.append(super.toJson());
 		return sb.toString();
 		

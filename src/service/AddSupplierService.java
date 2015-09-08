@@ -15,14 +15,15 @@ public class AddSupplierService extends ServiceImpl implements Service {
 	@Override
 	protected void execute() {
 		
-		String companyIdFromRq = request.getParameter("companyId");
+		String companyIdFromRq = request.getParameter("supplierCompanyId");
 		if(companyIdFromRq == null || companyIdFromRq.equals("")) {
 			createSupplierAndCompany();
 		} else {
 			companyId = Integer.parseInt(companyIdFromRq);
 			createSupplier(companyId);
 		}
-		request.setAttribute("nextStep", "newSupplier");
+		String screenOrigin = (String) request.getAttribute("screenOrigin");
+		request.setAttribute("nextStep", screenOrigin);
 	}
 	
 	private void createSupplierAndCompany() {

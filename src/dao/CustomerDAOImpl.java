@@ -57,7 +57,12 @@ public class CustomerDAOImpl extends DAOImpl implements CustomerDAO {
 	@Override
 	public CustomerVO getCustomerById(int roleId) {
 		
-		String sql = "select * from customer where role_id = " + roleId;
+		String sql = "select * from customer cus "
+						+ "join company_role cr "
+							+ "on cus.role_id = cr.role_id "
+						+ "join company com "
+							+ "on cr.company_id = com.company_id "
+						+ "where cus.role_id = " + roleId;
 		DDBBCustomer ddbbCustomer = new DDBBCustomer();
 		CustomerVO customer = new CustomerVO();
 		PreparedStatement statement = null;
@@ -66,8 +71,11 @@ public class CustomerDAOImpl extends DAOImpl implements CustomerDAO {
 		try {
 			statement = connection.prepareStatement(sql);
 			resultSet = statement.executeQuery();
-			ddbbCustomer.loadResult(resultSet);
-			customer.setFromPersistenceObject(ddbbCustomer);
+			if(resultSet.next()) {
+				customer = getCustomerFromRs(resultSet);
+//				ddbbCustomer.loadResult(resultSet);
+//				customer.setFromPersistenceObject(ddbbCustomer);
+			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {

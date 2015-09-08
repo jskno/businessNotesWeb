@@ -89,7 +89,7 @@ public class ProductVO {
 		} else {
 			setProductCode(null);
 		}
-		if(ddbbProduct.isProductDescriptionNull()) {
+		if(!ddbbProduct.isProductDescriptionNull()) {
 			setProductDescription(ddbbProduct.getProductDescription());
 		} else {
 			setProductDescription(null);

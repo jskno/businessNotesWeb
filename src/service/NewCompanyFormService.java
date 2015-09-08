@@ -5,7 +5,7 @@ public class NewCompanyFormService extends ServiceImpl {
 	@Override
 	protected void execute() {
 
-		request.setAttribute("url", "newCompany.jsp?");
+		request.setAttribute("url", "newCompanyForm.jsp?");
 	}
 
 }

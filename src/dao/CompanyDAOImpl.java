@@ -7,12 +7,10 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import persistence.DDBBCompany;
 import model.CompanyVO;
+import persistence.DDBBCompany;
 
 public class CompanyDAOImpl extends DAOImpl implements CompanyDAO {
 	
@@ -20,10 +18,10 @@ public class CompanyDAOImpl extends DAOImpl implements CompanyDAO {
 		super(connection, session);
 	}
 
-	private static final String NO_CUSTOMER_COMPANIES = "select * from company where id not in (" +
-			"select distinct company_id from customer)";
-	private static final String NO_SUPPLIER_COMPANIES = "select * from company where id not in (" +
-			"select distinct company_id from supplier)";
+	private static final String NO_CUSTOMER_COMPANIES = "select * from company where company_id not in (" +
+			"select distinct company_id from company_role where role_name = 'Customer')";
+	private static final String NO_SUPPLIER_COMPANIES = "select * from company where company_id not in (" +
+			"select distinct company_id from company_role where role_name = 'Supplier')";
 	
 	public int insert(Object o){
 		
@@ -78,48 +76,26 @@ public class CompanyDAOImpl extends DAOImpl implements CompanyDAO {
 	}
 	
 	@Override
-	public List<CompanyVO> getNoCustomerCompanies() {
+	public List<CompanyVO> getNoRoleCompanies(String origin) {
 		
-		List<CompanyVO> result = new ArrayList<CompanyVO>();
-		CompanyVO company;
-		PreparedStatement statement = null;
-		ResultSet resultSet = null;
-		try {
-			statement = connection.prepareStatement(NO_CUSTOMER_COMPANIES);
-			resultSet = statement.executeQuery();
-			while (resultSet.next()) {
-				company = new CompanyVO();
-				company.setCompanyId(resultSet.getInt("id"));
-				company.setCompanyName(resultSet.getString("company_name"));
-				company.setCompanyTelephone(resultSet.getString("company_telephone"));
-				company.setCompanyEmail(resultSet.getString("company_email"));
-				result.add(company);
-			}
-		} catch (SQLException ex) {
-			ex.printStackTrace();
-		} finally {
-			closeStmtAndRs(statement, resultSet);
+		String sql = null;
+		if(origin.equals("Customer")) {
+			sql = NO_CUSTOMER_COMPANIES;			
+		} else if(origin.equals("Supplier")) {
+			sql = NO_SUPPLIER_COMPANIES;
 		}
-		return result;
-	}
-	
-	@Override
-	public List<CompanyVO> getNoSupplierCompanies() {
-		
 		List<CompanyVO> result = new ArrayList<CompanyVO>();
 		CompanyVO company;
+		DDBBCompany ddbbCompany;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
-		
 		try {
-			statement = connection.prepareStatement(NO_SUPPLIER_COMPANIES);
+			statement = connection.prepareStatement(sql);
 			resultSet = statement.executeQuery();
 			while (resultSet.next()) {
-				company = new CompanyVO();
-				company.setCompanyId(resultSet.getInt("id"));
-				company.setCompanyName(resultSet.getString("company_name"));
-				company.setCompanyTelephone(resultSet.getString("company_telephone"));
-				company.setCompanyEmail(resultSet.getString("company_email"));
+				ddbbCompany = new DDBBCompany();
+				ddbbCompany.loadResult(resultSet);
+				company = new CompanyVO(ddbbCompany);
 				result.add(company);
 			}
 		} catch (SQLException ex) {

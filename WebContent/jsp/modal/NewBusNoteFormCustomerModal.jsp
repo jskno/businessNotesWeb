@@ -1,10 +1,22 @@
+<%@page import="model.CompanyVO"%>
+<%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+
+<%
+//    @SuppressWarnings("unchecked")
+//    List<CompanyVO> companyList =
+//            (List<CompanyVO>)request.getAttribute("noCustomerCompaniesList");
+%>
+
+<!DOCTYPE html >
+<html lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>Insert title here</title>
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<script src="bootstrap/jquery/jquery-2.1.3.min.js"></script>
+<script src="bootstrap/js/bootstrap.min.js"></script>
+<title>Customer Modal</title>
 </head>
 <body>
 <!--  INI MODALS -->
@@ -13,9 +25,10 @@
 
 	<!-- Modal content-->
 	<div class="modal-content">
-		<form id="newCustomerModalForm" class="form-horizontal" role="form" action="notes" method="POST">
-		<input type="hidden" name="action" value="onlyCreateCustomer"/>
-	
+		<form id="newCustomerModalForm" class="form-horizontal" role="form" action="notes/addElement" method="POST">
+		<input type="hidden" name="nextStep" id="nextStep" value="addCustomer"/>
+		<input type="hidden" name="screenOrigin" value="newNoteForm"/>
+		
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h4 class="modal-title">New Customer</h4>
@@ -25,22 +38,37 @@
 	    		<div class="form-group">
 	      			<label class="control-label col-sm-2" for="companyName">Company Name:</label>
 	      			<div class="col-sm-10">
-		        		<input type="text" class="form-control" name="companyName" id="companyName" 
-		        				placeholder="Enter name">
+		        		<select class="form-control col-sm-8" name="customerCompanyId" id="customerCompanyId">
+    						<option value=""></option>
+    					</select>
 	    			</div>
 	    		</div>
 	    		<div class="form-group">
-	      			<label class="control-label col-sm-2" for="companyTelephone">Telephone Number:</label>
+      			<label class="control-label col-sm-2" for="contactName">Contact Name:</label>
+     			<div class="col-sm-10">          
+        		<input type="text" class="form-control" name="contactName" id="contactName" 
+        				placeholder="Enter the contact name">
+      			</div>
+    			</div>
+    			<div class="form-group">
+      			<label class="control-label col-sm-2" for="contactTelephone">Contact Telephone:</label>
+     			<div class="col-sm-10">          
+        		<input type="text" class="form-control" name="contactTelephone" id="contactTelephone" 
+        				placeholder="Enter the contact telephone">
+      			</div>
+    			</div>
+	    		<div class="form-group">
+	      			<label class="control-label col-sm-2" for="creditRating">Credit Rating:</label>
 	     			<div class="col-sm-10">          
-		        		<input type="text" class="form-control" name="companyTelephone" id="companyTelephone" 
-		        				placeholder="Enter telephone">
-	      			</div>
+		        		<input type="text" class="form-control" name="creditRating" id="creditRating" 
+		        				placeholder="Enter the credit rating">
+	      		</div>
 	    		</div>
 	    		<div class="form-group">
-	      			<label class="control-label col-sm-2" for="companyEmail">Email:</label>
+	      			<label class="control-label col-sm-2" for="customerDiscount">Customer Discount:</label>
 	     			<div class="col-sm-10">          
-		        		<input type="text" class="form-control" name="companyEmail" id="companyEmail" 
-		        				placeholder="Enter email">
+		        		<input type="text" class="form-control" name="customerDiscount" id="customerDiscount" 
+		        				placeholder="Enter the customer discount">
 	      			</div>
 	    		</div>
     		</div>
@@ -52,7 +80,10 @@
 	</div>
 	</div>
 </div>
-				
+
+<script src="js/getNoRoleCompanies.js"></script>
+
+<!--  				
 <script>
 $(document).ready(function() {
     $('#newCompanyModalForm').formValidation({
@@ -89,170 +120,7 @@ $(document).ready(function() {
     });
 });
 </script>
-
-<div id="newSupplierModal" class="modal fade" role="dialog">
-	<div class="modal-dialog">
-
-	<!-- Modal content-->
-	<div class="modal-content">
-		<form id="newCompanyModalForm" class="form-horizontal" role="form" action="notes" method="POST">
-		<input type="hidden" name="action" value="onlyCreateCompany2"/>
-	
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">New Company</h4>
-			</div>
-	
-			<div class="modal-body">
-	    		<div class="form-group">
-	      			<label class="control-label col-sm-2" for="companyName">Company Name:</label>
-	      			<div class="col-sm-10">
-		        		<input type="text" class="form-control" name="companyName" id="companyName" 
-		        				placeholder="Enter name">
-	    			</div>
-	    		</div>
-	    		<div class="form-group">
-	      			<label class="control-label col-sm-2" for="companyTelephone">Telephone Number:</label>
-	     			<div class="col-sm-10">          
-		        		<input type="text" class="form-control" name="companyTelephone" id="companyTelephone" 
-		        				placeholder="Enter telephone">
-	      			</div>
-	    		</div>
-	    		<div class="form-group">
-	      			<label class="control-label col-sm-2" for="companyEmail">Email:</label>
-	     			<div class="col-sm-10">          
-		        		<input type="text" class="form-control" name="companyEmail" id="companyEmail" 
-		        				placeholder="Enter email">
-	      			</div>
-	    		</div>
-    		</div>
- 			<div class="modal-footer">
- 				<button type="submit" class="btn btn-default">Submit</button>
- 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
- 			</div>
- 		</form>
-	</div>
-	</div>
-</div>
-				
-<script>
-$(document).ready(function() {
-    $('#newCompanyModalForm').formValidation({
-        framework: 'bootstrap',
-        excluded: [':disabled'],
-        icon: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
-        },
-        fields: {
-        	companyName: {
-                validators: {
-                    notEmpty: {
-                        message: 'The company name is required'
-                    }
-                }
-            },
-            companyTelephone: {
-                validators: {
-                    notEmpty: {
-                        message: 'The company telephone is required'
-                    }
-                }
-            },
-            companyEmail: {
-                validators: {
-                    notEmpty: {
-                        message: 'The company email is required'
-                    }
-                }
-            },
-        }
-    });
-});
-</script>
-
-<div id="newProductModal" class="modal fade" role="dialog">
-	<div class="modal-dialog">
-
-	<!-- Modal content-->
-	<div class="modal-content">
-		<form id="newCompanyModalForm" class="form-horizontal" role="form" action="notes" method="POST">
-		<input type="hidden" name="action" value="onlyCreateCompany2"/>
-	
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">New Company</h4>
-			</div>
-	
-			<div class="modal-body">
-	    		<div class="form-group">
-	      			<label class="control-label col-sm-2" for="companyName">Company Name:</label>
-	      			<div class="col-sm-10">
-		        		<input type="text" class="form-control" name="companyName" id="companyName" 
-		        				placeholder="Enter name">
-	    			</div>
-	    		</div>
-	    		<div class="form-group">
-	      			<label class="control-label col-sm-2" for="companyTelephone">Telephone Number:</label>
-	     			<div class="col-sm-10">          
-		        		<input type="text" class="form-control" name="companyTelephone" id="companyTelephone" 
-		        				placeholder="Enter telephone">
-	      			</div>
-	    		</div>
-	    		<div class="form-group">
-	      			<label class="control-label col-sm-2" for="companyEmail">Email:</label>
-	     			<div class="col-sm-10">          
-		        		<input type="text" class="form-control" name="companyEmail" id="companyEmail" 
-		        				placeholder="Enter email">
-	      			</div>
-	    		</div>
-    		</div>
- 			<div class="modal-footer">
- 				<button type="submit" class="btn btn-default">Submit</button>
- 				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
- 			</div>
- 		</form>
-	</div>
-	</div>
-</div>
-				
-<script>
-$(document).ready(function() {
-    $('#newCompanyModalForm').formValidation({
-        framework: 'bootstrap',
-        excluded: [':disabled'],
-        icon: {
-            valid: 'glyphicon glyphicon-ok',
-            invalid: 'glyphicon glyphicon-remove',
-            validating: 'glyphicon glyphicon-refresh'
-        },
-        fields: {
-        	companyName: {
-                validators: {
-                    notEmpty: {
-                        message: 'The company name is required'
-                    }
-                }
-            },
-            companyTelephone: {
-                validators: {
-                    notEmpty: {
-                        message: 'The company telephone is required'
-                    }
-                }
-            },
-            companyEmail: {
-                validators: {
-                    notEmpty: {
-                        message: 'The company email is required'
-                    }
-                }
-            },
-        }
-    });
-});
-</script>
+-->
 
 <!-- FIN MODALS -->
 </body>

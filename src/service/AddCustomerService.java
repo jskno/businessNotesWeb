@@ -14,14 +14,15 @@ public class AddCustomerService extends ServiceImpl implements Service {
 
 	@Override
 	protected void execute() {
-		String companyIdFromRq = request.getParameter("companyId");
+		String companyIdFromRq = request.getParameter("customerCompanyId");
 		if(companyIdFromRq == null || companyIdFromRq.equals("")) {
 			createCustomerAndCompany();
 		} else {
 			companyId = Integer.parseInt(companyIdFromRq);
 			createCustomer(companyId);
 		}
-		request.setAttribute("nextStep", "newCustomer2");
+		String screenOrigin = (String) request.getAttribute("screenOrigin");
+		request.setAttribute("nextStep", screenOrigin);
 	}
 	
 	private void createCustomer(Integer companyId) {

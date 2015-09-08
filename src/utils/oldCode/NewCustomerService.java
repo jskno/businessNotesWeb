@@ -23,7 +23,7 @@ public class NewCustomerService extends ServiceImpl{
 		
 		try {
 			CompanyDAO companyDao = new CompanyDAOImpl(getConnection(), getSession());
-			List<CompanyVO> companiesList = companyDao.getNoCustomerCompanies();
+			List<CompanyVO> companiesList = companyDao.getNoRoleCompanies("Customer");
 			request.setAttribute("companiesList", companiesList);
 		} catch (Exception e) {
 			System.out.println(e);

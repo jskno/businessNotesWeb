@@ -5,7 +5,7 @@ public class NewProductFormService extends ServiceImpl implements Service {
 	@Override
 	protected void execute() {
 
-		request.setAttribute("url", "newProduct.jsp?");
+		request.setAttribute("url", "newProductFrom.jsp?");
 	}
 
 }

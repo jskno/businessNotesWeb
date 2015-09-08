@@ -119,15 +119,15 @@ public class DDBBNote {
 		try
 		{
 			// SQL: NOTE_ID (INT):
-			if (isNoteIdNull())
-			{
-				ps.setNull(p, java.sql.Types.NUMERIC);
-			}
-			else
-			{
-				ps.setInt(p, getNoteId());
-			}
-			p++;
+//			if (isNoteIdNull())
+//			{
+//				ps.setNull(p, java.sql.Types.NUMERIC);
+//			}
+//			else
+//			{
+//				ps.setInt(p, getNoteId());
+//			}
+//			p++;
 			// SQL: USER_ID (INT):
 			if (isUserIdNull())
 			{
@@ -135,17 +135,17 @@ public class DDBBNote {
 			}
 			else
 			{
-				ps.setInt(p, getNoteId());
+				ps.setInt(p, getUserId());
 			}
 			p++;
 			// SQL: CREATION_DATE (DATE):
 			if (isCreationDateNull())
 			{
-				ps.setNull(p, java.sql.Types.DATE);
+				ps.setDate(p, new Date(getCreationDate().getTime()));
 			}
 			else
 			{
-				ps.setDate(p, new Date(getCreationDate().getTime()));
+				ps.setDate(p, getCreationDate());
 			}
 			p++;
 			// SQL: NOTE_TITLE (STRING):

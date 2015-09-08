@@ -8,7 +8,7 @@
 <link href="bootstrap/css/bootstrap.min.css" rel="stylesheet" />
 <script src="bootstrap/jquery/jquery-2.1.3.min.js"></script>
 <script src="bootstrap/js/bootstrap.min.js"></script>
-<title>New Customer2</title>
+<title>New Customer</title>
 </head>
 <body>
 	<div class="container-fluid">
@@ -19,14 +19,15 @@
     	</div>
 		
 		<div class="well">
-			<h3>New Customer2</h3>
-  			<p>Form to introduce a new customer2.</p>
+			<h3>New Customer</h3>
+  			<p>Form to introduce a new customer.</p>
   		</div>
   		
   		<form name="newCustomer2" id="newCustomer2" class="form-horizontal" 
   			role="form" action="notes/addElement" method="POST">
-  			<input type="hidden" name="nextStep" id="nextStep" value="addCustomer2"/>
-  			<input type="hidden" name="companyId" id="companyId" value=""/>
+  			<input type="hidden" name="nextStep" id="nextStep" value="addCustomer"/>
+  			<input type="hidden" name="customerCompanyId" id="customerCompanyId" value=""/>
+  			<input type="hidden" name="screenOrigin" value="newCustomerForm">
   			<div class="form-group">
       			<label class="control-label col-sm-2" for="taxID">Tax ID:</label>
      			<div class="col-sm-10">          

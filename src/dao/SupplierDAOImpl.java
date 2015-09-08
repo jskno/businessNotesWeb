@@ -57,7 +57,12 @@ public class SupplierDAOImpl extends DAOImpl implements SupplierDAO {
 	@Override
 	public SupplierVO getSupplierById(int roleId) {
 		
-		String sql = "select * from supplier where id = " + roleId;
+		String sql = "select * from supplier supp "
+						+ "join company_role cr "
+							+ "on supp.role_id = cr.role_id "
+						+ "join company com "
+							+ "on cr.company_id = com.company_id "
+						+ "where supp.role_id = " + roleId;
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		
@@ -66,8 +71,11 @@ public class SupplierDAOImpl extends DAOImpl implements SupplierDAO {
 		try {
 			statement = connection.prepareStatement(sql);
 			resultSet = statement.executeQuery();
-			ddbbSupplier.loadResult(resultSet);
-			supplier.setFromPersistenceObject(ddbbSupplier);
+			if(resultSet.next()) {
+				supplier = getSupplierFromRs(resultSet);
+//				ddbbSupplier.loadResult(resultSet);
+//				supplier.setFromPersistenceObject(ddbbSupplier);
+			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {

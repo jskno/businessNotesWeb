@@ -56,8 +56,10 @@ public class ProductDAOImpl extends DAOImpl implements ProductDAO {
 		try {
 			statement = connection.prepareStatement(sql);
 			resultSet = statement.executeQuery();
-			ddbbProduct.loadResult(resultSet);
-			product.setFromPersistenceObject(ddbbProduct);
+			if(resultSet.next()) {
+				ddbbProduct.loadResult(resultSet);
+				product.setFromPersistenceObject(ddbbProduct);
+			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {

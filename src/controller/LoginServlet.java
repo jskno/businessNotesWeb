@@ -64,6 +64,7 @@ public class LoginServlet extends HttpServlet {
 			UserVO user = userDao.getUserByUsernameId(username);
 			if(user != null && username.equals(user.getUserName()) &&
 					password.equals(user.getPassword())) {
+				session.setAttribute("userId", user.getUserId());
 				session.setAttribute("username", username);
 				session.setAttribute("profile", user.getProfile().desc());
 				request.changeSessionId();

@@ -144,8 +144,8 @@ public class CompanyVO {
 		sb.append("<companyName>" + getCompanyName() + "</companyName>");
 		sb.append("<companyTelephone>" + getCompanyTelephone() + "</companyTelephone>");
 		sb.append("<companyEmail>" + getCompanyEmail() + "</companyEmail>");
-		sb.append("</company>");
 		sb.append("<companyAdded>1</companyAdded>");
+		sb.append("</company>");
 		return sb.toString();
 		
 	}

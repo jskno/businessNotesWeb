@@ -43,6 +43,11 @@ public class BusinessNoteVO extends NoteVO {
 	
 	public DDBBBusinessNote getPersistenceBusNote() {
 		DDBBBusinessNote ddbbBusinessNote = new DDBBBusinessNote();
+		if(getNoteId() != null) {
+			ddbbBusinessNote.setNoteId(getNoteId());
+		} else {
+			ddbbBusinessNote.setNoteIdNull();
+		}
 		if(getCustomer() != null) {
 			ddbbBusinessNote.setCustomerId(getCustomer().getRoleId());
 		} else {

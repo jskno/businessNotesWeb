@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class DDBBBusinessNote {
 	
-	private static final String SQL_INSERT_ALL = "insert into businness_note (NOTE_ID, CUSTOMER_ID, SUPPLIER_ID, " +
+	private static final String SQL_INSERT_ALL = "insert into business_note (NOTE_ID, CUSTOMER_ID, SUPPLIER_ID, " +
 			"PRODUCT_ID) values (?,?,?,?)";
 	private static final String SQL_READ="SELECT * FROM businness_note WHERE NOTE_ID=?";
 	private static final String SQL_DELETE="DELETE FROM businness_note WHERE NOTE_ID=?";
@@ -141,6 +141,7 @@ public class DDBBBusinessNote {
 			{
 				ps.setInt(p, getSupplierId());
 			}
+			p++;
 			// SQL: PRODUCT_ID (INT):
 			if (isProductIdNull())
 			{
