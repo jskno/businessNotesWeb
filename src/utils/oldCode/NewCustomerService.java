@@ -1,10 +1,11 @@
-package service;
+package utils.oldCode;
 
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import service.ServiceImpl;
 import model.CompanyVO;
 import dao.CompanyDAO;
 import dao.CompanyDAOImpl;

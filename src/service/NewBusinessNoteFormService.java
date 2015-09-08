@@ -12,7 +12,7 @@ import dao.ProductDAOImpl;
 import dao.SupplierDAO;
 import dao.SupplierDAOImpl;
 
-public class NewNoteFormService extends ServiceImpl {
+public class NewBusinessNoteFormService extends ServiceImpl {
 
 	@Override
 	protected void execute() {

@@ -15,7 +15,7 @@ import dao.ProductDAOImpl;
 import dao.SupplierDAO;
 import dao.SupplierDAOImpl;
 
-public class AddNoteService extends ServiceImpl implements Service {
+public class AddPersonalNoteService extends ServiceImpl implements Service {
 
 	@Override
 	protected void execute() {

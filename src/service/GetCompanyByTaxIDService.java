@@ -5,9 +5,9 @@ import java.io.IOException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import model.CompanyVO;
-import serviceWS.ServiceWS;
-import serviceWS.ServiceWSImpl;
 import utils.DBUtil;
+import utils.oldCode.serviceWS.ServiceWS;
+import utils.oldCode.serviceWS.ServiceWSImpl;
 import dao.CompanyDAO;
 import dao.CompanyDAOImpl;
 

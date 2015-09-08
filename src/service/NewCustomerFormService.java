@@ -1,7 +1,7 @@
 package service;
 
 
-public class NewCustomer2Service extends ServiceImpl{
+public class NewCustomerFormService extends ServiceImpl{
 
 	@Override
 	protected void execute() {		

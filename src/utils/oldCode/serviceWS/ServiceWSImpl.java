@@ -1,4 +1,4 @@
-package serviceWS;
+package utils.oldCode.serviceWS;
 
 public class ServiceWSImpl implements ServiceWS{
 	

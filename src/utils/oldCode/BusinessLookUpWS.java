@@ -1,8 +1,7 @@
-package controller;
+package utils.oldCode;
 
 import service.GetCompanyByTaxIDService;
-import service.Service;
-import serviceWS.ServiceWS;
+import utils.oldCode.serviceWS.ServiceWS;
 
 public class BusinessLookUpWS {
 	

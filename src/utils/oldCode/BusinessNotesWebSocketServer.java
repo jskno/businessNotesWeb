@@ -1,9 +1,9 @@
-package controller;
+package utils.oldCode;
 
 import javax.websocket.OnMessage;
 import javax.websocket.server.ServerEndpoint;
 
-import serviceWS.ServiceWS;
+import utils.oldCode.serviceWS.ServiceWS;
 
 @ServerEndpoint("/notes/ws")
 public class BusinessNotesWebSocketServer {

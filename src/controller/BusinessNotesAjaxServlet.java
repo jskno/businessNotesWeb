@@ -12,17 +12,20 @@ import javax.servlet.http.HttpServletResponse;
 import model.CompanyVO;
 import model.CustomerVO;
 import model.SupplierVO;
+import utils.DBUtil;
 import dao.CompanyDAO;
 import dao.CompanyDAOImpl;
 import dao.CustomerDAO;
 import dao.CustomerDAOImpl;
 import dao.SupplierDAO;
 import dao.SupplierDAOImpl;
-import service.Service;
-import utils.DBUtil;
 
 public class BusinessNotesAjaxServlet extends HttpServlet {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ServletContext context;
 	String sb;
 	
