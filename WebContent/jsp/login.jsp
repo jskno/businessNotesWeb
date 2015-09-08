@@ -26,8 +26,8 @@
   			%>
   		</div>
   		
-  		<form class="form-horizontal" role="form" action="login" method="POST">
-  		<input type="hidden" name="nextStep" id="nextStep" value=""/>
+  		<form name="login" id="login" class="form-horizontal" 
+  			role="form" action="login" method="POST">
     		<div class="form-group">
       			<label class="control-label col-sm-2" for="username">User Name:</label>
      			<div class="col-sm-10">          

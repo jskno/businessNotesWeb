@@ -39,9 +39,9 @@ import excelUtils.ImportTable;
 public class BusinessNotesController extends HttpServlet {
 	
 	private static final String BASE = "/jsp/";
+	private static final BusinessLookUp lookupService = new BusinessLookUp();
 	private String url;
 	private Service service;
-	private BusinessLookUp lookupService = new BusinessLookUp();
 	
 	@Override
 	public void init(ServletConfig config) throws ServletException {
@@ -66,22 +66,24 @@ public class BusinessNotesController extends HttpServlet {
 			HttpServletResponse response) throws ServletException, IOException {
 		
 		if(request.getSession().getAttribute("username") == null) {
-			response.sendRedirect("notes/login");
+			response.sendRedirect(request.getContextPath() + "/notes/login");
 			return;
+		} else {
+			
+			
+			String nextStep = request.getParameter("nextStep");
+			RequestDispatcher requestDispatcher;
+			if (nextStep == null) {
+				nextStep = "homePage";
+			}
+			service = lookupService.getBusinessService(nextStep);
+			service.execute(request, response);
+			
+			url = BASE + request.getAttribute("url");
+			requestDispatcher = getServletContext().
+					getRequestDispatcher(url);
+			requestDispatcher.forward(request, response);
 		}
-		
-		String nextStep = request.getParameter("nextStep");
-		RequestDispatcher requestDispatcher;
-		if (nextStep == null) {
-			nextStep = "homePage";
-		}
-		service = lookupService.getBusinessService(nextStep);
-		service.execute(request, response);
-		
-		url = BASE + request.getAttribute("url");
-		requestDispatcher = getServletContext().
-				getRequestDispatcher(url);
-		requestDispatcher.forward(request, response);
 		
 	}
 }

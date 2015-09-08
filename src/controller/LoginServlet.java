@@ -1,9 +1,14 @@
 package controller;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.Map;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -11,20 +16,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-//@WebServlet(
-//		name = "loginServlet",
-//		urlPatterns = "notes/login"
-//		)
+import utils.DBUtil;
+import dao.MenuDAO;
+import dao.MenuDAOImpl;
+import dao.UserDAO;
+import dao.UserDAOImpl;
+import model.MenuVO;
+import model.UserVO;
+
+@WebServlet(
+		name = "loginServlet",
+		urlPatterns = "notes/login"
+		)
 
 public class LoginServlet extends HttpServlet {
 	
-	private static final Map<String, String> userDatabase = new Hashtable<>();
+	private static final UserDAO userDao = 
+			new UserDAOImpl(DBUtil.getConnection(), null);
 	
-	static {
-		userDatabase.put("111", "password");
-		userDatabase.put("112", "password");
-		userDatabase.put("113", "password");
-		userDatabase.put("114", "password");
+	@Override
+	public void init(ServletConfig config) throws ServletException {
 	}
 	
 	@Override
@@ -32,12 +43,12 @@ public class LoginServlet extends HttpServlet {
 		throws ServletException, IOException {
 		
 		HttpSession session = request.getSession();
-		if(session.getAttribute("username") != null) {
+		if(request.getParameter("logout") != null) {
 			session.invalidate();
-			response.sendRedirect("login");
+			response.sendRedirect(request.getContextPath() + "/notes/login");
 			return;
 		} else if(session.getAttribute("username") != null){
-			response.sendRedirect("notes");
+			response.sendRedirect(request.getContextPath() + "/notes");
 			return;
 		}
 		request.setAttribute("loginFailed", false);
@@ -57,14 +68,21 @@ public class LoginServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		if(username == null || password == null ||
-				!LoginServlet.userDatabase.containsKey(username) ||
-				!password.equals(LoginServlet.userDatabase.get(username))) {
+				username.isEmpty() || password.isEmpty()) {  
 			request.setAttribute("loginFailed", true);
 			request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
 		} else {
-			session.setAttribute("username", username);
-			request.changeSessionId();
-			response.sendRedirect(request.getContextPath() + "/notes");
+			UserVO user = userDao.getUserByUsernameId(username);
+			if(user != null && username.equals(user.getUserName()) &&
+					password.equals(user.getPassword())) {
+				session.setAttribute("username", username);
+				session.setAttribute("profile", user.getProfile().desc());
+				request.changeSessionId();
+				response.sendRedirect(request.getContextPath() + "/notes");
+			} else {
+				request.setAttribute("loginFailed", true);
+				request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
+			}
 		}
 	}
 

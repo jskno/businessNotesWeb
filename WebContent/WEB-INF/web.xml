@@ -6,49 +6,49 @@
 		<servlet-name>businessNotesController</servlet-name>
 		<servlet-class>controller.BusinessNotesController</servlet-class>
 		<init-param>
-			<param-name>base</param-name>
+			<param-name>base1</param-name>
 			<param-value>/BusinessNotesWeb/notes</param-value>
 		</init-param>
 		<init-param>
 			<param-name>imageURL</param-name>
 			<param-value>/BusinessNotesWeb/images</param-value>
 		</init-param>
-		<load-on-startup>1</load-on-startup>
+		<load-on-startup>2</load-on-startup>
 	</servlet>
 	
 	<servlet>
 		<servlet-name>businessNotesControllerRedirect</servlet-name>
 		<servlet-class>controller.BusinessNotesControllerRedirect</servlet-class>
 		<init-param>
-			<param-name>base</param-name>
+			<param-name>base2</param-name>
 			<param-value>/BusinessNotesWeb/notes/addElement</param-value>
 		</init-param>
 		<init-param>
 			<param-name>imageURL</param-name>
 			<param-value>/BusinessNotesWeb/images</param-value>
 		</init-param>
-		<load-on-startup>1</load-on-startup>
+		<load-on-startup>3</load-on-startup>
 	</servlet>
 	
 	<servlet>
 		<servlet-name>businessNotesAjaxServlet</servlet-name>
 		<servlet-class>controller.BusinessNotesAjaxServlet</servlet-class>
 		<init-param>
-			<param-name>base</param-name>
+			<param-name>base3</param-name>
 			<param-value>/BusinessNotesWeb/notes/ajax</param-value>
 		</init-param>
 		<init-param>
 			<param-name>imageURL</param-name>
 			<param-value>/BusinessNotesWeb/images</param-value>
 		</init-param>
-		<load-on-startup>1</load-on-startup>
+		<load-on-startup>4</load-on-startup>
 	</servlet>
 	
 	<servlet>
 		<servlet-name>loginServlet</servlet-name>
 		<servlet-class>controller.LoginServlet</servlet-class>
 		<init-param>
-			<param-name>base</param-name>
+			<param-name>base4</param-name>
 			<param-value>/BusinessNotesWeb/notes/login</param-value>
 		</init-param>
 		<init-param>

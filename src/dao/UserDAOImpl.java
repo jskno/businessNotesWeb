@@ -4,16 +4,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import persistence.DDBBProduct;
-import persistence.DDBBUser;
-import model.MenuVO;
-import model.ProductVO;
 import model.UserVO;
+import persistence.DDBBUser;
 
 public class UserDAOImpl extends DAOImpl implements UserDAO {
 
@@ -51,13 +46,40 @@ public class UserDAOImpl extends DAOImpl implements UserDAO {
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		
-		UserVO user = new UserVO();
+		UserVO user = null;
 		DDBBUser ddbbUser = new DDBBUser();
 		try {
 			statement = connection.prepareStatement(sql);
 			resultSet = statement.executeQuery();
-			ddbbUser.loadResult(resultSet);
-			user.setFromPersistenceObject(ddbbUser);
+			if(resultSet.next()) {
+				user = new UserVO();
+				ddbbUser.loadResult(resultSet);
+				user.setFromPersistenceObject(ddbbUser);
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			closeStmtAndRs(statement, resultSet);
+		}
+		return user;
+	}
+	
+	@Override
+	public UserVO getUserByUsernameId(String username) {
+		String sql = "select * from user where USERNAME LIKE '" + username + "'";
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		UserVO user = null;
+		DDBBUser ddbbUser = new DDBBUser();
+		try {
+			statement = connection.prepareStatement(sql);
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				ddbbUser.loadResult(resultSet);
+				user = new UserVO();
+				user.setFromPersistenceObject(ddbbUser);
+			}
 		} catch (SQLException ex) {
 			ex.printStackTrace();
 		} finally {

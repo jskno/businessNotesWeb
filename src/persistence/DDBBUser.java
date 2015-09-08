@@ -99,7 +99,7 @@ public class DDBBUser {
 		}
 		setFirstName(rs.getString("FIRST_NAME"));
 		setLastName(rs.getString("LAST_NAME"));
-		setUserName(rs.getString("USER_NAME"));
+		setUserName(rs.getString("USERNAME"));
 		setPassword(rs.getString("PASSWORD"));
 		setProfile(rs.getString("PROFILE"));
 	}
