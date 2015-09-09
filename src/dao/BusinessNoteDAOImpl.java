@@ -159,6 +159,7 @@ public class BusinessNoteDAOImpl extends DAOImpl implements BusinessNoteDAO {
 			
 		return list;
 	}
+	
 	@Override
 	public List<DDBBBusinessNote> getPersistenceBusinessNotesList() {
 		
