@@ -95,6 +95,7 @@ public class AddBusinessNoteService extends ServiceImpl implements Service {
 		note.setUser(user);
 		
 	}
+	
 	@Override
 	public void getDomainData(HttpServletRequest request) {
 		
