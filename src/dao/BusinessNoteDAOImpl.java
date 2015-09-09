@@ -14,13 +14,30 @@ import model.BusinessNoteVO;
 import model.CustomerVO;
 import model.NoteVO;
 import model.ProductVO;
+import model.Profile;
 import model.SupplierVO;
 import persistence.DDBBBusinessNote;
+import persistence.DDBBNote;
 import utils.DateUtils;
 
 public class BusinessNoteDAOImpl extends DAOImpl implements BusinessNoteDAO {
 	
 	private static final int LAST_NOTES_DAYS = -30;
+	private static final String MANAGER_NOTES_LIST = 
+			"select * from note "
+					+ "join business_note busNote on note.note_id = busNote.note_id "
+		//	+ "where creation_date <= ?"
+					;
+	
+	private static final String SALES_TEAM_NOTES_LIST = 
+			"select * from note "
+					+ "join business_note busNote on note.note_id = busNote.note_id "
+		//	+ "where creation_date <= ? and "
+			+ "where user_id = ?";
+	
+	private SupplierVO supplier;
+	private CustomerVO customer;
+	private ProductVO product;
 	
 	private CustomerDAO customerDao;
     private SupplierDAO supplierDao;
@@ -34,6 +51,7 @@ public class BusinessNoteDAOImpl extends DAOImpl implements BusinessNoteDAO {
     	productDao = new ProductDAOImpl(connection, session);
     	noteDao = new NoteDAOImpl(connection, session);
     }
+    
 	@Override
 	public int insert(Object o){
 		
@@ -70,35 +88,58 @@ public class BusinessNoteDAOImpl extends DAOImpl implements BusinessNoteDAO {
 	public List<BusinessNoteVO> getLastBusinessNotes() {
 		
 		List<BusinessNoteVO> list = new ArrayList<BusinessNoteVO>();
+		String sql = null;
+		java.sql.Date date = DateUtils.getSqlDate(
+				DateUtils.getDateMinusXDays(LAST_NOTES_DAYS));
 		
-		Date date = DateUtils.getDateMinusXDays(LAST_NOTES_DAYS);
-		String sql = "select * from note "
-				+ "join business_note busNote on note.note_id = busNote.note_id "
-				+ "where create_date <= '%"
-				+ date
-				+ "%'"
-				;
+		Integer userId = (Integer) getSession().getAttribute("userId");
+		
+		Profile profile = (Profile) getSession().getAttribute("profile");
+		if(Profile.MANAGER.equals(profile)) {
+			sql = MANAGER_NOTES_LIST;
+		} else if (Profile.SALES_TEAM.equals(profile)) {
+			sql = SALES_TEAM_NOTES_LIST;
+			
+		}
+		
 		PreparedStatement statement = null;
 		ResultSet resultSet = null;
 		
 		try {
 			statement = connection.prepareStatement(sql);
+			int p = 1;
+//			statement.setDate(p, date);
+//			p++;
+			if(Profile.SALES_TEAM.equals(profile)) {
+				statement.setInt(p, userId);
+				p++;
+			}
 			resultSet = statement.executeQuery();
 			BusinessNoteVO businessNote;
 			DDBBBusinessNote ddbbBusinessNote;
 			while (resultSet.next()) {
-				businessNote = new BusinessNoteVO();
 				ddbbBusinessNote = new DDBBBusinessNote();
+				DDBBNote ddbbNote = new DDBBNote();
 				
+				ddbbNote.loadResult(resultSet);
 				ddbbBusinessNote.loadResult(resultSet);
-				businessNote.setFromPersistenceBusNote(ddbbBusinessNote);
+				businessNote = new BusinessNoteVO(ddbbNote, ddbbBusinessNote);
 				
-				CustomerVO customer = customerDao.getCustomerById(
-						ddbbBusinessNote.getCustomerId());
-				SupplierVO supplier = supplierDao.getSupplierById(
-						ddbbBusinessNote.getSupplierId());
-				ProductVO product = productDao.getProductById(
-						ddbbBusinessNote.getProductId());
+				CustomerVO customer = null;
+				SupplierVO supplier = null;
+				ProductVO product = null;
+				if(!ddbbBusinessNote.isCustomerIdNull()) {
+					customer = customerDao.getCustomerById(
+							ddbbBusinessNote.getCustomerId());
+				} 
+				if(!ddbbBusinessNote.isSupplierIdNull()) {
+					supplier = supplierDao.getSupplierById(
+							ddbbBusinessNote.getSupplierId());
+				}
+				if(!ddbbBusinessNote.isProductIdNull()) {
+					product = productDao.getProductById(
+							ddbbBusinessNote.getProductId());
+				}
 								
 				businessNote.setCustomer(customer);
 				businessNote.setSupplier(supplier);

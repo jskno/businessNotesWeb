@@ -7,9 +7,11 @@ import service.AddPersonalNoteService;
 import service.AddProductService;
 import service.AddSupplierService;
 import service.ExportTableService;
+import service.GetBusinessNotesListService;
 import service.GetCompaniesListService;
 import service.GetCustomerListService;
 import service.GetNotesListService;
+import service.GetPersonalNotesListService;
 import service.GetProductsListService;
 import service.GetSuppliersListService;
 import service.ImportTableService;
@@ -33,8 +35,11 @@ public class BusinessLookUp {
 	private final String NEW_COMPANY_FORM = "newCompanyForm";
 	private final String NEW_PRODUCT_FORM = "newProductForm";
 	
-	private final String NOTE_LIST = "notesList";
-	private final String CUSTOMER_LIST = "customersList";
+	private final String NOTES_LIST = "notesList";
+	private final String BUSINESS_NOTES_LIST = "businessNotesList";
+	private final String PERSONAL_NOTES_LIST = "personalNotesList";
+	
+	private final String CUSTOMERS_LIST = "customersList";
 	private final String SUPPLIERS_LIST = "suppliersList";
 	private final String COMPANIES_LIST = "companyList";
 	private final String PRODUCTS_LIST = "productsList";
@@ -76,10 +81,16 @@ public class BusinessLookUp {
 			serviceClass = new NewProductFormService();
 			break;
 			
-		case NOTE_LIST:
+		case NOTES_LIST:
 			serviceClass = new GetNotesListService();
 			break;
-		case CUSTOMER_LIST:
+		case BUSINESS_NOTES_LIST:
+			serviceClass = new GetBusinessNotesListService();
+			break;
+		case PERSONAL_NOTES_LIST:
+			serviceClass = new GetPersonalNotesListService();
+			break;
+		case CUSTOMERS_LIST:
 			serviceClass = new GetCustomerListService();
 			break;
 		case SUPPLIERS_LIST:

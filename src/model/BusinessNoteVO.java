@@ -3,6 +3,7 @@ package model;
 import java.util.Date;
 
 import persistence.DDBBBusinessNote;
+import persistence.DDBBNote;
 
 public class BusinessNoteVO extends NoteVO {
 	
@@ -22,6 +23,11 @@ public class BusinessNoteVO extends NoteVO {
 		this.product = product;
 	}
 	
+	public BusinessNoteVO(DDBBNote ddbbNote, DDBBBusinessNote ddbbBusinessNote) {
+		this.setFromPersistenceObject(ddbbNote);
+		this.setFromPersistenceBusNote(ddbbBusinessNote);
+	}
+
 	public CustomerVO getCustomer() {
 		return customer;
 	}

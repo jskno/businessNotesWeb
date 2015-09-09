@@ -36,5 +36,11 @@ public class DateUtils {
 		String now = formatter.format(currentDate.getTime());
 		return now;
 	}
+	
+	public static java.sql.Date getSqlDate(Date date) {
+		
+		return new java.sql.Date(date.getTime());
+		
+	}
 
 }

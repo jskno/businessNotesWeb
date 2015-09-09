@@ -66,7 +66,7 @@ public class LoginServlet extends HttpServlet {
 					password.equals(user.getPassword())) {
 				session.setAttribute("userId", user.getUserId());
 				session.setAttribute("username", username);
-				session.setAttribute("profile", user.getProfile().desc());
+				session.setAttribute("profile", user.getProfile());
 				request.changeSessionId();
 				response.sendRedirect(request.getContextPath() + "/notes");
 			} else {
