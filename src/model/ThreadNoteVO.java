@@ -4,31 +4,31 @@ import persistence.DDBBThreadNote;
 
 public class ThreadNoteVO {
 	
-	private Integer threadId;
-	private Integer noteId;
+	private ThreadVO thread;
+	private BusinessNoteVO note;
 	
-	public Integer getThreadId() {
-		return threadId;
+	public ThreadVO getThread() {
+		return thread;
 	}
-	public void setThreadId(Integer threadId) {
-		this.threadId = threadId;
+	public void setThread(ThreadVO thread) {
+		this.thread = thread;
 	}
-	public Integer getNoteId() {
-		return noteId;
+	public BusinessNoteVO getNote() {
+		return note;
 	}
-	public void setNoteId(Integer noteId) {
-		this.noteId = noteId;
+	public void setNote(BusinessNoteVO note) {
+		this.note = note;
 	}
 	
 	public DDBBThreadNote getPersistenceObject() {
 		DDBBThreadNote ddbbThreadNote = new DDBBThreadNote();
-		if(getThreadId() != null) {
-			ddbbThreadNote.setThreadId(getThreadId());
+		if(getThread() != null) {
+			ddbbThreadNote.setThreadId(getThread().getThreadId());
 		} else {
 			ddbbThreadNote.setThreadIdNull();
 		}
-		if(getNoteId() != null) {
-			ddbbThreadNote.setNoteId(getNoteId());
+		if(getNote() != null) {
+			ddbbThreadNote.setNoteId(getNote().getNoteId());
 		} else {
 			ddbbThreadNote.setNoteIdNull();
 		}

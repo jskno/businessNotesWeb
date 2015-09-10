@@ -26,9 +26,11 @@
 			<h3>BusinessNotes List</h3>
   			<p>Table showing all notes chronologically ordered.</p>
   		</div>
-  		<table class="table table-condensed">
+  		<table id="list" class="table table-condensed">
     		<thead>
      			<tr>
+     				<th>Add Thread</th>
+     				<th style="display:none;">noteId</th>
 					<th>Creation Date</th>
         			<th>Title</th>
        				<th>Text</th>
@@ -45,6 +47,7 @@
     	    	Iterator<BusinessNoteVO> iterator = notesList.iterator();
 	        	while (iterator.hasNext()) {
 	        	BusinessNoteVO note = (BusinessNoteVO) iterator.next();
+	        	int noteId = note.getNoteId();
         		Date creationDate = note.getCreationDate();
         		String noteTitle = note.getNoteTitle();
           		String noteText = note.getNoteText();
@@ -68,6 +71,8 @@
            		}
          	%>
 				<tr>
+         			<td><input id="addThread" type="checkbox"></td>
+         			<td style="display:none;"><%=noteId%></td>
 					<td><%=creationDate%></td>
 					<td><%=noteTitle%></td>
 					<td><%=noteText%></td>
@@ -82,7 +87,17 @@
         	%>
 			</tbody>
 		</table>
+		<div class="col-sm-2">
+      		<!-- Trigger the thread creation -->
+   			<button type="button" class="btn btn-info btn-md" data-toggle="modal" 
+      			id="newThreadButton" data-target="#NewThreadModalForm">Add Thread</button>
+      	</div>
 	</div>
+
+<!--  INI MODALS -->
+<jsp:include page="modal/NewThreadModalForm.jsp" flush="true" />
+<script src="js/getNoteIdsList.js"></script>
+<!--  FIN MODALS -->
 
 </body>
 </html>

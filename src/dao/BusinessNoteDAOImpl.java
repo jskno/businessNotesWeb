@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -197,5 +196,85 @@ public class BusinessNoteDAOImpl extends DAOImpl implements BusinessNoteDAO {
 			insert(eachNote);
 		}
 	}
+
+	@Override
+	public BusinessNoteVO getBusinessNoteById(int noteId) {
+		
+		String sql = "select * from business_note bus "
+				+ "join note n "
+					+ "on n.note_id = bus.note_id "
+				+ "where bus.note_id = ?";
+		
+		BusinessNoteVO busNote = null;
+		PreparedStatement statement = null;
+		ResultSet resultSet = null;
+		
+		try {
+			statement = connection.prepareStatement(sql);
+			int p = 1;
+			statement.setInt(p, noteId);
+			p++;
+			resultSet = statement.executeQuery();
+			if(resultSet.next()) {
+				busNote = getBusinessNoteFromRs(resultSet);
+			}
+		} catch (SQLException ex) {
+			ex.printStackTrace();
+		} finally {
+			closeStmtAndRs(statement, resultSet);
+		}
+		return busNote;
+	}
+	
+	@Override
+	public List<BusinessNoteVO> getBusinessNotesListFromRs(ResultSet rs) 
+			throws SQLException {
+		
+		List<BusinessNoteVO> list = new ArrayList<BusinessNoteVO>();
+	
+		BusinessNoteVO businessNote;
+		while (rs.next()) {
+			businessNote = getBusinessNoteFromRs(rs);
+			list.add(businessNote);
+		}
+		return list;
+	}
+
+	@Override
+	public BusinessNoteVO getBusinessNoteFromRs(ResultSet rs)
+			throws SQLException {
+		
+		BusinessNoteVO businessNote;
+
+		DDBBBusinessNote ddbbBusinessNote = new DDBBBusinessNote();;
+		DDBBNote ddbbNote = new DDBBNote();
+		ddbbNote.loadResult(rs);
+		ddbbBusinessNote.loadResult(rs);
+		
+		businessNote = new BusinessNoteVO(ddbbNote, ddbbBusinessNote);
+		
+		CustomerVO customer = null;
+		SupplierVO supplier = null;
+		ProductVO product = null;
+		if(!ddbbBusinessNote.isCustomerIdNull()) {
+			customer = customerDao.getCustomerById(
+					ddbbBusinessNote.getCustomerId());
+		} 
+		if(!ddbbBusinessNote.isSupplierIdNull()) {
+			supplier = supplierDao.getSupplierById(
+					ddbbBusinessNote.getSupplierId());
+		}
+		if(!ddbbBusinessNote.isProductIdNull()) {
+			product = productDao.getProductById(
+					ddbbBusinessNote.getProductId());
+		}
+						
+		businessNote.setCustomer(customer);
+		businessNote.setSupplier(supplier);
+		businessNote.setProduct(product);
+		
+		return businessNote;
+	}
+
 
 }

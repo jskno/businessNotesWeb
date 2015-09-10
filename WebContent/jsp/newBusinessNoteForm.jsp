@@ -117,6 +117,7 @@
       						data-target="#newProductModal">New Product</button>
       			</div>      				
       		</div>
+      		<!-- 
     		<div class="form-group">        
 				<div class="col-sm-offset-2 col-sm-10">
        			<div class="checkbox">
@@ -124,6 +125,7 @@
 	        	</div>
     			</div>
     		</div>
+    		 -->
     		<div class="form-group">        
       			<div class="col-sm-offset-2 col-sm-10">
         			<button type="submit" class="btn btn-default">Submit</button>
@@ -133,9 +135,9 @@
 	</div>
 
 <!--  INI MODALS -->
-<jsp:include page="modal/NewBusNoteFormCustomerModal.jsp" flush="false" />
-<jsp:include page="modal/NewBusNoteFormSupplierModal.jsp" flush="false" />
-<jsp:include page="modal/NewBusNoteFormProductModal.jsp" flush="false" />
+<jsp:include page="modal/NewBusNoteFormCustomerModal.jsp" flush="true" />
+<jsp:include page="modal/NewBusNoteFormSupplierModal.jsp" flush="true" />
+<jsp:include page="modal/NewBusNoteFormProductModal.jsp" flush="true" />
 <script src="js/getNoRoleCompanies.js"></script>
 <!--  FIN MODALS -->
 

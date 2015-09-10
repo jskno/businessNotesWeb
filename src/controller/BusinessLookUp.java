@@ -6,6 +6,7 @@ import service.AddBusinessNoteService;
 import service.AddPersonalNoteService;
 import service.AddProductService;
 import service.AddSupplierService;
+import service.AddThreadService;
 import service.ExportTableService;
 import service.GetBusinessNotesListService;
 import service.GetCompaniesListService;
@@ -14,6 +15,7 @@ import service.GetNotesListService;
 import service.GetPersonalNotesListService;
 import service.GetProductsListService;
 import service.GetSuppliersListService;
+import service.GetThreadsListService;
 import service.ImportTableService;
 import service.NewCompanyFormService;
 import service.NewCustomerFormService;
@@ -38,6 +40,7 @@ public class BusinessLookUp {
 	private final String NOTES_LIST = "notesList";
 	private final String BUSINESS_NOTES_LIST = "businessNotesList";
 	private final String PERSONAL_NOTES_LIST = "personalNotesList";
+	private final String THREADS_LIST = "threadsList";
 	
 	private final String CUSTOMERS_LIST = "customersList";
 	private final String SUPPLIERS_LIST = "suppliersList";
@@ -51,6 +54,7 @@ public class BusinessLookUp {
 	private final String ADD_COMPANY = "addCompany";
 	private final String ADD_BUSINESS_NOTE = "addBusinessNote";
 	private final String ADD_PERSONAL_NOTE = "addPersonalNote";
+	private final String ADD_THREAD = "addThread";
 	
 	private final String EXPORT_TABLE = "exportTable";
 	private final String IMPORT_TABLE = "importTable";
@@ -90,6 +94,10 @@ public class BusinessLookUp {
 		case PERSONAL_NOTES_LIST:
 			serviceClass = new GetPersonalNotesListService();
 			break;
+		case THREADS_LIST:
+			serviceClass = new GetThreadsListService();
+			break;
+			
 		case CUSTOMERS_LIST:
 			serviceClass = new GetCustomerListService();
 			break;
@@ -102,6 +110,7 @@ public class BusinessLookUp {
 		case PRODUCTS_LIST:
 			serviceClass = new GetProductsListService();
 			break;
+			
 		case ADD_CUSTOMER:
 			serviceClass = new AddCustomerService();
 			break;
@@ -120,6 +129,9 @@ public class BusinessLookUp {
 		case ADD_PERSONAL_NOTE:
 			serviceClass = new AddPersonalNoteService();
 			break;
+		case ADD_THREAD:
+			serviceClass = new AddThreadService();
+			break;	
 		case EXPORT_TABLE:
 			serviceClass = new ExportTableService();
 			break;

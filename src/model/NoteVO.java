@@ -87,17 +87,18 @@ public abstract class NoteVO {
 	
 	public void setFromPersistenceObject(DDBBNote ddbbNote) {
 		
-		UserVO user = new UserVO();
+		UserVO user = null;
 		
 		if(!ddbbNote.isUserIdNull()) {
+			user = new UserVO();
 			user.setUserId(ddbbNote.getUserId());
 		}
 		setUser(user);
 		
 		if(!ddbbNote.isNoteIdNull()) {
-			setNoteId(ddbbNote.getUserId());
+			setNoteId(ddbbNote.getNoteId());
 		} else {
-			setNoteId(noteId);
+			setNoteId(null);
 		}
 		if(!ddbbNote.isCreationDateNull()) {
 			setCreationDate(new Date(

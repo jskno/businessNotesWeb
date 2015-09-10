@@ -9,13 +9,14 @@ import java.sql.Statement;
 
 public class DDBBThread {
 	
-	private static final String INSERT_ALL = "insert into thread (THREAD_TITLE) values (?)";
+	private static final String INSERT_ALL = "insert into thread (THREAD_TITLE, CREATION_DATE) values (?,?)";
 	private static final String LAST_ID = "SELECT LAST_INSERT_ID()";
 	private static final String SQL_READ="SELECT * FROM thread WHERE THREAD_ID=?";
 	private static final String SQL_DELETE="DELETE FROM thread WHERE THREAD_ID=?";
 	
 	private int threadId;
 	private String threadTitle;
+	private Date creationDate;
 	
 	private int threadIdNull;
 	
@@ -30,6 +31,12 @@ public class DDBBThread {
 	}
 	public void setThreadTitle(String threadTitle) {
 		this.threadTitle = threadTitle;
+	}
+	public Date getCreationDate() {
+		return creationDate;
+	}
+	public void setCreationDate(Date creationDate) {
+		this.creationDate = creationDate;
 	}
 	
 	public int getThreadIdNull() {
@@ -46,6 +53,12 @@ public class DDBBThread {
 	}
 	public void setThreadTitleNull() {
 		this.threadTitle = null;
+	}
+	public boolean isCreationDateNull() {
+		return getCreationDate() == null;
+	}
+	public void setCreationDateNull() {
+		setCreationDate(null);
 	}
 	
 	public void loadResult(ResultSet rs) throws SQLException {
@@ -71,7 +84,7 @@ public class DDBBThread {
 		
 		try
 		{
-			// SQL: NOTE_ID (INT):
+			// SQL: THREAD_TITLE (STRING):
 			if (isThreadTitleNull())
 			{
 				ps.setNull(p, java.sql.Types.VARCHAR);
@@ -80,6 +93,18 @@ public class DDBBThread {
 			{
 				ps.setString(p, getThreadTitle());
 			}
+			p++;
+			// SQL: CREATION_DATE (DATE):
+			if (isCreationDateNull())
+			{
+				ps.setDate(p, new Date(getCreationDate().getTime()));
+			}
+			else
+			{
+				ps.setDate(p, getCreationDate());
+			}
+			p++;
+			
 			ps.executeUpdate();
 			
 			rs = stmt.executeQuery(LAST_ID);

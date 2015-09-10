@@ -80,6 +80,7 @@ public class DDBBThreadNote {
 			{
 				ps.setInt(p, getThreadId());
 			}
+			p++;
 			// SQL: NOTE_ID (INT):
 			if (isNoteIdNull())
 			{
@@ -89,6 +90,8 @@ public class DDBBThreadNote {
 			{
 				ps.setInt(p, getNoteId());
 			}
+			p++;
+			
 			ps.executeUpdate();
 			lastKey = getThreadId();
 			

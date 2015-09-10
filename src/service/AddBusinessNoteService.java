@@ -121,8 +121,8 @@ public class AddBusinessNoteService extends ServiceImpl implements Service {
 		}
 		
 		userId = (Integer) getSession().getAttribute("userId");
-		noteText = request.getParameter("noteTitle");
-		noteTitle = request.getParameter("noteText");
+		noteTitle = request.getParameter("noteTitle");
+		noteText = request.getParameter("noteText");
 		creationDate = new Date();
 		
 	}
