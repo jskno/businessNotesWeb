@@ -54,7 +54,7 @@
                         		} 
                         		else if("modal".equals(eachSubMenu.getKind())) {
                         %>
- 		                           <li><a href="#" data-toggle="modal" data-target=<%=eachSubMenu.getLink()%>>eachSubMenu.getName()</a></li>
+ 		                           <li><a href="#" data-toggle="modal" data-target=<%=eachSubMenu.getLink()%>><%=eachSubMenu.getName()%></a></li>
  		                <%
                         		}
                         	}
