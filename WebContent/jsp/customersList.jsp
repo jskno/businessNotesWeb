@@ -31,7 +31,7 @@
         			<th>Contact Name</th>
        				<th>Contact Telephone</th>
        				<th>Credit Rating</th>
-       				<th>Customer Discount days</th>
+       				<th>Customer Discount</th>
        				<th></th>
        				<th></th>
      			</tr>
